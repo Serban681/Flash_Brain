@@ -18,6 +18,8 @@ html, body {
     --font-fredoka: 'Fredoka', cursive;
     --font-josefin: 'Josefin Sans', sans-serif;
 
+    --border-radius: 0.2rem;
+    --box-shadow: 0.3rem 0.3rem 0.3rem rgba(0, 0, 0, 0.15);
     /* height: 100%; */
 }
 
@@ -54,6 +56,7 @@ html, body {
     width: 10rem;
     padding: 0.6rem 2rem;
     cursor: pointer;
+    border-radius: var(--border-radius);
 }
 
 .selected-file-name {
@@ -62,4 +65,29 @@ html, body {
     font-family: 'Josefin Sans', sans-serif;
     font-weight: bold;
     color: white;
+}
+
+/* ---- End Upload File Styling ----- */
+
+.big-btn {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 500;
+    background-color: var(--green);
+    color: white;
+    font-weight: bold;
+    padding: 0.8rem 3.3rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0.3rem 0.3rem 0.3rem rgba(0, 0, 0, 0.15);
+    font-size: 1.1rem;
+}
+
+.small-btn {
+    font-weight: 600;
+    font-family: 'Josefin Sans', sans-serif;
+    background-color: var(--blue);
+    color: white;
+    font-size: 1rem;
+    padding: 0.7rem 2.4rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
 }
