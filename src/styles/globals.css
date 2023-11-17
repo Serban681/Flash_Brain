@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Josefin+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Josefin+Sans:wght@400;600&display=swap');
 
 html, body {
     --yellow: #FDCB9E;
@@ -26,7 +26,40 @@ html, body {
     justify-content: center;
 }
 
-.app-styles {
-    height: 100vh;
-    background-color: #00B7C2;
+
+/* ---- Upload File Styling ----- */
+
+.file-input-container {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+  
+.file-input {
+    position: absolute;
+    font-size: 2rem;
+    height: 2.5rem;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+  
+.file-input-label {
+    background-color: var(--black);
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 500;
+    color: #fff;
+    display: inline-block;
+    width: 10rem;
+    padding: 0.6rem 2rem;
+    cursor: pointer;
+}
+
+.selected-file-name {
+    display: block;
+    margin-top: 10px;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: bold;
+    color: white;
 }
