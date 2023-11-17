@@ -14,13 +14,17 @@ html, body {
     --light-black: #2F3D45;
     --light-yellow: #FFE1C7;
     --light-green: #00B7C2;
+    --light-blue: #1F70A7;
+
+    --dark-yellow: #F7BF8C;
+    --dark-green: #03A8B2;
+    --dark-black: #161F23;
 
     --font-fredoka: 'Fredoka', cursive;
     --font-josefin: 'Josefin Sans', sans-serif;
 
     --border-radius: 0.2rem;
     --box-shadow: 0.3rem 0.3rem 0.3rem rgba(0, 0, 0, 0.15);
-    /* height: 100%; */
 }
 
 .centered-container {
