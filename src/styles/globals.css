@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    --yellow: #FDCB9E;
+    --black: #1B262C;
+    --blue: #0F4C75;
+    --green: #00B7C2;
+    --white: #FFFFFF;
+
+    --light-black: #2F3D45;
+    --light-yellow: #FFE1C7;
+    --light-green: #00B7C2;
+}
+
+.centered-container {
+    display: flex;
+    justify-content: center;
+}
