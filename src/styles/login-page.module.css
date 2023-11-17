@@ -100,3 +100,11 @@
     text-decoration: underline;
     margin-bottom: 5px;
 }
+
+.errorMessage {
+    font-family: var(--font-josefin);
+    font-size: 20px;
+    margin-top: 5px;
+    color: darkred;
+    width: 100%;
+}
