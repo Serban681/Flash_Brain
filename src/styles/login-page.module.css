@@ -1,0 +1,51 @@
+.loginPageOuterDiv {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--light-yellow);
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+}
+
+.loginP {
+    width: 100%;
+    text-align: left;
+    color: var(--white);
+}
+
+.googleButton {
+    width: 100%;
+    color: var(--white);
+    height: 30px;
+    background-color: var(--black);
+    border-radius: 5px;
+}
+
+.loginLine {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.loginLine div {
+    height: 3px;
+    width: 47%;
+    background-color: var(--white);
+    margin-top: 10px;
+}
+
+.loginLine p {
+    color: var(--white);
+    width: 6%;
+    margin: 0 10px;
+    text-align: center;
+}
