@@ -1,0 +1,102 @@
+.loginPageOuterDiv {
+    width: 100%;
+    height: clamp(200px, 100%, 100vh);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--yellow);
+}
+
+.loginForm {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: clamp(500px, 25%, 700px);
+}
+
+.loginP {
+    width: 100%;
+    text-align: left;
+    color: var(--white);
+    font-family: var(--font-josefin);
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.googleButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    color: var(--white);
+    height: 50px;
+    font-family: var(--font-josefin);
+    font-weight: bold;
+    background-color: var(--black);
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.loginLine {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    font-family: var(--font-josefin);
+    font-size: 25px;
+}
+
+.loginLine div {
+    height: 3px;
+    width: 45%;
+    background-color: var(--white);
+    margin-top: 10px;
+}
+
+.loginLine p {
+    color: var(--white);
+    width: 10%;
+    margin-top: -8px;
+    text-align: center;
+}
+
+.passwordInput, .userInput {
+    width: 100%;
+    height: 50px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    color: var(--black);
+    font-family: var(--font-josefin);
+    padding-left: 5px;
+    font-size: 22px;
+    border: 4px solid var(--white);
+    outline: none;
+}
+
+.userP, .passP {
+    width: 100%;
+    color: var(--white);
+    font-size: 25px;
+    font-family: var(--font-josefin);
+}
+
+.passP {
+    width: 100%;
+    color: var(--white);
+    font-size: 25px;
+    font-family: var(--font-josefin);
+}
+
+.signUpLink {
+    width: 100%;
+    color: var(--white);
+    font-family: var(--font-josefin);
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: 5px;
+}
