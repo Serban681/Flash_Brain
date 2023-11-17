@@ -4,10 +4,10 @@ import FooterComponent from "@/components/GeneralComponents/Footer";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <>
+    <div className="app-styles">
       <Component {...pageProps} />
       <FooterComponent />
-    </>
+    </div>
   );
 };
 
