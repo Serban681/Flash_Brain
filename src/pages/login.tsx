@@ -7,7 +7,7 @@ import GoogleImage from "@/images/google_logo.svg";
 export default function LoginPage() {
 
     function handleLogin() {
-
+        console.log(";")
     }
 
     return (
@@ -15,7 +15,10 @@ export default function LoginPage() {
             <Header></Header>
             <form className={styles.loginForm}>
                 <p className={styles.loginP}>Log in</p>
-                <button className={styles.googleButton}><Image src={GoogleImage} alt="Google icon"></Image>Log-in with Google</button>
+                <button type="button" className={styles.googleButton}>
+                    <Image src={GoogleImage} alt="Google icon" style={{marginRight:15, width:'auto', height:'auto'}}></Image>
+                    Log-in with Google
+                </button>
                 <div className={styles.loginLine}>
                     <div></div>
                     <p>or</p>

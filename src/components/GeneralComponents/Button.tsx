@@ -4,7 +4,7 @@ export default function Button(props:any) {
     const callbackFunction = props.function;
 
     return (
-        <button onClick={callbackFunction} style={{
+        <button type="button" onClick={callbackFunction} style={{
             backgroundColor: 'var(--blue)',
             borderRadius: 5,
             color: 'white',
