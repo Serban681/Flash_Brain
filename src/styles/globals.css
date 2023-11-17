@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Josefin+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@900&family=Josefin+Sans:wght@400;500;600;700&display=swap');
 
-body {
+html, body {
     --yellow: #FDCB9E;
     --black: #1B262C;
     --blue: #0F4C75;
@@ -17,9 +17,16 @@ body {
 
     --font-fredoka: 'Fredoka', cursive;
     --font-josefin: 'Josefin Sans', sans-serif;
+
+    /* height: 100%; */
 }
 
 .centered-container {
     display: flex;
     justify-content: center;
+}
+
+.app-styles {
+    height: 100vh;
+    background-color: #00B7C2;
 }
