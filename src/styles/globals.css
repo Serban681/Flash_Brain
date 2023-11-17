@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Josefin+Sans:wght@400;500;600;700&display=swap');
+
 body {
     --yellow: #FDCB9E;
     --black: #1B262C;
@@ -12,6 +14,9 @@ body {
     --light-black: #2F3D45;
     --light-yellow: #FFE1C7;
     --light-green: #00B7C2;
+
+    --font-fredoka: 'Fredoka', cursive;
+    --font-josefin: 'Josefin Sans', sans-serif;
 }
 
 .centered-container {
