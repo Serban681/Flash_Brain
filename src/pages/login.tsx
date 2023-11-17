@@ -1,7 +1,6 @@
 import styles from '@/styles/login-page.module.css';
 import Header from "@/components/GeneralComponents/Header";
 import Link from "next/link";
-import Button from "@/components/GeneralComponents/Button";
 import Image from "next/image";
 import GoogleImage from "@/images/google_logo.svg";
 import {useState} from "react";
@@ -16,10 +15,11 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string>('');
 
-    function handleLogin() {
+    function handleLogin(e:any) {
+        e.preventDefault();
         const loginData: LoginRequest = {
-            username,
             password,
+            username,
         };
 
         setError('');
@@ -79,7 +79,9 @@ export default function LoginPage() {
                 />
                 <Link href={"/register"} style={{width:'100%'}}><p className={styles.signUpLink}>Don't have an account ? Sign-up here</p></Link>
                 <div style={{width:'100%', marginTop:20}}>
-                    <Button text={"Log in"} function={handleLogin}></Button>
+                    <button
+                        onClick={(e) => handleLogin(e)}
+                    >Log-in</button>
                 </div>
                 {error && <p className={styles.errorMessage}>{error}</p>}
             </form>
