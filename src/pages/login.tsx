@@ -43,7 +43,7 @@ export default function LoginPage() {
                 }
             })
             .then((data) => {
-                Cookies.set('jwtToken', data.jwtToken);
+                Cookies.set('jwtToken', data.access_token);
                 router.push('/');
             })
             .catch((error) => {
@@ -79,7 +79,7 @@ export default function LoginPage() {
                 />
                 <Link href={"/register"} style={{width:'100%'}}><p className={styles.signUpLink}>Don't have an account ? Sign-up here</p></Link>
                 <div style={{width:'100%', marginTop:20}}>
-                    <button
+                    <button className="small-btn"
                         onClick={(e) => handleLogin(e)}
                     >Log-in</button>
                 </div>

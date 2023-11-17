@@ -5,6 +5,10 @@ import GoogleImage from "@/images/google_logo.svg";
 import Link from "next/link";
 import {ChangeEvent, useState} from "react";
 import {RegisterRequest} from "@/utils/model/RegisterRequest";
+import config from "@/config";
+// @ts-ignore
+import Cookies from "js-cookie";
+import router from "next/router";
 
 export default function RegisterPage() {
 
@@ -29,7 +33,33 @@ export default function RegisterPage() {
             email
         };
 
-        console.log(registerData);
+        setError('');
+
+        fetch(config.apiUrl + "/user", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Origin': config.origin
+            },
+            body: JSON.stringify(registerData),
+        })
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    if(response.status === 401)
+                        throw new Error('Password is incorrect.');
+                    else if(response.status === 404) throw new Error('User not found.');
+                    else throw new Error('Something went wrong.');
+                }
+            })
+            .then((data) => {
+                Cookies.set('jwtToken', data.access_token);
+                router.push('/');
+            })
+            .catch((error) => {
+                setError(error.message);
+            });
     }
 
     return (
@@ -81,8 +111,11 @@ export default function RegisterPage() {
 
                 <Link href={"/login"} style={{width:'100%'}}><p className={styles.logInLink}>Already have an account ? Log-in here</p></Link>
                 <div style={{width:'100%', marginTop:20}}>
-                    <button onClick={(e) => handleRegister(e)}>Sign-up</button>
+                    <button
+                        onClick={(e) => handleRegister(e)}
+                        className="small-btn">Sign-up</button>
                 </div>
+                {error && <p className={styles.errorMessage}>{error}</p>}
             </form>
         </div>
     )
