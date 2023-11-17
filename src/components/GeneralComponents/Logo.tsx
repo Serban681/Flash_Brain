@@ -1,7 +1,5 @@
 export default function LogoComponent() {
     return (
-        <div className="bg-black">
-            <h1 className="font-fredoka text-xl text-white">#FlashBrain</h1>        
-        </div>
+        <h1 className="font-fredoka text-xl text-white font-bold">#FlashBrain</h1>        
     )
 }
