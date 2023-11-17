@@ -27,8 +27,8 @@ export default function CreateFlashCardPage() {
                             <div className="file-input-label">Choose a file</div>
                         </div>
                         
-                        <div className="mt-10">
-                            <button className="bg-white">Upload</button>
+                        <div className="mt-16">
+                            <button className="big-btn">Upload</button>
                         </div>
                     </div>
                 </div>
