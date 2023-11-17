@@ -83,6 +83,11 @@ html, body {
     border-radius: var(--border-radius);
     box-shadow: 0.3rem 0.3rem 0.3rem rgba(0, 0, 0, 0.15);
     font-size: 1.1rem;
+    transition: scale 0.5s ease;
+}
+
+.big-btn:hover {
+    scale: 1.03;
 }
 
 .small-btn {
@@ -98,5 +103,52 @@ html, body {
 }
 
 .small-btn:hover {
-    scale: 1.02;
+    scale: 1.03;
+}
+
+/* For WebKit based browsers (Chrome, Safari) */
+/* Customize the scrollbar */
+::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background-color: var(--black); /* Color of the scrollbar handle */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Color of the scrollbar handle on hover */
+}
+
+/* For Firefox */
+/* Customize the scrollbar */
+/* Width of the scrollbar track */
+/* Note: Firefox does not support color customization of the scrollbar */
+/* Only width and background */
+scrollbar {
+    width: 10px;
+}
+
+/* Handle */
+scrollbar-thumb {
+    background-color: var(--black); /* Color of the scrollbar handle */
+}
+
+/* Handle on hover */
+scrollbar-thumb:hover {
+    background-color: #555; /* Color of the scrollbar handle on hover */
+}
+
+::selection {
+    color: var(--white); /* Set the color of the selected text */
+    background-color: var(--black); /* Set the background color of the selected text */
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
