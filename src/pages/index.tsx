@@ -9,6 +9,9 @@ import SummaryCard from "@/components/MainPageComponents/SummaryCard";
 import useFetchSummaries from "@/utils/useFetchSummaries";
 import {useSearchParams} from "next/navigation";
 import useFetchLikedSummaries from "@/utils/useFetchLikedSummaries";
+import Image from "next/image";
+
+import like_image from "@/images/like_image_icon.svg";
 
 export function CategoryList(props: any) {
 
@@ -69,6 +72,10 @@ export default function Home() {
     useEffect(() => {
         setSearchValue(searchQuery ? searchQuery : '');
     }, [searchQuery])
+
+    const goToFavourites = () => {
+        router.push('/favourites');
+    }
 
     function scrollToSection(id: string) {
         const section = document.getElementById(id);
@@ -136,6 +143,9 @@ export default function Home() {
       <>
           <div className={styles.indexOuterDiv}>
               <Header></Header>
+              <div onClick={goToFavourites} className="cursor-pointer hover:scale-105 transition-all w-14 h-14 flex justify-center items-center absolute bg-[#1B262C] rounded-full shadow-default absolute bottom-10 right-10">
+                <Image className="w-7 h-7" src={like_image} alt="" />
+              </div>
               <div className={styles.indexContentDiv}>
                 <div className={styles.indexHigherDiv}>
                     <div className={styles.indexHigherDivLeft}>

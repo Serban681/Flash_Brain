@@ -1,6 +1,6 @@
 .userDropdownOuterDiv, .userDropdownOuterDivHidden {
     width: 25rem;
-    height: 15rem;
+    height: 20rem;
     position: absolute;
     background-color: var(--black);
     top: 1rem;
@@ -66,10 +66,19 @@
     font-weight: bold;
 }
 
-.buttonDiv {
+.buttonsContainer {
+    width: 100%;
     width: calc(100% - 40px);
-    display: flex;
-    justify-content: right;
-    margin-right: 40px;
-    margin-top: 40px;
+    margin-top: 2.7rem;
+}
+
+.btn {
+    position: absolute;
+    right: 2rem;
+}
+
+.btn_2 {
+    position: absolute;
+    right: 2rem;
+    bottom: 2rem;
 }
