@@ -4,13 +4,14 @@ import config from "@/config";
 // @ts-ignore
 import Cookies from "js-cookie";
 
-function useFetchLikedSummaries() {
+function useFetchLikedSummaries(isLoggedIn: boolean) {
 
     const [isPending, setIsPending] = useState<boolean>(true);
     const [error, setError] = useState<string>("");
     const [summaryList, setSummaryList] = useState<Summary[]>([]);
 
     useEffect(() => {
+        if(!isLoggedIn) return;
         setError('');
         setIsPending(true);
         fetch(config.apiUrl + "/user/liked",
@@ -31,7 +32,7 @@ function useFetchLikedSummaries() {
                 setIsPending(false);
                 setError(e.message);
             })
-    }, []);
+    }, [isLoggedIn]);
     return {error, isPending, summaryList};
 
 }

@@ -2,12 +2,40 @@ import Header from "@/components/GeneralComponents/Header"
 import Image from "next/image"
 import upload_icon from "@/images/upload_icon.svg"
 import { useState } from "react"
+import config from "@/config";
 
 export default function CreateFlashCardPage() {
-    const [file, setFile] = useState<any>(null)
+    const [file, setFile] = useState<File | null>(null);
+    const [fileError, setFileError] = useState<string>('');
+    const [isPendingUpload, setIsPendingUpload] = useState<boolean>(false);
+    const [isPublic, setIsPublic] = useState<boolean>(true);
 
     function handleFileChange(e:any) {
-        setFile(e.target.files[0])
+        setFile(e.target.files[0]);
+    }
+
+    function handleFileUpload() {
+        if(file === null) {
+            setFileError('Please select a file');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('uploadFile', file);
+
+        fetch(config.apiUrl + 'file/uploadfile?isPublic=' + isPublic, {
+            method: 'POST',
+            body: formData,
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Something went wrong');
+                }
+            })
+            .catch((error) => {
+                console.error('There was a problem with the upload');
+                setIsPendingUpload(false);
+            });
     }
 
     return (
@@ -31,7 +59,7 @@ export default function CreateFlashCardPage() {
                         </div>
                         
                         <div className="mt-16">
-                            <button className="big-btn">Upload</button>
+                            <button className="big-btn" onClick={handleFileUpload}>Upload</button>
                         </div>
                     </div>
                 </div>
