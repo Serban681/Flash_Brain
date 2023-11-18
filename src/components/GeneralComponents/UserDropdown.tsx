@@ -32,6 +32,10 @@ export default function UserDropdown(props:any) {
         };
     }, []);
 
+    useEffect(() => {
+        console.log(userInformation);
+    }, [userInformation])
+
 
     function handleSignOut() {
         Cookies.remove('jwtToken');
@@ -47,8 +51,8 @@ export default function UserDropdown(props:any) {
             <div className={styles.userDiv}>
                 <div className={styles.circleDiv}></div>
                 <div className={styles.userInformationDiv}>
-                    <p style={{fontSize:24}}>{userInformation ? userInformation.username : "Loading..."}</p>
-                    <p style={{fontSize:18}}>{userInformation ? userInformation.email : "Loading..."}</p>
+                    <p style={{fontSize:24}}>{userInformation !== undefined ? userInformation.username : "Loading..."}</p>
+                    <p style={{fontSize:18}}>{userInformation !== undefined ? userInformation.email : "Loading..."}</p>
                 </div>
             </div>
             <div className={styles.buttonDiv}>
