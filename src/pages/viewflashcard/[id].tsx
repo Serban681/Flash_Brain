@@ -45,6 +45,8 @@ export default function ViewFlashCardPage() {
                 }
             })
         }
+
+        console.log(summary)
     }, [summaryList, summary]);
 
     const likeThePost = () => {
