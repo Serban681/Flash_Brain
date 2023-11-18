@@ -5,7 +5,7 @@ import config from "../config";
 import {Summary} from "@/utils/model/Summary";
 import {set} from "zod";
 
-function useFetchSummaries() {
+function useFetchSummaries(searchValue: string, categoryList:number[]) {
 
     const [isPending, setIsPending] = useState<boolean>(true);
     const [error, setError] = useState<string>("");
@@ -30,7 +30,7 @@ function useFetchSummaries() {
                 setIsPending(false);
                 setError(e.message);
             })
-    }, [])
+    }, [categoryList]);
     return {error, isPending, summaryList};
 
 }

@@ -62,8 +62,8 @@ export default function Home() {
 
     const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
     const [activeCategoryList, setActiveCategoryList] = useState<number[]>([]);
-    const {error: errorFetchSummaries, isPending: isPendingSummaries, summaryList} = useFetchSummaries();
     const [searchValue, setSearchValue] = useState<string>('');
+    const {error: errorFetchSummaries, isPending: isPendingSummaries, summaryList} = useFetchSummaries(searchValue, activeCategoryList);
 
     const searchParams = useSearchParams()
     const searchQuery = searchParams.get('query');
@@ -114,21 +114,13 @@ export default function Home() {
 
     function handleSearch(e:any) {
         e.preventDefault();
-        let category = 1;
-
-        if(activeCategoryList.length > 0) {
-            category = parseInt(activeCategoryList.join(''));
-        }
 
         if(searchValue === '') {
-            router.push({
-                pathname: '/',
-                query: {category},
-            });
+            router.push('/');
         } else {
             router.push({
                 pathname: '/',
-                query: {searchValue, category},
+                query: {searchValue},
             });
         }
     }
@@ -178,8 +170,9 @@ export default function Home() {
                               setCategoryList={setActiveCategoryList}
                               searchValue={searchValue}
                           ></CategoryList>
-
-                          {isPendingSummaries && <div className="lds-dual-ring"></div>}
+                            <div className="centered-container">
+                                <div className="lds-dual-ring" style={{opacity: isPendingSummaries ? '1' : '0'}}></div>
+                            </div>
                           {summaryList.length > 0 && <div className={styles.summaryBrowser}>
                               {summaryList.map((summary, index) => (
                                   <div key={summary.summaryId} style={{borderRadius:10}}>
