@@ -5,6 +5,7 @@ import {useEffect, useRef} from "react";
 import gravatar from 'gravatar';
 import Image from 'next/image';
 import useCheckLoggedIn from "@/utils/useCheckLoggedIn";
+import router from "next/router";
 
 export default function UserDropdown(props:any) {
 
@@ -40,7 +41,7 @@ export default function UserDropdown(props:any) {
 
     function handleSignOut() {
         Cookies.remove('jwtToken');
-        window.location.reload();
+        router.push('/');
     }
 
     return (
