@@ -112,6 +112,8 @@
     height: 100%;
     background-color: #5A94BB;
     border: 1px solid #5A94BB;
+    font-family: var(--font-josefin);
+    font-weight: bold;
 }
 
 .searchBarInput:focus {
@@ -131,13 +133,10 @@
     background-color: var(--black);
 }
 
-
 .summaryBrowser {
+    margin-top: 40px;
     width: 100%;
-    display: grid;
-}
-
-.summaryBrowser {
+    padding-bottom: 50px;
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Three equal columns */
     gap: 50px; /* Gap between grid items */
