@@ -70,7 +70,7 @@ export default function Home() {
     const searchQuery = searchParams.get('query');
 
     const [isScrolled, setIsScrolled] = useState(false);
-
+// hau hau
 
     useEffect(() => {
         setSearchValue(searchQuery ? searchQuery : '');
