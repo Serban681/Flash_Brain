@@ -2,6 +2,7 @@ import Header from "@/components/GeneralComponents/Header"
 import FlyerComponent from "@/components/ViewFlashCardPageComponent/Flyer"
 import Image from "next/image"
 import like_icon from "@/images/like_icon.svg"
+import kangaroo_img from "@/images/kangaroo_img.png"
 
 export default function ViewFlashCardPage() {
     const parts = [
@@ -13,7 +14,7 @@ export default function ViewFlashCardPage() {
     ]
 
     return (
-        <div className="bg-blue w-full h-full">
+        <div className="bg-blue w-full h-full relative">
             <Header />
             <div className="flex items-center min-h-[calc(100vh-11.75rem)]">
                 <div className="flex justify-center w-full">
@@ -54,6 +55,10 @@ export default function ViewFlashCardPage() {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div className="absolute border-8 border-white right-[-38rem] bottom-[7rem] cursor-pointer">
+                <Image className="h-64 object-cover" src={kangaroo_img} alt=""  />
             </div>
         </div>
     )
