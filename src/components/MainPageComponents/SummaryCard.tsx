@@ -1,7 +1,10 @@
 import styles from '../../styles/summary-card.module.css'
 import {Summary} from "@/utils/model/Summary";
 import Link from 'next/link';
-import {useEffect, useState} from "react";
+import {useState} from "react";
+import thumbs_up from "@/images/thumbs_up.svg";
+import Image from "next/image";
+
 export default function SummaryCard(props:any) {
 
     let summary:Summary = props.summary;
@@ -9,18 +12,7 @@ export default function SummaryCard(props:any) {
     let backgroundColor: string = props.backgroundColor;
     let secondaryColor: string = props.secondaryColor;
 
-    //let likedSummaries = props.likedSummaries;
-    //let setLikedSummaries = props.setLikedSummaries;
-
     const [isLiked, setIsLiked] = useState<boolean>(false);
-
-    // useEffect(() => {
-    //     if(likedSummaries) {
-    //         likedSummaries.forEach((item: Summary) =>{
-    //             if(item.summaryId == summary.summaryId) setIsLiked(true);
-    //         })
-    //     }
-    // }, [likedSummaries, setIsLiked]);
 
     function likeCard() {
         if(isLiked) return;
@@ -46,8 +38,13 @@ export default function SummaryCard(props:any) {
                         {summary.category_id == 9 && <span className="material-symbols-outlined">list</span>}
                     </div>
                 </div>
-                <div className={styles.summaryRightDiv} style={{backgroundColor: backgroundColor}}>
+                
+                <div className={`relative ${styles.summaryRightDiv}`} style={{backgroundColor: backgroundColor}}>
                     {summary.title}
+                    <div className='absolute flex right-2 bottom-0.5'>
+                        <p>126</p>
+                        <Image className='w-4 ml-0.5 mb-1' width={40} height={40} src={thumbs_up} alt="" />
+                    </div>  
                 </div>
             </div>
         </Link>
