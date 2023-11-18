@@ -6,33 +6,146 @@ import styles from '@/styles/index.module.css';
 import router from "next/router";
 import {useState} from "react";
 import {Category} from "@/utils/model/Category";
+import {Summary} from "@/utils/model/Summary";
+import SummaryCard from "@/components/MainPageComponents/SummaryCard";
 
-function categoryList(props: any) {
+export function CategoryList(props: any) {
 
     let categories: Category[] = [
-        {categoryName: "All", categoryId: 0},
-        {categoryName: "Math", categoryId: 1},
-        {categoryName: "Science", categoryId: 2},
-        {categoryName: "Cinema", categoryId: 3},
-        {categoryName: "Other", categoryId: 4},
-
+        {categoryName: "all", categoryId: 0},
+        {categoryName: "math", categoryId: 1},
+        {categoryName: "science", categoryId: 2},
+        {categoryName: "cinema", categoryId: 3},
+        {categoryName: "other", categoryId: 4},
     ]
-    const categoryList = props.categoryList;
+    const categoryList:number[] = props.categoryList;
     const setCategoryList = props.setCategoryList;
+
+    function isSelected(categoryId: number): boolean {
+        return categoryList.includes(categoryId);
+    }
+    function selectCategory(categoryId: number) {
+        if(!categoryList.includes(categoryId)) {
+            if(categoryId === 0) {
+                setCategoryList([0]);
+            }
+            else {
+                let newList: number[] = [...categoryList, categoryId];
+                newList = newList.filter((id: number) => id !== 0);
+                setCategoryList(newList);
+            }
+        } else {
+            let newList: number[] = categoryList.filter((id: number) => id !== categoryId);
+            setCategoryList(newList);
+        }
+    }
+
+    return (
+        <div className={styles.categoryElementDiv}>
+            {categories.map(category => (
+                <div key={category.categoryId} className={isSelected(category.categoryId) ? styles.categoryDivSelected : styles.categoryDiv} onClick={() => selectCategory(category.categoryId)}>
+                    #{category.categoryName}
+                </div>
+            ))}
+        </div>
+    )
 
 }
 
 export default function Home() {
 
-  const {isLoggedIn, isPending: isPendingLoggedIn} = useCheckLoggedIn();
-  const [activeCategoryList, setActiveCategoryList] = useState<number[]>([]);
+    const {isLoggedIn, isPending: isPendingLoggedIn} = useCheckLoggedIn();
+    const [activeCategoryList, setActiveCategoryList] = useState<number[]>([]);
+    const [summaryList, setSummaryList] = useState<Summary[]>([
+        {
+            title: "The Art of War",
+            category: {
+                categoryName: "Strategy",
+                categoryId: 1
+            },
+            summaryId: 101
+        },
+        {
+            title: "To Kill a Mockingbird",
+            category: {
+                categoryName: "Fiction",
+                categoryId: 2
+            },
+            summaryId: 102
+        },
+        {
+            title: "The Power of Habit",
+            category: {
+                categoryName: "Self-Help",
+                categoryId: 3
+            },
+            summaryId: 103
+        },
+        {
+            title: "Sapiens: A Brief History of Humankind",
+            category: {
+                categoryName: "History",
+                categoryId: 4
+            },
+            summaryId: 104
+        },
+        {
+            title: "The Subtle Art of Not Giving a F*ck",
+            category: {
+                categoryName: "Self-Help",
+                categoryId: 3
+            },
+            summaryId: 105
+        },
+        {
+            title: "The Great Gatsby",
+            category: {
+                categoryName: "Fiction",
+                categoryId: 2
+            },
+            summaryId: 106
+        },
+        {
+            title: "Atomic Habits",
+            category: {
+                categoryName: "Self-Help",
+                categoryId: 3
+            },
+            summaryId: 107
+        },
+        {
+            title: "1984",
+            category: {
+                categoryName: "Fiction",
+                categoryId: 2
+            },
+            summaryId: 108
+        },
+        {
+            title: "The Lean Startup",
+            category: {
+                categoryName: "Business",
+                categoryId: 5
+            },
+            summaryId: 109
+        },
+        {
+            title: "The Alchemist",
+            category: {
+                categoryName: "Fiction",
+                categoryId: 2
+            },
+            summaryId: 110
+        }
+    ]);
 
-    function scrollToSection(id:string) {
+    function scrollToSection(id: string) {
         const section = document.getElementById(id);
         if (section) {
-            section.scrollIntoView({ behavior: 'smooth' });
+            section.scrollIntoView({behavior: 'smooth'});
         }
     }
+
 
   return (
     <>
@@ -68,12 +181,26 @@ export default function Home() {
                                 <button className={styles.searchBarButton}>Search</button>
                             </div>
                           </form>
+                          <CategoryList categoryList={activeCategoryList} setCategoryList={setActiveCategoryList}></CategoryList>
+
+
+                          {summaryList.length > 0 && <div className={styles.summaryBrowser}>
+                              {summaryList.map(summary => (
+                                  <div key={summary.summaryId}>
+                                      <SummaryCard summary={summary}></SummaryCard>
+                                  </div>
+                              ))}
+                          </div>}
+                          {summaryList.length == 0 && <p style={{
+                              fontFamily:'var(--font-josefin)',
+                              fontSize: 26,
+                              color: 'var(--white)',
+                              marginTop: 20
+                          }}>No results found</p>}
                       </div>
                   </section>
               </div>
           </div>
-
-
       </>
     </>
   );
