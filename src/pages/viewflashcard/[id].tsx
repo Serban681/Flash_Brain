@@ -32,18 +32,26 @@ export default function ViewFlashCardPage() {
     const {error:errorGettingOwner, isPending:ownerPending, user:owner} = useFetchSingleUser(summary?.ownerId);
     //check logged-in status
     const {isLoggedIn, isPending, userInformation} = useCheckLoggedIn();
+    //get the liked summaries of the current user
+    let {
+        error,
+        isPending:isPendingLikedSummaries,
+        summaryList: likedSummaryList,
+        setSummaryList
+    } = useFetchLikedSummaries(isLoggedIn);
+
 
     const [isLiked, setIsLiked] = useState<boolean>(false);
     //check if the current summary is in the list of liked summaries of the current user
     useEffect(() => {
-        if(userInformation && userInformation.likes && summary) {
-            userInformation.likes.forEach((likedSummary) =>{
+        if(likedSummaryList) {
+            likedSummaryList.forEach((likedSummary) =>{
                 if(likedSummary.summaryId === summary?.summaryId) {
                     setIsLiked(true);
                 }
             })
         }
-    }, [userInformation, summary]);
+    }, [likedSummaryList, summary]);
 
     const likeThePost = () => {
         if(isLiked) {
@@ -75,8 +83,6 @@ export default function ViewFlashCardPage() {
                 })
         }
     }
-
-    //TODO 2 different classes for the like icon (one with fill one without)
 
     const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
 

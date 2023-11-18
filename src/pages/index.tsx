@@ -70,7 +70,6 @@ export default function Home() {
     const [currentSearchedValue, setCurrentSearchedValue] = useState<string | null>(initialPathValue ?? null);
     const [searchValue, setSearchValue] = useState<string>('');
 
-
     const {error: errorFetchSummaries, isPending: isPendingSummaries, summaryList} = useFetchSummaries(currentSearchedValue ?? '', activeCategoryList);
 
     const goToFavourites = () => {
