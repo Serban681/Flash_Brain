@@ -15,7 +15,6 @@ function useFetchSummaries(searchValue: string, categoryList:number[]) {
             query: searchValue,
             categories: categoryList
         }
-        console.log(filterRequest);
         setError('');
         setIsPending(true);
         fetch(config.apiUrl + "/summary/filtered",
@@ -28,7 +27,6 @@ function useFetchSummaries(searchValue: string, categoryList:number[]) {
                 body: JSON.stringify(filterRequest)
             }
         ).then(res => {
-                console.log(filterRequest);
                 if(!res.ok) throw Error("Couldn't fetch summaries");
                 return res.json();
             })

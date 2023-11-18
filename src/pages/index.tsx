@@ -58,15 +58,17 @@ export function CategoryList(props: any) {
 
 export default function Home() {
 
+    const searchParams = useSearchParams()
+    const initialPathValue = searchParams.get('query');
+
     const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
     const [activeCategoryList, setActiveCategoryList] = useState<number[]>([1]);
+
+    const [currentSearchedValue, setCurrentSearchedValue] = useState<string | null>(initialPathValue ?? null);
     const [searchValue, setSearchValue] = useState<string>('');
-    const {error: errorFetchLikedSummaries, isPending: isPendingLikedSummaries, summaryList: likedSummaryList, setSummaryList: setLikedSummaryList} = useFetchLikedSummaries(isLoggedIn);
 
-    const searchParams = useSearchParams();
-    const [currentSearchedValue, setCurrentSearchedValue] = useState<string>('');
-    const {error: errorFetchSummaries, isPending: isPendingSummaries, summaryList} = useFetchSummaries(currentSearchedValue, activeCategoryList);
 
+    const {error: errorFetchSummaries, isPending: isPendingSummaries, summaryList} = useFetchSummaries(currentSearchedValue ?? '', activeCategoryList);
 
     function scrollToSection(id: string) {
         const section = document.getElementById(id);
@@ -111,8 +113,24 @@ export default function Home() {
 
     function handleSearch(e:any) {
         e.preventDefault();
-        setCurrentSearchedValue(searchValue);
+       if(searchValue) {
+           router.push({
+                   pathname: '/', query: { query: searchValue }},
+           undefined, { shallow: true })
+            setCurrentSearchedValue(searchValue);
+       }
+        else router.push("/")
     }
+
+    useEffect(() => {
+        if(currentSearchedValue) {
+            // const section = document.getElementById('browseSection');
+            // if (section) {
+            //     section.scrollIntoView({behavior: 'smooth'});
+            // }
+        }
+        setSearchValue(currentSearchedValue ?? '');
+    }, [currentSearchedValue]);
 
   return (
     <>
@@ -169,8 +187,6 @@ export default function Home() {
                                           summary={summary}
                                           backgroundColor={getSummaryBackground(index)}
                                           secondaryColor={getSummarySecondaryColor(index)}
-                                          likedSummaries={likedSummaryList}
-                                          setLikedSummaries={setLikedSummaryList}
                                       ></SummaryCard>
                                   </div>
                               ))}
