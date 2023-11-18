@@ -187,8 +187,7 @@ export default function Home() {
                           {summaryList.length == 0 && !isPendingSummaries && <p style={{
                               fontFamily:'var(--font-josefin)',
                               fontSize: 26,
-                              color: 'var(--white)',
-                              marginTop: 20
+                              color: 'var(--white)'
                           }}>No results found</p>}
                       </div>
                   </section>

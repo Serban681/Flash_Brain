@@ -1,0 +1,15 @@
+.likedPageOuterDiv {
+    width: 100%;
+    height: clamp(200px, 100%, 100vh);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--yellow);
+}
+
+.likedContentDiv {
+    min-height: calc(100vh - 11.75rem);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
