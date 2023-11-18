@@ -21,9 +21,12 @@ export default function CreateFlashCardPage() {
                         <p className="text-white font-josefin font-medium text-center mt-3">
                             Upload files here. We accept .pdf, .txt and .docx that are less than 10mb.
                         </p>
-                        <div className="file-input-container mt-10">
+                        <div className="text-white font-josefin font-bold mb-3 text-center mt-14">
+                            {file !== null ? file.name : ''}
+                        </div>
+                        <div className="file-input-container">
                             <input type="file" id="fileInput" className="file-input" onChange={handleFileChange} />
-                            <div className="selected-file-name ml-7 mb-3" id="selectedFileName">{file !== null ? file.name : ''}</div>
+                               
                             <div className="file-input-label">Choose a file</div>
                         </div>
                         
