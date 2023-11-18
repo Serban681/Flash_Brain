@@ -8,5 +8,5 @@ export interface Summary {
     isPublic: boolean;
     flashCards: Flashcard[];
     path?: string;
-    likes: number[];
+    likes?: number[];
 }

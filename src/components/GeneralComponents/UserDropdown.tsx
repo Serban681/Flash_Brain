@@ -34,7 +34,6 @@ export default function UserDropdown(props:any) {
             document.removeEventListener('mousedown', handleClickOutside);
             document.removeEventListener('keydown', handleEscapeKey);
         };
-    }, [])
 
     function handleSignOut() {
         Cookies.remove('jwtToken');
