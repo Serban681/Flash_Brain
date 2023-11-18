@@ -6,6 +6,7 @@ import gravatar from 'gravatar';
 import Image from 'next/image';
 import useCheckLoggedIn from "@/utils/useCheckLoggedIn";
 import router from "next/router";
+import close_icon from "@/images/close_icon.svg";
 
 export default function UserDropdown(props:any) {
 
@@ -47,19 +48,19 @@ export default function UserDropdown(props:any) {
 
     return (
         <div ref={componentRef} className={`rounded ${isHidden ? styles.userDropdownOuterDivHidden :  styles.userDropdownOuterDiv}`}>
-            <div className={styles.xDiv}>
-                <span className="material-symbols-outlined" onClick={() => setIsHidden(true)}>close</span>
+            <div className={`${styles.xDiv}`}>
+                <Image className="material-symbols-outlined transition-all hover:scale-110 mt-3 mr-3" onClick={() => setIsHidden(true)} src={close_icon} alt="close icon" />
             </div>
-            <p className={styles.accountP}>Account</p>
+            <p className={`${styles.accountP} mt-[-1.2rem]`}>Account</p>
             <div className={styles.userDiv}>
-                {!!userInformation && <Image className='w-14 mr-2 ml-8 cursor-pointer rounded-full' src={gravatarUrl} alt='User Avatar' width={200} height={200} />}
+                {!!userInformation && <Image className='w-12 mr-2 ml-6 rounded-full' src={gravatarUrl} alt='User Avatar' width={200} height={200} />}
                 <div className={styles.userInformationDiv}>
-                    <p style={{fontSize:24}}>{userInformation !== undefined ? userInformation.username : "Loading..."}</p>
-                    <p style={{fontSize:18}}>{userInformation !== undefined ? userInformation.email : "Loading..."}</p>
+                    <p style={{fontSize:18}}>{userInformation !== undefined ? userInformation.username : "Loading..."}</p>
+                    <p style={{fontSize:16}}>{userInformation !== undefined ? userInformation.email : "Loading..."}</p>
                 </div>
             </div>
             <div className={styles.buttonDiv}>
-                <button className="big-btn" onClick={handleSignOut}>Sign out</button>
+                <button className="small-btn" id="green" onClick={handleSignOut}>Sign out</button>
             </div>
         </div>
     )
