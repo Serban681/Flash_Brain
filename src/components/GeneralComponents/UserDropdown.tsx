@@ -34,6 +34,7 @@ export default function UserDropdown(props:any) {
             document.removeEventListener('mousedown', handleClickOutside);
             document.removeEventListener('keydown', handleEscapeKey);
         };
+    }, [componentRef]);
 
     function handleSignOut() {
         Cookies.remove('jwtToken');
@@ -59,7 +60,6 @@ export default function UserDropdown(props:any) {
             <div className={styles.buttonDiv}>
                 <button className="big-btn" onClick={handleSignOut}>Sign out</button>
             </div>
-
         </div>
     )
 }
