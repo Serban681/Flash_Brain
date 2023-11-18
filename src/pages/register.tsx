@@ -18,23 +18,38 @@ export default function RegisterPage() {
     const [email, setEmail] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    const [usernameError, setUsernameError] = useState<string>('');
-    const [passwordError, setPasswordError] = useState<string>('');
-    const [emailError, setEmailError] = useState<string>('');
-    const [confirmPasswordError, setConfirmPasswordError] = useState<string>('');
-
     const [error, setError] = useState<string>('');
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     function handleRegister(e:any) {
         e.preventDefault();
-
         const registerData: RegisterRequest = {
             password,
             username,
             email
         };
 
+        if(password === '' || username === '' || email === '' || confirmPassword === '') {
+            setError('⚠ All fields are required.');
+            return;
+        }
+        if(password !== confirmPassword) {
+            setError('⚠ Passwords do not match.');
+            return;
+        }
+
+        if(!email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+            setError('⚠ Invalid email address.');
+            return;
+        }
+
+        if(password.length < 8) {
+            setError("⚠ Password must be at least 8 characters long.");
+            return;
+        }
+
         setError('');
+        setIsLoading(true);
 
         fetch(config.apiUrl + "/user", {
             method: 'POST',
@@ -48,18 +63,19 @@ export default function RegisterPage() {
                 if (response.ok) {
                     return response.json();
                 } else {
-                    if(response.status === 401)
-                        throw new Error('Password is incorrect.');
-                    else if(response.status === 404) throw new Error('User not found.');
+                    if(response.status === 409)
+                        throw new Error('User with these credentials already exists');
                     else throw new Error('Something went wrong.');
                 }
             })
             .then((data) => {
+                setIsLoading(false);
                 Cookies.set('jwtToken', data.access_token);
                 router.push('/');
             })
             .catch((error) => {
-                setError(error.message);
+                setIsLoading(false);
+                setError('⚠ ' + error.message);
             });
     }
 
@@ -67,6 +83,8 @@ export default function RegisterPage() {
         useGoogleLogin({
             onSuccess: codeResponse => {
                 const url = 'https://www.googleapis.com/oauth2/v2/userinfo';
+                setError('');
+                setIsLoading(true);
                 fetch(url, {
                     headers: {
                         Authorization: `Bearer ${codeResponse.access_token}`
@@ -98,22 +116,23 @@ export default function RegisterPage() {
                                 if (response.ok) {
                                     return response.json();
                                 } else {
-                                    if(response.status === 401)
-                                        throw new Error('Password is incorrect.');
-                                    else if(response.status === 404) throw new Error('User not found.');
+                                    if(response.status === 409) throw new Error('User already exists.');
                                     else throw new Error('Something went wrong.');
                                 }
                             })
                             .then((data) => {
+                                setIsLoading(false);
                                 Cookies.set('jwtToken', data.access_token);
                                 router.push('/');
                             })
                             .catch((error) => {
-                                setError(error.message);
+                                setIsLoading(false)
+                                setError('⚠ ' + error.message);
                             });
                     })
                     .catch(() => {
-                        setError("Something went wrong");
+                        setIsLoading(false);
+                        setError('⚠ ' + "Something went wrong");
                     });
             }
         });
@@ -166,12 +185,13 @@ export default function RegisterPage() {
                 />
 
                 <Link href={"/login"} style={{width:'100%'}}><p className={styles.logInLink}>Already have an account ? Log-in here</p></Link>
-                <div style={{width:'100%', marginTop:20}}>
+                <div style={{width:'100%', marginTop:20, marginBottom: 20}}>
                     <button
                         onClick={(e) => handleRegister(e)}
                         className="small-btn">Sign-up</button>
                 </div>
                 {error && <p className={styles.errorMessage}>{error}</p>}
+                {isLoading && <div className="lds-dual-ring"></div>}
             </form>
         </div>
     )

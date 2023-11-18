@@ -24,6 +24,11 @@ export default function LoginPage() {
             username,
         };
 
+        if(password === '' || username === '') {
+            setError('⚠ Username and password cannot be empty.');
+            return;
+        }
+
         setError('');
         setIsLoading(true);
 

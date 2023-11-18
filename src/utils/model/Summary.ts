@@ -6,7 +6,7 @@ export interface Summary {
     category_id: number;
     ownerId: number;
     isPublic: boolean;
-    flashCard: Flashcard[];
+    flashCards: Flashcard[];
     path?: string;
     likes: number[];
 }

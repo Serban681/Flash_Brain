@@ -2,11 +2,13 @@ import {useEffect, useState} from "react";
 // @ts-ignore
 import Cookies from "js-cookie";
 import config from "../config";
+import {User} from "@/utils/model/User";
 
 function useCheckLoggedIn() {
 
     const [isPending, setIsPending] = useState<boolean>(true);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [userInformation, setUserInformation] = useState<User | undefined>(undefined);
 
     useEffect(() => {
         fetch(config.apiUrl + "/auth/verifyToken",
@@ -18,13 +20,17 @@ function useCheckLoggedIn() {
                 if(!res.ok) throw Error("Couldn't check logged in state");
                 setIsLoggedIn(true);
                 setIsPending(false);
+                return res.json();
+            })
+            .then(data => {
+                setUserInformation(data);
             })
             .catch(() => {
                 setIsPending(false);
                 setIsLoggedIn(false);
             })
     }, [])
-    return {isLoggedIn, isPending};
+    return {isLoggedIn, isPending, userInformation};
 
 }
 export default useCheckLoggedIn;

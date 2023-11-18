@@ -8,6 +8,7 @@ import {useState} from "react";
 import {Category} from "@/utils/model/Category";
 import {Summary} from "@/utils/model/Summary";
 import SummaryCard from "@/components/MainPageComponents/SummaryCard";
+import useFetchSummaries from "@/utils/useFetchSummaries";
 
 export function CategoryList(props: any) {
 
@@ -58,91 +59,101 @@ export function CategoryList(props: any) {
 
 export default function Home() {
 
-    const {isLoggedIn, isPending: isPendingLoggedIn} = useCheckLoggedIn();
+    const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
     const [activeCategoryList, setActiveCategoryList] = useState<number[]>([]);
-    //const {error: errorFetchSummaries, isPending: isPendingSummaries, summaryList} = useFetchSummaries();
-    const summaryList: Summary[] = [
-        {
-            title: "Introduction to JavaScript",
-            category_id: 1,
-            ownerId: 101,
-            summaryId: 1,
-            isPublic: true,
-            flashCard: []
-        },
-        {
-            title: "Python Basics",
-            category_id: 2,
-            ownerId: 102,
-            summaryId: 2,
-            isPublic: false,
-            flashCard: []
-        },
-        {
-            title: "HTML & CSS Fundamentals",
-            category_id: 1,
-            ownerId: 103,
-            summaryId: 3,
-            isPublic: true,
-            flashCard: []
-        },
-        {
-            title: "Data Structures in Java",
-            category_id: 3,
-            ownerId: 104,
-            summaryId: 4,
-            isPublic: false,
-            flashCard: []
-        },
-        {
-            title: "Machine Learning Basics",
-            category_id: 4,
-            ownerId: 105,
-            summaryId: 5,
-            isPublic: true,
-            flashCard: []
-        },
-        {
-            title: "Web Development Concepts",
-            category_id: 1,
-            ownerId: 106,
-            summaryId: 6,
-            isPublic: true,
-            flashCard: []
-        },
-        {
-            title: "Artificial Intelligence Overview",
-            category_id: 4,
-            ownerId: 107,
-            summaryId: 7,
-            isPublic: false,
-            flashCard: []
-        },
-        {
-            title: "Mobile App Development Basics",
-            category_id: 5,
-            ownerId: 108,
-            summaryId: 8,
-            isPublic: true,
-            flashCard: []
-        },
-        {
-            title: "Network Security Fundamentals",
-            category_id: 6,
-            ownerId: 109,
-            summaryId: 9,
-            isPublic: false,
-            flashCard: []
-        },
-        {
-            title: "Algorithms and Complexity",
-            category_id: 3,
-            ownerId: 110,
-            summaryId: 10,
-            isPublic: true,
-            flashCard: []
-        },
-    ]
+    const {error: errorFetchSummaries, isPending: isPendingSummaries, summaryList} = useFetchSummaries();
+    // const summaryList: Summary[] = [
+    //     {
+    //         title: "Introduction to JavaScript",
+    //         category_id: 1,
+    //         ownerId: 101,
+    //         summaryId: 1,
+    //         isPublic: true,
+    //         flashCard: [],
+    //         likes: []
+    //     },
+    //     {
+    //         title: "Python Basics",
+    //         category_id: 2,
+    //         ownerId: 102,
+    //         summaryId: 2,
+    //         isPublic: false,
+    //         flashCard: [],
+    //         likes: []
+    //     },
+    //     {
+    //         title: "HTML & CSS Fundamentals",
+    //         category_id: 1,
+    //         ownerId: 103,
+    //         summaryId: 3,
+    //         isPublic: true,
+    //         flashCard: [],
+    //         likes: []
+    //     },
+    //     {
+    //         title: "Data Structures in Java",
+    //         category_id: 3,
+    //         ownerId: 104,
+    //         summaryId: 4,
+    //         isPublic: false,
+    //         flashCard: [],
+    //         likes: []
+    //     },
+    //     {
+    //         title: "Machine Learning Basics",
+    //         category_id: 4,
+    //         ownerId: 105,
+    //         summaryId: 5,
+    //         isPublic: true,
+    //         flashCard: [],
+    //         likes: []
+    //     },
+    //     {
+    //         title: "Web Development Concepts",
+    //         category_id: 1,
+    //         ownerId: 106,
+    //         summaryId: 6,
+    //         isPublic: true,
+    //         flashCard: [],
+    //         likes: []
+    //     },
+    //     {
+    //         title: "Artificial Intelligence Overview",
+    //         category_id: 4,
+    //         ownerId: 107,
+    //         summaryId: 7,
+    //         isPublic: false,
+    //         flashCard: [],
+    //         likes: []
+    //     },
+    //     {
+    //         title: "Mobile App Development Basics",
+    //         category_id: 5,
+    //         ownerId: 108,
+    //         summaryId: 8,
+    //         isPublic: true,
+    //         flashCard: [],
+    //         likes: []
+    //     },
+    //     {
+    //         title: "Network Security Fundamentals",
+    //         category_id: 6,
+    //         ownerId: 109,
+    //         summaryId: 9,
+    //         isPublic: false,
+    //         flashCard: [],
+    //         likes: []
+    //     },
+    //     {
+    //         title: "Algorithms and Complexity",
+    //         category_id: 3,
+    //         ownerId: 110,
+    //         summaryId: 10,
+    //         isPublic: true,
+    //         flashCard: [],
+    //         likes: []
+    //     },
+    // ]
 
 
     function scrollToSection(id: string) {
@@ -224,6 +235,7 @@ export default function Home() {
                           </form>
                           <CategoryList categoryList={activeCategoryList} setCategoryList={setActiveCategoryList}></CategoryList>
 
+                          {isPendingSummaries && <div className="lds-dual-ring"></div>}
                           {summaryList.length > 0 && <div className={styles.summaryBrowser}>
                               {summaryList.map((summary, index) => (
                                   <div key={summary.summaryId} style={{borderRadius:10}}>
@@ -235,7 +247,7 @@ export default function Home() {
                                   </div>
                               ))}
                           </div>}
-                          {summaryList.length == 0 && <p style={{
+                          {summaryList.length == 0 && !isPendingSummaries && <p style={{
                               fontFamily:'var(--font-josefin)',
                               fontSize: 26,
                               color: 'var(--white)',
