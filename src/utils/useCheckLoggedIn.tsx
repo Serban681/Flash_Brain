@@ -9,7 +9,6 @@ function useCheckLoggedIn() {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
     useEffect(() => {
-        console.log(Cookies.get('jwtToken'));
         fetch(config.apiUrl + "/auth/verifyToken",
             {method: 'GET',
                 headers: {"Origin":config.origin,

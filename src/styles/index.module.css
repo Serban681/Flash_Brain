@@ -19,7 +19,7 @@
     background-color: var(--yellow);
     display: flex;
     flex-direction: row;
-    padding: 100px;
+    padding: 150px;
     margin-bottom: 100px;
 }
 
@@ -53,7 +53,7 @@
     aspect-ratio: 1/1;
     height: 140px;
     border-radius: 200px;
-    left: calc(70% - 60px);
+    left: calc(75% - 60px);
     top: calc(10% + 110px);
     z-index: 1;
 }
@@ -64,7 +64,7 @@
     aspect-ratio: 1/1;
     height: 80px;
     border-radius: 200px;
-    left: calc(70% + 120px);
+    left: calc(75% + 120px);
     top: calc(10% - 35px);
     z-index: 1;
 }
@@ -75,16 +75,16 @@
     aspect-ratio: 1/1;
     height: 200px;
     border-radius: 200px;
-    left: 70%;
+    left: 75%;
     top: 10%;
 }
 
 .indexLowerDiv {
     background-color: var(--blue);
-    padding-left: 100px;
-    padding-right: 100px;
+    padding-left: 150px;
+    padding-right: 150px;
     width: 100%;
-    height: 300px;
+    min-height: 400px;
 }
 
 .indexSearchForm {
@@ -112,6 +112,8 @@
     height: 100%;
     background-color: #5A94BB;
     border: 1px solid #5A94BB;
+    font-family: var(--font-josefin);
+    font-weight: bold;
 }
 
 .searchBarInput:focus {
@@ -131,11 +133,62 @@
     background-color: var(--black);
 }
 
-.categoryDiv {
+.summaryBrowser {
+    margin-top: 40px;
+    width: 100%;
+    padding-bottom: 50px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three equal columns */
+    gap: 50px; /* Gap between grid items */
+}
+
+/* For smaller screens, switch to 2 columns */
+@media (max-width: 1400px) {
+    .summaryBrowser {
+        grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+    }
+}
+
+/* For even smaller screens, switch to a single column */
+@media (max-width: 900px) {
+    .summaryBrowser {
+        grid-template-columns: 1fr; /* Single column */
+    }
+}
+
+
+/* Category List element */
+
+.categoryElementDiv {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 40px;
+}
+
+.categoryDiv, .categoryDivSelected {
     color: var(--white);
     font-family: var(--font-josefin);
     font-weight: bold;
     font-size: 20px;
-    border-radius: 10px;
+    border-radius: 13px;
+    width: 130px;
+    padding: 8px;
+    text-align: center;
+    margin-right: 25px;
+    margin-bottom: 15px;
+    transition: scale 0.3s ease;
+}
+
+.categoryDiv {
+    background-color: var(--light-black);
+}
+
+.categoryDivSelected {
     background-color: var(--black);
+}
+
+.categoryDiv:hover, .categoryDivSelected:hover {
+    cursor: pointer;
+    scale: 1.07;
 }

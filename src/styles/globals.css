@@ -13,7 +13,7 @@ html, body {
 
     --light-black: #2F3D45;
     --light-yellow: #FFE1C7;
-    --light-green: #00B7C2;
+    --light-green: #35D6DF;
     --light-blue: #1F70A7;
 
     --dark-yellow: #F7BF8C;
@@ -77,7 +77,6 @@ html, body {
 
 .big-btn {
     font-family: 'Josefin Sans', sans-serif;
-    font-weight: 500;
     background-color: var(--green);
     color: white;
     font-weight: bold;
@@ -153,4 +152,29 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active{
     -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.lds-dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+}
+.lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
