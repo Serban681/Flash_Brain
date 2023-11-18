@@ -9,11 +9,13 @@ import config from "@/config";
 // @ts-ignore
 import Cookies from "js-cookie";
 import router from "next/router";
+import {useGoogleLogin} from "@react-oauth/google";
 export default function LoginPage() {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string>('');
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     function handleLogin(e:any) {
         e.preventDefault();
@@ -23,6 +25,7 @@ export default function LoginPage() {
         };
 
         setError('');
+        setIsLoading(true);
 
         fetch(config.apiUrl + "/auth/generate", {
             method: 'POST',
@@ -44,18 +47,80 @@ export default function LoginPage() {
             })
             .then((data) => {
                 Cookies.set('jwtToken', data.access_token);
+                setIsLoading(false);
                 router.push('/');
             })
             .catch((error) => {
-                setError(error.message);
+                setIsLoading(false);
+                setError('⚠ ' + error.message);
             });
     }
+
+    const handleGoogleLogin =
+        useGoogleLogin({
+            onSuccess: codeResponse => {
+                setIsLoading(true);
+                setError('');
+                const url = 'https://www.googleapis.com/oauth2/v2/userinfo';
+                fetch(url, {
+                    headers: {
+                        Authorization: `Bearer ${codeResponse.access_token}`
+                    }
+                })
+                    .then((response) => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('Failed to fetch user info');
+                        }
+                    })
+                    .then((userInfo) => {
+                        const atIndex = userInfo.email.indexOf('@');
+                        let loginData: LoginRequest = {
+                            username: userInfo.email.substring(0, atIndex),
+                            password: userInfo.id
+                        }
+                        fetch(config.apiUrl + "/auth/generate", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Origin': config.origin
+                            },
+                            body: JSON.stringify(loginData),
+                        })
+                            .then((response) => {
+                                if (response.ok) {
+                                    return response.json();
+                                } else {
+                                    if(response.status === 401)
+                                        throw new Error('Password is incorrect.');
+                                    else if(response.status === 404) throw new Error('User not found.');
+                                    else throw new Error('Something went wrong.');
+                                }
+                            })
+                            .then((data) => {
+                                Cookies.set('jwtToken', data.access_token);
+                                setIsLoading(false);
+                                router.push('/');
+                            })
+                            .catch((error) => {
+                                setError('⚠ ' + error.message);
+                                setIsLoading(false);
+                            });
+                    })
+                    .catch(() => {
+                        setIsLoading(false);
+                        setError("⚠ Something went wrong");
+                    });
+            }
+        });
+
     return (
         <div className={styles.loginPageOuterDiv}>
             <Header></Header>
             <form className={styles.loginForm}>
                 <p className={styles.loginP}>Log in</p>
-                <button type="button" className={styles.googleButton}>
+                <button type="button" className={styles.googleButton} onClick={() => handleGoogleLogin()}>
                     <Image src={GoogleImage} alt="Google icon" style={{marginRight:15, width:'auto', height:'auto'}}></Image>
                     Log-in with Google
                 </button>
@@ -84,6 +149,7 @@ export default function LoginPage() {
                     >Log-in</button>
                 </div>
                 {error && <p className={styles.errorMessage}>{error}</p>}
+                {isLoading && <div className="lds-dual-ring"></div>}
             </form>
         </div>
     )

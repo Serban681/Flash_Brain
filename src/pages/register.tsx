@@ -9,6 +9,7 @@ import config from "@/config";
 // @ts-ignore
 import Cookies from "js-cookie";
 import router from "next/router";
+import {useGoogleLogin} from "@react-oauth/google";
 
 export default function RegisterPage() {
 
@@ -62,12 +63,67 @@ export default function RegisterPage() {
             });
     }
 
+    const handleGoogleRegister =
+        useGoogleLogin({
+            onSuccess: codeResponse => {
+                const url = 'https://www.googleapis.com/oauth2/v2/userinfo';
+                fetch(url, {
+                    headers: {
+                        Authorization: `Bearer ${codeResponse.access_token}`
+                    }
+                })
+                    .then((response) => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('Failed to fetch user info');
+                        }
+                    })
+                    .then((userInfo) => {
+                        const atIndex = userInfo.email.indexOf('@');
+                        let registerData: RegisterRequest = {
+                            username: userInfo.email.substring(0, atIndex),
+                            password: userInfo.id,
+                            email: userInfo.email,
+                        }
+                        fetch(config.apiUrl + "/user", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Origin': config.origin
+                            },
+                            body: JSON.stringify(registerData),
+                        })
+                            .then((response) => {
+                                if (response.ok) {
+                                    return response.json();
+                                } else {
+                                    if(response.status === 401)
+                                        throw new Error('Password is incorrect.');
+                                    else if(response.status === 404) throw new Error('User not found.');
+                                    else throw new Error('Something went wrong.');
+                                }
+                            })
+                            .then((data) => {
+                                Cookies.set('jwtToken', data.access_token);
+                                router.push('/');
+                            })
+                            .catch((error) => {
+                                setError(error.message);
+                            });
+                    })
+                    .catch(() => {
+                        setError("Something went wrong");
+                    });
+            }
+        });
+
     return (
         <div className={styles.registerPageOuterDiv}>
             <Header></Header>
             <form className={styles.registerForm}>
                 <p className={styles.registerP}>Sign-up</p>
-                <button type="button" className={styles.googleButton}>
+                <button type="button" className={styles.googleButton} onClick={() => handleGoogleRegister()}>
                     <Image src={GoogleImage} alt="Google icon" style={{marginRight:15, width:'auto', height:'auto'}}></Image>
                     Sign-up with Google
                 </button>
