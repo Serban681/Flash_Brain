@@ -4,6 +4,7 @@ import router from 'next/router'
 import UserDropdown from "@/components/GeneralComponents/UserDropdown";
 import {use, useEffect, useState} from "react";
 import useCheckLoggedIn from "@/utils/useCheckLoggedIn";
+import gravatar from 'gravatar';
 
 export default function AvatarComponent() {
 
@@ -15,9 +16,17 @@ export default function AvatarComponent() {
         else setIsHidden(!isHidden);
     }
 
+    const gravatarUrl = !isPendingLoggedIn && isLoggedIn ? gravatar.url(!!userInformation ? userInformation.email : '' , {protocol: 'http', s: '40'}) : ''
+
     return (
         <div>
-            <Image className='w-10 mr-5 cursor-pointer' src={AccountCircle} alt='' onClick={handleClick} />
+            {
+                !isPendingLoggedIn && !!isLoggedIn ? 
+                    <Image className='w-9 mr-5 cursor-pointer rounded-full' src={gravatarUrl} alt='User Avatar' width={40} height={40} onClick={handleClick} />
+                    :
+                    <Image className='w-10 mr-5 cursor-pointer' src={AccountCircle} alt='' onClick={handleClick} />
+            }
+
             <UserDropdown
                 isHidden={isHidden}
                 setIsHidden = {setIsHidden}
