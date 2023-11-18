@@ -60,7 +60,6 @@ export function CategoryList(props: any) {
 }
 
 export default function Home() {
-
     const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
     const [activeCategoryList, setActiveCategoryList] = useState<number[]>([]);
     const [searchValue, setSearchValue] = useState<string>('');
@@ -69,9 +68,28 @@ export default function Home() {
 
     const searchParams = useSearchParams()
     const searchQuery = searchParams.get('query');
+
+    const [isScrolled, setIsScrolled] = useState(false);
+
+
     useEffect(() => {
         setSearchValue(searchQuery ? searchQuery : '');
     }, [searchQuery])
+
+    useEffect(() => {
+        console.log(isLoggedIn)
+
+        const handleScroll = () => {
+          const scrolled = window.scrollY > 0;    
+          setIsScrolled(scrolled);
+        };
+    
+        window.addEventListener('scroll', handleScroll);
+    
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }, []);
 
     const goToFavourites = () => {
         router.push('/favourites');
@@ -143,9 +161,12 @@ export default function Home() {
       <>
           <div className={styles.indexOuterDiv}>
               <Header></Header>
-              <div onClick={goToFavourites} className="cursor-pointer hover:scale-105 transition-all w-14 h-14 flex justify-center items-center absolute bg-[#1B262C] rounded-full shadow-default absolute bottom-10 right-10">
-                <Image className="w-7 h-7" src={like_image} alt="" />
+              <div className={`absolute bottom-10 transition-all ease-in ${!isPendingLoggedIn && isLoggedIn && !isScrolled ? 'right-[2rem]' : 'right-[-4rem]'}`}>
+                <div onClick={goToFavourites} className={`cursor-pointer w-14 h-14 flex justify-center items-center bg-[#1B262C] rounded-full shadow-default`}>
+                    <Image className="w-7 h-7" src={like_image} alt="" />
+                </div>
               </div>
+              
               <div className={styles.indexContentDiv}>
                 <div className={styles.indexHigherDiv}>
                     <div className={styles.indexHigherDivLeft}>
