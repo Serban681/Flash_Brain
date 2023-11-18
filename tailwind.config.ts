@@ -22,9 +22,8 @@ export default {
         'default': "0.3rem 0.3rem 0.3rem rgba(0, 0, 0, 0.15)"
       },
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
-        fredoka: ["var(--font-fredoka)", ...fontFamily.sans],
-        josefin: ["var(--font-josefin)", ...fontFamily.sans],
+        'fredoka': ['Fredoka', 'sans-serif'],
+        'josefin': ['Josefin Sans', 'sans-serif'],
       },
 
     },
