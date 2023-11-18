@@ -148,7 +148,7 @@ export default function Home() {
               <div className={styles.indexContentDiv}>
                 <div className={styles.indexHigherDiv}>
                     <div className={styles.indexHigherDivLeft}>
-                        <p className={styles.indexMotto}>Make hard things<br/> easy to understand</p>
+                        <p className={styles.indexMotto}>Make hard things easy to understand</p>
                         <div>
                             {!isLoggedIn && <button className="big-btn" onClick={() => router.push('/register')}>Register now</button>}
                             {isLoggedIn && <button className="big-btn" onClick={() => scrollToSection("browseSection")}>Get started</button>}

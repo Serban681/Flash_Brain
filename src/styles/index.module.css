@@ -19,6 +19,7 @@
     background-color: var(--yellow);
     display: flex;
     flex-direction: row;
+    justify-content: center;
     padding: 150px;
     margin-bottom: 100px;
 }
@@ -36,13 +37,17 @@
     position: relative;
     display: flex;
     align-items: center;
+    margin-top: 5rem;
+    margin-left: -7rem;
+    transform: scale(0.8);
 }
 
 .indexMotto {
-    font-size: 70px;
+    font-size: 3rem;
+    width: 30rem;
     color: var(--white);
     font-family: var(--font-josefin);
-    font-weight: bolder;
+    font-weight: 700;
     line-height: 70px;
     margin-bottom: 100px;
 }
@@ -163,14 +168,14 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    margin-top: 40px;
+    margin-top: 4rem;
 }
 
 .categoryDiv, .categoryDivSelected {
     color: var(--white);
     font-family: var(--font-josefin);
-    font-weight: bold;
-    font-size: 20px;
+    font-weight: 500;
+    font-size: 1.1rem;
     border-radius: 13px;
     width: 130px;
     padding: 8px;
