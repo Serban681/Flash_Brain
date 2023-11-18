@@ -121,9 +121,9 @@
     font-weight: bold;
 }
 
-.searchBarInput:focus {
+/* .searchBarInput:focus {
     border: 1px solid var(--white);
-}
+} */
 
 .searchBarButton {
     font-family: var(--font-josefin);
@@ -138,9 +138,14 @@
     background-color: var(--black);
 }
 
+.searchBarButton:hover {
+    cursor: pointer;
+}
+
 .summaryBrowser {
+    margin-top: -1rem;
     width: 100%;
-    padding-bottom: 50px;
+    padding-bottom: 8rem;
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Three equal columns */
     gap: 50px; /* Gap between grid items */
@@ -167,14 +172,14 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    margin-top: 2.5rem;
+    margin-top: 2rem;
 }
 
 .categoryDiv, .categoryDivSelected {
     color: var(--white);
     font-family: var(--font-josefin);
     font-weight: 500;
-    font-size: 1.1rem;
+    font-size: 1.2em;
     border-radius: 13px;
     padding: 0.4rem 1.4rem;
     text-align: center;
