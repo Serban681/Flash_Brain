@@ -40,10 +40,14 @@ export default function UserDropdown(props:any) {
         };
     }, [componentRef]);
 
-    function handleSignOut() {
+    const handleSignOut = () => {
         Cookies.remove('jwtToken');
         router.push('/');
         window.location.reload();
+    }
+
+    const goToMySummaries = () => {
+        router.push('/mysummaries');
     }
 
     return (
@@ -59,8 +63,9 @@ export default function UserDropdown(props:any) {
                     <p style={{fontSize:16}}>{userInformation !== undefined ? userInformation.email : "Loading..."}</p>
                 </div>
             </div>
-            <div className={styles.buttonDiv}>
-                <button className="small-btn" id="green" onClick={handleSignOut}>Sign out</button>
+            <div className={styles.buttonsContainer}>
+                <button onClick={goToMySummaries} className={`small-btn ${styles.btn}`}>My summaries</button>
+                <button className={`small-btn block ${styles.btn_2}`} id="green" onClick={handleSignOut}>Sign out</button>            
             </div>
         </div>
     )
