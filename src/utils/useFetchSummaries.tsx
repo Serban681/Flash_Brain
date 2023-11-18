@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import Cookies from "js-cookie";
 import config from "../config";
 import {Summary} from "@/utils/model/Summary";
+import {set} from "zod";
 
 function useFetchSummaries() {
 
@@ -11,6 +12,8 @@ function useFetchSummaries() {
     const [summaryList, setSummaryList] = useState<Summary[]>([]);
 
     useEffect(() => {
+        setError('');
+        setIsPending(true);
         fetch(config.apiUrl + "/summary/all",
             {method: 'GET',
                 headers: {"Origin":config.origin}}
