@@ -50,7 +50,6 @@ export default function ViewFlashCardPage() {
         setCurContent(flashcards && flashcards[0]?.content)
         setCurImagePath(flashcards && flashcards[0]?.imagePath!)
 
-        console.log(imagePath)
     }, [summary, flashcards])
 
     const likeThePost = () => {
@@ -129,7 +128,7 @@ export default function ViewFlashCardPage() {
                                 })
                             }  
                         </div>
-                        <div className="w-[50rem] h-96 bg-[var(--light-blue)] z-10 mb-20 shadow-default text-white font-semibold font-josefin p-8 overflow-auto">
+                        <div className="w-[50rem] h-96 bg-[var(--light-blue)] z-10 mb-20 shadow-default text-white font-semibold font-josefin p-8 overflow-auto rounded-sm">
                             <p className="mb-10">To: {owner.username}</p>
 
                             {!!curContent && <div dangerouslySetInnerHTML={{ __html: addTagsAfterPeriods(curContent) }} />}
@@ -155,7 +154,7 @@ export default function ViewFlashCardPage() {
             {
                 !!imagePath && 
                 <div className={imageActive ? imgActiveStyle : imgPasiveStyle} onClick={() => setImageActive(!imageActive)} >
-                    <Image width={400} height={300} className="h-[17rem] w-[30rem] object-cover" src={'https://9939-35-240-128-142.ngrok-free.app/' + imagePath} alt=""  />
+                    <Image width={400} height={300} className="h-[17rem] w-[30rem] object-cover" src={'https://7f51-35-229-17-58.ngrok-free.app/' + imagePath} alt=""  />
                 </div>
             }
             

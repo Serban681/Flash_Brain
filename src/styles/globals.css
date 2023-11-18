@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Josefin+Sans:wght@400;500;600&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap'); */
 
 html, body {
     --yellow: #FDCB9E;
