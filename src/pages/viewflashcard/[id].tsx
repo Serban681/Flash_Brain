@@ -4,7 +4,7 @@ import Image from "next/image"
 import like_icon from "@/images/like_icon.svg"
 import arrow from "@/images/arrow.svg"
 
-import router from "next/router"
+import { useRouter} from "next/router"
 
 import { useEffect, useState } from "react"
 import { Summary } from "@/utils/model/Summary"
@@ -14,6 +14,13 @@ import useCheckLoggedIn from "@/utils/useCheckLoggedIn"
 import thumbs_up from "@/images/thumbs_up.svg"
 
 export default function ViewFlashCardPage() {
+    const router = useRouter()
+    const { id } = router.query
+
+    useEffect(() => {
+        console.log(id)
+    })
+
     const [summary, setSummary] = useState<Summary | null>({
         summaryId: 1,
         title: 'Introduction to Machine Learning Algorithms',
