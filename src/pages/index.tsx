@@ -77,6 +77,21 @@ export default function Home() {
 
     const {error: errorFetchSummaries, isPending: isPendingSummaries, summaryList} = useFetchSummaries(currentSearchedValue ?? '', activeCategoryList);
 
+    useEffect(() => {
+        console.log(isLoggedIn)
+
+        const handleScroll = () => {
+          const scrolled = window.scrollY > 0;    
+          setIsScrolled(scrolled);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }, []);
+
     const goToFavourites = () => {
         router.push('/favourites');
     }
@@ -155,8 +170,10 @@ export default function Home() {
       <>
           <div className={styles.indexOuterDiv}>
               <Header></Header>
-              <div onClick={goToFavourites} className="cursor-pointer hover:scale-105 transition-all w-14 h-14 flex justify-center items-center absolute bg-[#1B262C] rounded-full shadow-default absolute bottom-10 right-10">
-                <Image className="w-7 h-7" src={like_image} alt="" />
+              <div className={`absolute bottom-10 transition-all ease-in ${!isPendingLoggedIn && isLoggedIn && !isScrolled ? 'right-[2rem]' : 'right-[-4rem]'}`}>
+                <div onClick={goToFavourites} className={`cursor-pointer w-14 h-14 flex justify-center items-center bg-[#1B262C] rounded-full shadow-default`}>
+                    <Image className="w-7 h-7" src={like_image} alt="" />
+                </div>
               </div>
               <div className={styles.indexContentDiv}>
                 <div className={styles.indexHigherDiv}>
