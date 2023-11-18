@@ -22,91 +22,8 @@ export default function ViewFlashCardPage() {
 
     const {error:errorGettingSummary, isPending:summaryPending, summary} = useFetchSingleSummary(numberId);
 
-    useEffect(() => {
-        console.log(summary)
-    }, [summary])
-
-    // const [summary, setSummary] = useState<Summary | null>({
-    //     summaryId: 1,
-    //     title: 'Introduction to Machine Learning Algorithms',
-    //     category_id: 1,
-    //     ownerId: 1,
-    //     isPublic: true,
-    //     flashCards: [],
-    //     likes: [28, 19, 40, 2, 67, 78]
-    // })
-    const [flashcards, setFlashcards] = useState<Flashcard[]>([
-        {
-            flashCardId: 1,
-            title: 'About C# Arrays',
-            content: 'The concept of overfitting, where a network is unable to effectively learn, is introduced. The importance of reducing model complexity to prevent overfitting is explained. By reducing the number of parameters required to train, the network is less likely to overfit and can improve predictive performance.',
-            imagePath: 'https://ed8a-34-126-186-228.ngrok-free.app/Radu.png',
-            summary_id: 1,
-        },
-        {
-            flashCardId: 2,
-            title: 'How it works',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pretium fringilla justo, non eleifend purus tincidunt ut. In hac habitasse platea dictumst. Vestibulum eget dui vel quam efficitur vestibulum. Sed ullamcorper tortor ac orci consectetur, vel facilisis lacus pulvinar. Suspendisse potenti. Fusce sit amet metus in dolor varius pellentesque at nec elit. Sed auctor, nunc sit amet cursus tempor, nulla ex volutpat turpis, ac hendrerit sem odio in velit. Vivamus ac tortor auctor, bibendum purus vel, pharetra purus. Etiam interdum, lacus eu viverra efficitur, tellus elit sodales neque, ac volutpat ligula metus ut lacus. Proin eu quam at risus dictum vestibulum. Duis facilisis justo in nulla convallis, a blandit diam venenatis.',	
-            imagePath: 'https://ed8a-34-126-186-228.ngrok-free.app/Radu.png',
-            summary_id: 1,
-        },
-        {
-            flashCardId: 3,
-            title: "Introduction to Object-Oriented Programming",
-            content: "Object-oriented programming (OOP) is a programming paradigm that uses objects to organize code. In OOP, each object can contain data in the form of fields and code in the form of procedures, often known as methods. This approach promotes code reuse, modularity, and a clear structure. Key principles include encapsulation, inheritance, and polymorphism.",
-            imagePath: "https://ed8a-34-126-186-228.ngrok-free.app/Radu.png",
-            summary_id: 1
-        },
-        {
-            flashCardId: 4,
-            title: "Working with REST APIs",
-            content: "REST (Representational State Transfer) is an architectural style for designing networked applications. When working with REST APIs, you typically use standard HTTP methods such as GET, POST, PUT, and DELETE to perform operations on resources. JSON is commonly used for data representation. RESTful APIs are stateless and can be used for building scalable and maintainable web services.",
-            imagePath: "https://ed8a-34-126-186-228.ngrok-free.app/Radu.png",
-            summary_id: 1
-        },
-        {
-            flashCardId: 5,
-            title: 'The Basics of HTML and CSS',
-            content: 'HTML and CSS are fundamental technologies for building web pages. This flashcard covers the basics of HTML structure and CSS styling, exploring how these languages work together to create visually appealing and structured web content.',
-            imagePath: 'https://ed8a-34-126-186-228.ngrok-free.app/Radu.png',
-            summary_id: 1
-        },
-        {
-            flashCardId: 6,
-            title: 'Exploring SQL Queries',
-            content: 'SQL (Structured Query Language) is crucial for managing and retrieving data from relational databases. This flashcard provides an overview of SQL queries, covering SELECT statements, filtering data, and basic database operations.',
-            imagePath: 'https://ed8a-34-126-186-228.ngrok-free.app/Radu.png',
-            summary_id: 1
-        },
-        {
-            flashCardId: 7,
-            title: 'Understanding the MVC Architecture',
-            content: 'The Model-View-Controller (MVC) architecture is a design pattern widely used in software development. This flashcard explains the key components of MVC and how they contribute to building scalable and maintainable applications.',
-            imagePath: 'https://ed8a-34-126-186-228.ngrok-free.app/Radu.png',
-            summary_id: 1
-        },
-        {
-            flashCardId: 8,
-            title: 'Introduction to Machine Learning Algorithms',
-            content: 'Machine learning algorithms are the backbone of predictive modeling. This flashcard introduces various types of machine learning algorithms, including supervised learning, unsupervised learning, and reinforcement learning.',
-            imagePath: 'https://ed8a-34-126-186-228.ngrok-free.app/Radu.png',
-            summary_id: 1
-        },
-        {
-            flashCardId: 9,
-            title: 'Getting Started with Git and Version Control',
-            content: 'Git is a powerful version control system used in software development. This flashcard covers the basics of Git, including repository management, branching, and collaboration using platforms like GitHub.',
-            imagePath: 'https://ed8a-34-126-186-228.ngrok-free.app/Radu.png',
-            summary_id: 1
-        },
-        {
-            flashCardId: 10,
-            title: 'The Importance of Cybersecurity',
-            content: 'Cybersecurity is crucial for protecting digital assets and sensitive information. This flashcard discusses the importance of cybersecurity measures, common threats, and best practices for ensuring online security.',
-            imagePath: 'https://ed8a-34-126-186-228.ngrok-free.app/Radu.png',
-            summary_id: 1
-        }  
-    ])
+    // const [summary, setSummary] = useState<Summary | null>()
+    const [flashcards, setFlashcards] = useState<Flashcard[]>([])
     const [owner, setOwner] = useState<User>({
         // id: 1,
         email: 'hau@gmail.com',
@@ -121,11 +38,20 @@ export default function ViewFlashCardPage() {
     const [imageActive, setImageActive] = useState<boolean>(false)
     const [curIndex, setCurIndex] = useState<number>(0)
 
-    const [curContent, setCurContent] = useState<string>(flashcards[0]?.content!)
-    const [imagePath, setCurImagePath] = useState<string>(flashcards[0]?.imagePath!)
+    const [curContent, setCurContent] = useState<string | null | undefined>(flashcards && flashcards[0]?.content)
+    const [imagePath, setCurImagePath] = useState<string | null | undefined>(flashcards && flashcards[0]?.imagePath!)
 
     const imgActiveStyle = 'absolute border-8 border-white right-[7rem] bottom-[2rem] cursor-pointer z-10 shadow-default transition-all duration-500 ease-in-out hover:scale-105'
     const imgPasiveStyle = 'absolute border-8 border-white right-[-25rem] bottom-[7rem] cursor-pointer z-10 shadow-default transition-all duration-500 ease-in-out hover:scale-105'
+
+    useEffect(() => {
+        setFlashcards(summary?.flashCards!)
+
+        setCurContent(flashcards && flashcards[0]?.content)
+        setCurImagePath(flashcards && flashcards[0]?.imagePath!)
+
+        console.log(imagePath)
+    }, [summary, flashcards])
 
     const likeThePost = () => {
         // if(!isLoggedIn && !isPending) {
@@ -182,11 +108,10 @@ export default function ViewFlashCardPage() {
             <div className="flex items-center min-h-[calc(100vh-11.75rem)]">
                 <div className="flex justify-center w-full">
                     <div className="flex justify-center flex-col w-60 items-center relative">
-                        <p className="text-white font-josefin font-bold mb-10 mt-20">{(curIndex * 5) + 1}-{(curIndex * 5) + 1 +4} of {flashcards.length}</p>
-
+                        {!!flashcards && <p className="text-white font-josefin font-bold mb-10 mt-20">{(curIndex * 5) + 1}-{(curIndex * 5) + 1 +4} of {flashcards.length}</p>}
                         <div className="mb-96 mr-40">
                             {   
-                                flashcards && flashcards.map((flashCard, index) => {
+                                !!flashcards &&  flashcards.map((flashCard, index) => {
                                     if(index >= curIndex * 5 && index <= curIndex * 5 + 4) {
                                         if(index % 5 <= 1) { 
                                             if(index % 5 === 0) return ( <FlyerComponent key={index} degree={20} color={'black'} move={{up: 1.5, right: 20}} title={flashCard.title} id={flashCard.flashCardId} setCurrentFlashcard={setCurrentFlashcard} /> )
@@ -207,7 +132,7 @@ export default function ViewFlashCardPage() {
                         <div className="w-[50rem] h-96 bg-[var(--light-blue)] z-10 mb-20 shadow-default text-white font-semibold font-josefin p-8 overflow-auto">
                             <p className="mb-10">To: {owner.username}</p>
 
-                            <div dangerouslySetInnerHTML={{ __html: addTagsAfterPeriods(curContent) }} />
+                            {!!curContent && <div dangerouslySetInnerHTML={{ __html: addTagsAfterPeriods(curContent) }} />}
 
                             <div className="flex justify-between mt-7">
                                 <div className="flex mt-10">
@@ -226,10 +151,14 @@ export default function ViewFlashCardPage() {
 
             <Image onClick={prevFive} className="absolute left-10 bottom-1/2 hover:scale-110 cursor-pointer w-8 rotate-180" src={arrow} alt='' />
             <Image onClick={nextFive} className="absolute right-10 bottom-1/2 hover:scale-110 cursor-pointer w-8" src={arrow} alt='' />
-
-            <div className={imageActive ? imgActiveStyle : imgPasiveStyle} onClick={() => setImageActive(!imageActive)} >
-                <Image width={400} height={300} className="h-72 w-[30rem] object-cover" src={imagePath} alt=""  />
-            </div>
+            
+            {
+                !!imagePath && 
+                <div className={imageActive ? imgActiveStyle : imgPasiveStyle} onClick={() => setImageActive(!imageActive)} >
+                    <Image width={400} height={300} className="h-[17rem] w-[30rem] object-cover" src={'https://9939-35-240-128-142.ngrok-free.app/' + imagePath} alt=""  />
+                </div>
+            }
+            
         </div>
     )
 }

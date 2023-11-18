@@ -1,5 +1,5 @@
 module.exports = {
     images: {
-      domains: ['www.gravatar.com', 'ed8a-34-126-186-228.ngrok-free.app'],
+      domains: ['www.gravatar.com', '9939-35-240-128-142.ngrok-free.app'],
     }
 };

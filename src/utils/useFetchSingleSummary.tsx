@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import Cookies from "js-cookie";
 import config from "../config";
 import {Summary} from "@/utils/model/Summary";
-import {set} from "zod";
+import {number, set} from "zod";
 
 function useFetchSingleSummary(summaryId: number) {
 
@@ -12,6 +12,7 @@ function useFetchSingleSummary(summaryId: number) {
     const [summary, setSummary] = useState<Summary | undefined>(undefined);
 
     useEffect(() => {
+        if(summaryId === undefined || summary === null || Number.isNaN(summaryId)) return;
         setError('');
         setIsPending(true);
         fetch(config.apiUrl + "/summary/" + summaryId,
@@ -30,7 +31,7 @@ function useFetchSingleSummary(summaryId: number) {
                 setIsPending(false);
                 setError(e.message);
             })
-    }, [])
+    }, [summaryId])
     return {error, isPending, summary};
 }
 export default useFetchSingleSummary

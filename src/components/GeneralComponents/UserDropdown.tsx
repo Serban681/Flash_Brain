@@ -17,8 +17,6 @@ export default function UserDropdown(props:any) {
     const gravatarUrl = !isPendingLoggedIn && isLoggedIn ? gravatar.url(!!userInformation ? userInformation.email : '' , {protocol: 'http', s: '40'}) : ''
 
     useEffect(() => {
-        console.log(userInformation)
-
         function handleClickOutside(event: MouseEvent) {
             if (componentRef.current && !componentRef.current.contains(event.target as Node)) {
                 setIsHidden(true);
