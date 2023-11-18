@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {use, useEffect, useState} from "react";
 // @ts-ignore
 import Cookies from "js-cookie";
 import config from "../config";
@@ -23,6 +23,7 @@ function useCheckLoggedIn() {
                 return res.json();
             })
             .then(data => {
+                console.log(data);
                 setUserInformation(data);
             })
             .catch(() => {

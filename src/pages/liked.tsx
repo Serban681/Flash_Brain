@@ -9,7 +9,6 @@ import useFetchSummaries from "@/utils/useFetchSummaries";
 export default function liked() {
 
     const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
-    const {error: errorFetchSummaries, isPending: isPendingSummaries, summaryList} = useFetchLikedSummaries(isLoggedIn);
 
     useEffect(() => {
         if(!isPendingLoggedIn && !isLoggedIn) router.push("/login");

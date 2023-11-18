@@ -9,18 +9,18 @@ export default function SummaryCard(props:any) {
     let backgroundColor: string = props.backgroundColor;
     let secondaryColor: string = props.secondaryColor;
 
-    let likedSummaries = props.likedSummaries;
-    let setLikedSummaries = props.setLikedSummaries;
+    //let likedSummaries = props.likedSummaries;
+    //let setLikedSummaries = props.setLikedSummaries;
 
     const [isLiked, setIsLiked] = useState<boolean>(false);
 
-    useEffect(() => {
-        if(likedSummaries) {
-            likedSummaries.forEach((item: Summary) =>{
-                if(item.summaryId == summary.summaryId) setIsLiked(true);
-            })
-        }
-    }, [likedSummaries, setIsLiked]);
+    // useEffect(() => {
+    //     if(likedSummaries) {
+    //         likedSummaries.forEach((item: Summary) =>{
+    //             if(item.summaryId == summary.summaryId) setIsLiked(true);
+    //         })
+    //     }
+    // }, [likedSummaries, setIsLiked]);
 
     function likeCard() {
         if(isLiked) return;

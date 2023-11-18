@@ -3,7 +3,6 @@ import {useEffect, useState} from "react";
 import Cookies from "js-cookie";
 import config from "../config";
 import {Summary} from "@/utils/model/Summary";
-import {set} from "zod";
 
 function useFetchSummaries(searchValue: string, categoryList:number[]) {
 
@@ -12,13 +11,22 @@ function useFetchSummaries(searchValue: string, categoryList:number[]) {
     const [summaryList, setSummaryList] = useState<Summary[]>([]);
 
     useEffect(() => {
+        let filterRequest = {
+            query: searchValue,
+            categories: categoryList
+        }
         setError('');
         setIsPending(true);
-        fetch(config.apiUrl + "/summary/all",
-            {method: 'GET',
-                headers: {"Origin":config.origin}}
-        )
-            .then(res => {
+        fetch(config.apiUrl + "/summary/filtered",
+            {
+                method: 'POST',
+                headers: {
+                    "Origin": config.origin,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(filterRequest)
+            }
+        ).then(res => {
                 if(!res.ok) throw Error("Couldn't fetch summaries");
                 return res.json();
             })
@@ -30,7 +38,7 @@ function useFetchSummaries(searchValue: string, categoryList:number[]) {
                 setIsPending(false);
                 setError(e.message);
             })
-    }, [categoryList]);
+    }, [categoryList, searchValue])
     return {error, isPending, summaryList};
 }
 export default useFetchSummaries

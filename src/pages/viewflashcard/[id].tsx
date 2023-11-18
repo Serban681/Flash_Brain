@@ -33,41 +33,56 @@ export default function ViewFlashCardPage() {
     //check logged-in status
     const {isLoggedIn, isPending, userInformation} = useCheckLoggedIn();
     //get the liked summaries of the current user
-    const {error: errorFetchSummaries, isPending: isPendingSummaries, summaryList} = useFetchLikedSummaries(isLoggedIn);
+    let {
+        error,
+        isPending:isPendingLikedSummaries,
+        summaryList: likedSummaryList,
+        setSummaryList
+    } = useFetchLikedSummaries(isLoggedIn);
+
 
     const [isLiked, setIsLiked] = useState<boolean>(false);
     //check if the current summary is in the list of liked summaries of the current user
     useEffect(() => {
-        if(summaryList.length > 0 || summary) {
-            summaryList.forEach((likedSummary) =>{
+        if(likedSummaryList) {
+            likedSummaryList.forEach((likedSummary) =>{
                 if(likedSummary.summaryId === summary?.summaryId) {
                     setIsLiked(true);
                 }
             })
         }
-
-        console.log(summary)
-    }, [summaryList, summary]);
+    }, [likedSummaryList, summary]);
 
     const likeThePost = () => {
-        if(isLiked) return;
+        if(isLiked) {
+            fetch(config.apiUrl + "/like/" + summary?.summaryId,
+                {method: 'DELETE',
+                    headers: {"Origin":config.origin,
+                        "Authorization": "Bearer " + Cookies.get('jwtToken')}}
+            )
+                .then(res => {
+                    if(!res.ok) throw Error("Couldn't remove like from summary");
+                    setIsLiked(false);
+                })
+                .catch((e) => {
+                    console.log(e.message);
+                })
+        }
         else {
-            fetch(config.apiUrl + "/like",
-                {method: 'POST',
+            fetch(config.apiUrl + "/like/" + summary?.summaryId,
+                {method: 'GET',
                     headers: {"Origin":config.origin,
                         "Authorization": "Bearer " + Cookies.get('jwtToken')}}
             )
                 .then(res => {
                     if(!res.ok) throw Error("Couldn't like post");
-
+                    setIsLiked(true);
                 })
                 .catch((e) => {
                     console.log(e.message);
                 })
         }
     }
-
-    //TODO 2 different classes for the like icon (one with fill one without)
 
     const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
 

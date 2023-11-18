@@ -60,36 +60,22 @@ export function CategoryList(props: any) {
 }
 
 export default function Home() {
-    const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
-    const [activeCategoryList, setActiveCategoryList] = useState<number[]>([]);
-    const [searchValue, setSearchValue] = useState<string>('');
-    const {error: errorFetchSummaries, isPending: isPendingSummaries, summaryList} = useFetchSummaries(searchValue, activeCategoryList);
-    const {error: errorFetchLikedSummaries, isPending: isPendingLikedSummaries, summaryList: likedSummaryList, setSummaryList: setLikedSummaryList} = useFetchLikedSummaries(isLoggedIn);
 
     const searchParams = useSearchParams()
+
+    const initialPathValue = searchParams.get('query');
+
+    const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
+    const [activeCategoryList, setActiveCategoryList] = useState<number[]>([1]);
+            
     const searchQuery = searchParams.get('query');
 
     const [isScrolled, setIsScrolled] = useState(false);
-// hau hau
 
-    useEffect(() => {
-        setSearchValue(searchQuery ? searchQuery : '');
-    }, [searchQuery])
+    const [currentSearchedValue, setCurrentSearchedValue] = useState<string | null>(initialPathValue ?? null);
+    const [searchValue, setSearchValue] = useState<string>('');
 
-    useEffect(() => {
-        console.log(isLoggedIn)
-
-        const handleScroll = () => {
-          const scrolled = window.scrollY > 0;    
-          setIsScrolled(scrolled);
-        };
-    
-        window.addEventListener('scroll', handleScroll);
-    
-        return () => {
-          window.removeEventListener('scroll', handleScroll);
-        };
-      }, []);
+    const {error: errorFetchSummaries, isPending: isPendingSummaries, summaryList} = useFetchSummaries(currentSearchedValue ?? '', activeCategoryList);
 
     const goToFavourites = () => {
         router.push('/favourites');
@@ -138,16 +124,24 @@ export default function Home() {
 
     function handleSearch(e:any) {
         e.preventDefault();
-
-        if(searchValue === '') {
-            router.push('/');
-        } else {
-            router.push({
-                pathname: '/',
-                query: {searchValue},
-            });
-        }
+       if(searchValue) {
+           router.push({
+                   pathname: '/', query: { query: searchValue }},
+           undefined, { shallow: true })
+            setCurrentSearchedValue(searchValue);
+       }
+        else router.push("/")
     }
+
+    useEffect(() => {
+        if(currentSearchedValue) {
+            // const section = document.getElementById('browseSection');
+            // if (section) {
+            //     section.scrollIntoView({behavior: 'smooth'});
+            // }
+        }
+        setSearchValue(currentSearchedValue ?? '');
+    }, [currentSearchedValue]);
 
   return (
     <>
@@ -161,12 +155,9 @@ export default function Home() {
       <>
           <div className={styles.indexOuterDiv}>
               <Header></Header>
-              <div className={`absolute bottom-10 transition-all ease-in ${!isPendingLoggedIn && isLoggedIn && !isScrolled ? 'right-[2rem]' : 'right-[-4rem]'}`}>
-                <div onClick={goToFavourites} className={`cursor-pointer w-14 h-14 flex justify-center items-center bg-[#1B262C] rounded-full shadow-default`}>
-                    <Image className="w-7 h-7" src={like_image} alt="" />
-                </div>
+              <div onClick={goToFavourites} className="cursor-pointer hover:scale-105 transition-all w-14 h-14 flex justify-center items-center absolute bg-[#1B262C] rounded-full shadow-default absolute bottom-10 right-10">
+                <Image className="w-7 h-7" src={like_image} alt="" />
               </div>
-              
               <div className={styles.indexContentDiv}>
                 <div className={styles.indexHigherDiv}>
                     <div className={styles.indexHigherDivLeft}>
@@ -210,8 +201,6 @@ export default function Home() {
                                           summary={summary}
                                           backgroundColor={getSummaryBackground(index)}
                                           secondaryColor={getSummarySecondaryColor(index)}
-                                          likedSummaries={likedSummaryList}
-                                          setLikedSummaries={setLikedSummaryList}
                                       ></SummaryCard>
                                   </div>
                               ))}

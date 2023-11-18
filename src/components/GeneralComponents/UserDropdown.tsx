@@ -43,6 +43,7 @@ export default function UserDropdown(props:any) {
     const handleSignOut = () => {
         Cookies.remove('jwtToken');
         router.push('/');
+        window.location.reload();
     }
 
     const goToMySummaries = () => {
