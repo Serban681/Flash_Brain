@@ -46,7 +46,6 @@ export function CategoryList(props: any) {
             setCategoryList(newList);
         }
     }
-
     return (
         <div className={styles.categoryElementDiv}>
             {categories.map(category => (
@@ -68,11 +67,9 @@ export default function Home() {
 
     const searchParams = useSearchParams()
     const searchQuery = searchParams.get('query');
-    const categoryIds = searchParams.get('category');
-
     useEffect(() => {
         setSearchValue(searchQuery ? searchQuery : '');
-    }, [searchQuery, categoryIds])
+    }, [searchQuery])
 
     function scrollToSection(id: string) {
         const section = document.getElementById(id);
@@ -117,11 +114,23 @@ export default function Home() {
 
     function handleSearch(e:any) {
         e.preventDefault();
-        if(searchValue === '') return;
-        router.push({
-            pathname: '/',
-            query: {searchValue},
-        });
+        let category = 1;
+
+        if(activeCategoryList.length > 0) {
+            category = parseInt(activeCategoryList.join(''));
+        }
+
+        if(searchValue === '') {
+            router.push({
+                pathname: '/',
+                query: {category},
+            });
+        } else {
+            router.push({
+                pathname: '/',
+                query: {searchValue, category},
+            });
+        }
     }
 
   return (
@@ -164,7 +173,11 @@ export default function Home() {
                                 <button className={styles.searchBarButton}>Search</button>
                             </div>
                           </form>
-                          <CategoryList categoryList={activeCategoryList} setCategoryList={setActiveCategoryList}></CategoryList>
+                          <CategoryList
+                              categoryList={activeCategoryList}
+                              setCategoryList={setActiveCategoryList}
+                              searchValue={searchValue}
+                          ></CategoryList>
 
                           {isPendingSummaries && <div className="lds-dual-ring"></div>}
                           {summaryList.length > 0 && <div className={styles.summaryBrowser}>
