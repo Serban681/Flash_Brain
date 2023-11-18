@@ -8,7 +8,7 @@ export default function SummaryCard(props:any) {
     let secondaryColor: string = props.secondaryColor;
 
     return (
-        <Link href="/viewflashcard"><div className={styles.summaryCardOuterDiv}>
+        <Link href={"/viewflashcard/" + summary.summaryId}><div className={styles.summaryCardOuterDiv}>
                 <div className={styles.summaryLeftDiv} style={{backgroundColor:secondaryColor}}>
                     <div style={{backgroundColor: backgroundColor}}>
                         {summary.category_id == 1 && <span className="material-symbols-outlined">text_ad</span>}

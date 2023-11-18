@@ -4,11 +4,13 @@ import useCheckLoggedIn from "@/utils/useCheckLoggedIn";
 import config from "@/config";
 import styles from '@/styles/index.module.css';
 import router from "next/router";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Category} from "@/utils/model/Category";
 import {Summary} from "@/utils/model/Summary";
 import SummaryCard from "@/components/MainPageComponents/SummaryCard";
 import useFetchSummaries from "@/utils/useFetchSummaries";
+import { useRouter } from 'next/router';
+import {useSearchParams} from "next/navigation";
 
 export function CategoryList(props: any) {
 
@@ -62,99 +64,15 @@ export default function Home() {
     const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
     const [activeCategoryList, setActiveCategoryList] = useState<number[]>([]);
     const {error: errorFetchSummaries, isPending: isPendingSummaries, summaryList} = useFetchSummaries();
-    // const summaryList: Summary[] = [
-    //     {
-    //         title: "Introduction to JavaScript",
-    //         category_id: 1,
-    //         ownerId: 101,
-    //         summaryId: 1,
-    //         isPublic: true,
-    //         flashCard: [],
-    //         likes: []
-    //     },
-    //     {
-    //         title: "Python Basics",
-    //         category_id: 2,
-    //         ownerId: 102,
-    //         summaryId: 2,
-    //         isPublic: false,
-    //         flashCard: [],
-    //         likes: []
-    //     },
-    //     {
-    //         title: "HTML & CSS Fundamentals",
-    //         category_id: 1,
-    //         ownerId: 103,
-    //         summaryId: 3,
-    //         isPublic: true,
-    //         flashCard: [],
-    //         likes: []
-    //     },
-    //     {
-    //         title: "Data Structures in Java",
-    //         category_id: 3,
-    //         ownerId: 104,
-    //         summaryId: 4,
-    //         isPublic: false,
-    //         flashCard: [],
-    //         likes: []
-    //     },
-    //     {
-    //         title: "Machine Learning Basics",
-    //         category_id: 4,
-    //         ownerId: 105,
-    //         summaryId: 5,
-    //         isPublic: true,
-    //         flashCard: [],
-    //         likes: []
-    //     },
-    //     {
-    //         title: "Web Development Concepts",
-    //         category_id: 1,
-    //         ownerId: 106,
-    //         summaryId: 6,
-    //         isPublic: true,
-    //         flashCard: [],
-    //         likes: []
-    //     },
-    //     {
-    //         title: "Artificial Intelligence Overview",
-    //         category_id: 4,
-    //         ownerId: 107,
-    //         summaryId: 7,
-    //         isPublic: false,
-    //         flashCard: [],
-    //         likes: []
-    //     },
-    //     {
-    //         title: "Mobile App Development Basics",
-    //         category_id: 5,
-    //         ownerId: 108,
-    //         summaryId: 8,
-    //         isPublic: true,
-    //         flashCard: [],
-    //         likes: []
-    //     },
-    //     {
-    //         title: "Network Security Fundamentals",
-    //         category_id: 6,
-    //         ownerId: 109,
-    //         summaryId: 9,
-    //         isPublic: false,
-    //         flashCard: [],
-    //         likes: []
-    //     },
-    //     {
-    //         title: "Algorithms and Complexity",
-    //         category_id: 3,
-    //         ownerId: 110,
-    //         summaryId: 10,
-    //         isPublic: true,
-    //         flashCard: [],
-    //         likes: []
-    //     },
-    // ]
+    const [searchValue, setSearchValue] = useState<string>('');
 
+    const searchParams = useSearchParams()
+    const searchQuery = searchParams.get('query');
+    const categoryIds = searchParams.get('category');
+
+    useEffect(() => {
+        setSearchValue(searchQuery ? searchQuery : '');
+    }, [searchQuery, categoryIds])
 
     function scrollToSection(id: string) {
         const section = document.getElementById(id);
@@ -197,6 +115,14 @@ export default function Home() {
         }
     }
 
+    function handleSearch(e:any) {
+        e.preventDefault();
+        if(searchValue === '') return;
+        router.push({
+            pathname: '/',
+            query: {searchValue},
+        });
+    }
 
   return (
     <>
@@ -227,9 +153,14 @@ export default function Home() {
                 </div>
                   <section id="browseSection">
                       <div className={styles.indexLowerDiv}>
-                          <form className={styles.indexSearchForm}>
+                          <form onSubmit={(e) => handleSearch(e)} className={styles.indexSearchForm}>
                             <div className={styles.searchBarDiv}>
-                                <input type="text" className={styles.searchBarInput}></input>
+                                <input
+                                    type="text"
+                                    className={styles.searchBarInput}
+                                    value={searchValue}
+                                    onChange={(e) => setSearchValue(e.target.value)}
+                                ></input>
                                 <button className={styles.searchBarButton}>Search</button>
                             </div>
                           </form>
