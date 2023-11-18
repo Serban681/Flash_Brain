@@ -3,8 +3,14 @@ import FlyerComponent from "@/components/ViewFlashCardPageComponent/Flyer"
 import Image from "next/image"
 import like_icon from "@/images/like_icon.svg"
 import kangaroo_img from "@/images/kangaroo_img.png"
+import { useState } from "react"
 
 export default function ViewFlashCardPage() {
+    const [imageActive, setImageActive] = useState<boolean>(false)
+
+    const imgActiveStyle = 'absolute border-8 border-white right-[7rem] bottom-[2rem] cursor-pointer z-10 shadow-default transition-all duration-500 ease-in-out hover:scale-105'
+    const imgPasiveStyle = 'absolute border-8 border-white right-[-25rem] bottom-[7rem] cursor-pointer z-10 shadow-default transition-all duration-500 ease-in-out hover:scale-105'
+
     const parts = [
         'About C# Arrays',
         'abou L stuff',
@@ -57,8 +63,8 @@ export default function ViewFlashCardPage() {
                 </div>
             </div>
 
-            <div className="absolute border-8 border-white right-[-38rem] bottom-[7rem] cursor-pointer">
-                <Image className="h-64 object-cover" src={kangaroo_img} alt=""  />
+            <div className={imageActive ? imgActiveStyle : imgPasiveStyle} onClick={() => setImageActive(!imageActive)} >
+                <Image className="h-72 w-[30rem] object-cover" src={kangaroo_img} alt=""  />
             </div>
         </div>
     )
