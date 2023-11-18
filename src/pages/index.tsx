@@ -59,16 +59,14 @@ export function CategoryList(props: any) {
 export default function Home() {
 
     const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
-    const [activeCategoryList, setActiveCategoryList] = useState<number[]>([]);
+    const [activeCategoryList, setActiveCategoryList] = useState<number[]>([1]);
     const [searchValue, setSearchValue] = useState<string>('');
-    const {error: errorFetchSummaries, isPending: isPendingSummaries, summaryList} = useFetchSummaries(searchValue, activeCategoryList);
     const {error: errorFetchLikedSummaries, isPending: isPendingLikedSummaries, summaryList: likedSummaryList, setSummaryList: setLikedSummaryList} = useFetchLikedSummaries(isLoggedIn);
 
-    const searchParams = useSearchParams()
-    const searchQuery = searchParams.get('query');
-    useEffect(() => {
-        setSearchValue(searchQuery ? searchQuery : '');
-    }, [searchQuery])
+    const searchParams = useSearchParams();
+    const [currentSearchedValue, setCurrentSearchedValue] = useState<string>('');
+    const {error: errorFetchSummaries, isPending: isPendingSummaries, summaryList} = useFetchSummaries(currentSearchedValue, activeCategoryList);
+
 
     function scrollToSection(id: string) {
         const section = document.getElementById(id);
@@ -113,15 +111,7 @@ export default function Home() {
 
     function handleSearch(e:any) {
         e.preventDefault();
-
-        if(searchValue === '') {
-            router.push('/');
-        } else {
-            router.push({
-                pathname: '/',
-                query: {searchValue},
-            });
-        }
+        setCurrentSearchedValue(searchValue);
     }
 
   return (

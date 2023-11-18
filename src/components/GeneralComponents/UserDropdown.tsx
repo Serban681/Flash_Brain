@@ -42,6 +42,7 @@ export default function UserDropdown(props:any) {
     function handleSignOut() {
         Cookies.remove('jwtToken');
         router.push('/');
+        window.location.reload();
     }
 
     return (

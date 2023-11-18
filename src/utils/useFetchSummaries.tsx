@@ -15,16 +15,20 @@ function useFetchSummaries(searchValue: string, categoryList:number[]) {
             query: searchValue,
             categories: categoryList
         }
-
+        console.log(filterRequest);
         setError('');
         setIsPending(true);
         fetch(config.apiUrl + "/summary/filtered",
-            {method: 'POST',
-                headers: {"Origin":config.origin},
-            body: JSON.stringify(filterRequest)
+            {
+                method: 'POST',
+                headers: {
+                    "Origin": config.origin,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(filterRequest)
             }
-        )
-            .then(res => {
+        ).then(res => {
+                console.log(filterRequest);
                 if(!res.ok) throw Error("Couldn't fetch summaries");
                 return res.json();
             })
@@ -36,7 +40,7 @@ function useFetchSummaries(searchValue: string, categoryList:number[]) {
                 setIsPending(false);
                 setError(e.message);
             })
-    }, [categoryList]);
+    }, [categoryList, searchValue])
     return {error, isPending, summaryList};
 }
 export default useFetchSummaries
