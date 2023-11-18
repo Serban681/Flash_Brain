@@ -1,16 +1,14 @@
 import Head from "next/head";
 import Header from "@/components/GeneralComponents/Header";
 import useCheckLoggedIn from "@/utils/useCheckLoggedIn";
-import config from "@/config";
 import styles from '@/styles/index.module.css';
 import router from "next/router";
 import {useEffect, useState} from "react";
 import {Category} from "@/utils/model/Category";
-import {Summary} from "@/utils/model/Summary";
 import SummaryCard from "@/components/MainPageComponents/SummaryCard";
 import useFetchSummaries from "@/utils/useFetchSummaries";
-import { useRouter } from 'next/router';
 import {useSearchParams} from "next/navigation";
+import useFetchLikedSummaries from "@/utils/useFetchLikedSummaries";
 
 export function CategoryList(props: any) {
 
@@ -64,6 +62,7 @@ export default function Home() {
     const [activeCategoryList, setActiveCategoryList] = useState<number[]>([]);
     const [searchValue, setSearchValue] = useState<string>('');
     const {error: errorFetchSummaries, isPending: isPendingSummaries, summaryList} = useFetchSummaries(searchValue, activeCategoryList);
+    const {error: errorFetchLikedSummaries, isPending: isPendingLikedSummaries, summaryList: likedSummaryList, setSummaryList: setLikedSummaryList} = useFetchLikedSummaries(isLoggedIn);
 
     const searchParams = useSearchParams()
     const searchQuery = searchParams.get('query');
@@ -180,6 +179,8 @@ export default function Home() {
                                           summary={summary}
                                           backgroundColor={getSummaryBackground(index)}
                                           secondaryColor={getSummarySecondaryColor(index)}
+                                          likedSummaries={likedSummaryList}
+                                          setLikedSummaries={setLikedSummaryList}
                                       ></SummaryCard>
                                   </div>
                               ))}
