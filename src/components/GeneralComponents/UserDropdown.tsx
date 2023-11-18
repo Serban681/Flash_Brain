@@ -4,13 +4,17 @@ import Cookies from "js-cookie";
 import {useEffect, useRef} from "react";
 import gravatar from 'gravatar';
 import Image from 'next/image';
+import useCheckLoggedIn from "@/utils/useCheckLoggedIn";
 
 export default function UserDropdown(props:any) {
 
     let isHidden = props.isHidden;
     let setIsHidden = props.setIsHidden;
-    let userInformation = props.userInformation;
     const componentRef = useRef<HTMLDivElement>(null);
+
+    const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
+
+    const gravatarUrl = !isPendingLoggedIn && isLoggedIn ? gravatar.url(!!userInformation ? userInformation.email : '' , {protocol: 'http', s: '40'}) : ''
 
     useEffect(() => {
         console.log(userInformation)
@@ -48,10 +52,7 @@ export default function UserDropdown(props:any) {
             </div>
             <p className={styles.accountP}>Account</p>
             <div className={styles.userDiv}>
-                <div className={styles.circleDiv}></div>
-
-                {/* {!!userInformation && <Image className='w-9 mr-5 cursor-pointer rounded-full' src={gravatar.url(userInformation.email)} alt='User Avatar' width={40} height={40} />} */}
-                {/* here I add the avatar */}
+                {!!userInformation && <Image className='w-14 mr-2 ml-8 cursor-pointer rounded-full' src={gravatarUrl} alt='User Avatar' width={200} height={200} />}
                 <div className={styles.userInformationDiv}>
                     <p style={{fontSize:24}}>{userInformation !== undefined ? userInformation.username : "Loading..."}</p>
                     <p style={{fontSize:18}}>{userInformation !== undefined ? userInformation.email : "Loading..."}</p>
