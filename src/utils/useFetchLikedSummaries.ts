@@ -33,7 +33,7 @@ function useFetchLikedSummaries(isLoggedIn: boolean) {
                 setError(e.message);
             })
     }, [isLoggedIn]);
-    return {error, isPending, summaryList};
+    return {error, isPending, summaryList, setSummaryList};
 
 }
 export default useFetchLikedSummaries;

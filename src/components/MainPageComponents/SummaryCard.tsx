@@ -1,11 +1,35 @@
 import styles from '../../styles/summary-card.module.css'
 import {Summary} from "@/utils/model/Summary";
 import Link from 'next/link';
+import {useEffect, useState} from "react";
 export default function SummaryCard(props:any) {
 
     let summary:Summary = props.summary;
+    let isLoggedIn = props.isLoggedIn;
     let backgroundColor: string = props.backgroundColor;
     let secondaryColor: string = props.secondaryColor;
+
+    let likedSummaries = props.likedSummaries;
+    let setLikedSummaries = props.setLikedSummaries;
+
+    const [isLiked, setIsLiked] = useState<boolean>(false);
+
+    useEffect(() => {
+        if(likedSummaries) {
+            likedSummaries.forEach((item: Summary) =>{
+                if(item.summaryId == summary.summaryId) setIsLiked(true);
+            })
+        }
+    }, [likedSummaries, setIsLiked]);
+
+    function likeCard() {
+        if(isLiked) return;
+        else {
+            //TODO call post like api endpoint and add the current summary to the local list of user liked summaries
+        }
+    }
+
+    //TODO 2 different classes for the like icon (one with fill one without)
 
     return (
         <Link href={"/viewflashcard/" + summary.summaryId}><div className={styles.summaryCardOuterDiv}>

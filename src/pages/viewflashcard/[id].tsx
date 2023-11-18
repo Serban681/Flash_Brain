@@ -14,26 +14,60 @@ import useCheckLoggedIn from "@/utils/useCheckLoggedIn"
 import thumbs_up from "@/images/thumbs_up.svg"
 
 import useFetchSingleSummary from "@/utils/useFetchSingleSummary"
+import useFetchSingleUser from "@/utils/useFetchSingleUser";
+import useFetchLikedSummaries from "@/utils/useFetchLikedSummaries";
+import SummaryCard from "@/components/MainPageComponents/SummaryCard";
+import config from "@/config";
+// @ts-ignore
+import Cookies from "js-cookie";
 
 export default function ViewFlashCardPage() {
     const router = useRouter()
     const { id } = router.query
     const numberId = Number(id)
 
+    //get the summary
     const {error:errorGettingSummary, isPending:summaryPending, summary} = useFetchSingleSummary(numberId);
-
-    // const [summary, setSummary] = useState<Summary | null>()
-    const [flashcards, setFlashcards] = useState<Flashcard[]>([])
-    const [owner, setOwner] = useState<User>({
-        // id: 1,
-        email: 'hau@gmail.com',
-        password: '123456',
-        username: 'Hau2478)_lulz'
-    })
-
+    //get the owner of the summary
+    const {error:errorGettingOwner, isPending:ownerPending, user:owner} = useFetchSingleUser(summary?.ownerId);
+    //check logged-in status
     const {isLoggedIn, isPending, userInformation} = useCheckLoggedIn();
+    //get the liked summaries of the current user
+    const {error: errorFetchSummaries, isPending: isPendingSummaries, summaryList} = useFetchLikedSummaries(isLoggedIn);
 
-    const [isLiked, setIsLiked] = useState<boolean>(false)
+    const [isLiked, setIsLiked] = useState<boolean>(false);
+    //check if the current summary is in the list of liked summaries of the current user
+    useEffect(() => {
+        if(summaryList.length > 0 || summary) {
+            summaryList.forEach((likedSummary) =>{
+                if(likedSummary.summaryId === summary?.summaryId) {
+                    setIsLiked(true);
+                }
+            })
+        }
+    }, [summaryList, summary]);
+
+    const likeThePost = () => {
+        if(isLiked) return;
+        else {
+            fetch(config.apiUrl + "/like",
+                {method: 'POST',
+                    headers: {"Origin":config.origin,
+                        "Authorization": "Bearer " + Cookies.get('jwtToken')}}
+            )
+                .then(res => {
+                    if(!res.ok) throw Error("Couldn't like post");
+
+                })
+                .catch((e) => {
+                    console.log(e.message);
+                })
+        }
+    }
+
+    //TODO 2 different classes for the like icon (one with fill one without)
+
+    const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
 
     const [imageActive, setImageActive] = useState<boolean>(false)
     const [curIndex, setCurIndex] = useState<number>(0)
@@ -51,28 +85,6 @@ export default function ViewFlashCardPage() {
         setCurImagePath(flashcards && flashcards[0]?.imagePath!)
 
     }, [summary, flashcards])
-
-    const likeThePost = () => {
-        // if(!isLoggedIn && !isPending) {
-        //     router.push('/login')
-        //     return
-        // }  
-
-        // if(isLiked) {
-        //     const newLikes = summary!.likes.filter(id => id !== userInformation?.id)
-
-        //     setSummary({ likes: newLikes, ...summary! })
-        // }
-        
-        // if(!isLiked) {
-        //     const newLikes = [...summary!.likes, userInformation?.id!]
-
-        //     setSummary({ likes: newLikes, ...summary! })
-        // }
-
-        // setIsLiked(!isLiked)
-        
-    }
 
     const setCurrentFlashcard = (id: number) => {
         const curFlashCard = flashcards.find(flashcard => flashcard.flashCardId === id)
@@ -129,7 +141,7 @@ export default function ViewFlashCardPage() {
                             }  
                         </div>
                         <div className="w-[50rem] h-96 bg-[var(--light-blue)] z-10 mb-20 shadow-default text-white font-semibold font-josefin p-8 overflow-auto rounded-sm">
-                            <p className="mb-10">To: {owner.username}</p>
+                            <p className="mb-10">To: {owner ? owner.username : ''}</p>
 
                             {!!curContent && <div dangerouslySetInnerHTML={{ __html: addTagsAfterPeriods(curContent) }} />}
 
