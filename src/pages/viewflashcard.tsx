@@ -2,13 +2,16 @@ import Header from "@/components/GeneralComponents/Header"
 import FlyerComponent from "@/components/ViewFlashCardPageComponent/Flyer"
 import Image from "next/image"
 import like_icon from "@/images/like_icon.svg"
-import kangaroo_img from "@/images/kangaroo_img.png"
 import arrow from "@/images/arrow.svg"
+
+import router from "next/router"
 
 import { useEffect, useState } from "react"
 import { Summary } from "@/utils/model/Summary"
 import { Flashcard } from "@/utils/model/Flashcard"
 import { User } from "@/utils/model/User"
+import useCheckLoggedIn from "@/utils/useCheckLoggedIn"
+import thumbs_up from "@/images/thumbs_up.svg"
 
 export default function ViewFlashCardPage() {
     const [summary, setSummary] = useState<Summary | null>({
@@ -17,7 +20,7 @@ export default function ViewFlashCardPage() {
         category_id: 1,
         ownerId: 1,
         isPublic: true,
-        flashCard: [],
+        flashCards: [],
         likes: [28, 19, 40, 2, 67, 78]
     })
     const [flashcards, setFlashcards] = useState<Flashcard[]>([
@@ -99,7 +102,7 @@ export default function ViewFlashCardPage() {
         username: 'Hau2478)_lulz'
     })
 
-
+    const {isLoggedIn, isPending, userInformation} = useCheckLoggedIn();
 
     const [isLiked, setIsLiked] = useState<boolean>(false)
 
@@ -113,8 +116,25 @@ export default function ViewFlashCardPage() {
     const imgPasiveStyle = 'absolute border-8 border-white right-[-25rem] bottom-[7rem] cursor-pointer z-10 shadow-default transition-all duration-500 ease-in-out hover:scale-105'
 
     const likeThePost = () => {
+        if(!isLoggedIn && !isPending) {
+            router.push('/login')
+            return
+        }  
+
+        if(isLiked) {
+            const newLikes = summary!.likes.filter(id => id !== userInformation?.id)
+
+            setSummary({ likes: newLikes, ...summary! })
+        }
+        
+        if(!isLiked) {
+            const newLikes = [...summary!.likes, userInformation?.id!]
+
+            setSummary({ likes: newLikes, ...summary! })
+        }
+
         setIsLiked(!isLiked)
-        // setSummary({ likes: [summary?.likes, ], ...summmary })
+        
     }
 
     const setCurrentFlashcard = (id: number) => {
@@ -180,7 +200,7 @@ export default function ViewFlashCardPage() {
                             <div className="flex justify-between mt-7">
                                 <div className="flex mt-10">
                                     <div className="mr-1 text-[1.3rem]">{summary?.likes.length}</div>
-                                    <Image className="w-6 hover:scale-110 cursor-pointer" src={isLiked ? '' : like_icon} alt="" />
+                                    <Image onClick={() => likeThePost()} className="w-6 hover:scale-110 cursor-pointer" src={isLiked ? thumbs_up : like_icon} alt="" />
                                 </div>
                                 <div className="mt-5 text-right">
                                     <p>Happy Learning,</p>
