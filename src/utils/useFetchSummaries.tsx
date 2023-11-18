@@ -32,6 +32,5 @@ function useFetchSummaries(searchValue: string, categoryList:number[]) {
             })
     }, [categoryList]);
     return {error, isPending, summaryList};
-
 }
 export default useFetchSummaries
