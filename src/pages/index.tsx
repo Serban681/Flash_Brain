@@ -62,10 +62,15 @@ export function CategoryList(props: any) {
 export default function Home() {
 
     const searchParams = useSearchParams()
+
     const initialPathValue = searchParams.get('query');
 
     const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
     const [activeCategoryList, setActiveCategoryList] = useState<number[]>([1]);
+            
+    const searchQuery = searchParams.get('query');
+
+    const [isScrolled, setIsScrolled] = useState(false);
 
     const [currentSearchedValue, setCurrentSearchedValue] = useState<string | null>(initialPathValue ?? null);
     const [searchValue, setSearchValue] = useState<string>('');
