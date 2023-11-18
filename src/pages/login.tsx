@@ -126,7 +126,7 @@ export default function LoginPage() {
             <form className={styles.loginForm}>
                 <p className={styles.loginP}>Log in</p>
                 <button type="button" className={styles.googleButton} onClick={() => handleGoogleLogin()}>
-                    <Image src={GoogleImage} alt="Google icon" style={{marginRight:15, width:'auto', height:'auto'}}></Image>
+                    <Image src={GoogleImage} alt="Google icon" style={{marginRight:15, width:'2rem', height:'auto'}}></Image>
                     Log-in with Google
                 </button>
                 <div className={styles.loginLine}>
@@ -151,7 +151,7 @@ export default function LoginPage() {
                 <div style={{width:'100%', marginTop:20}}>
                     <button className="small-btn"
                         onClick={(e) => handleLogin(e)}
-                    >Log-in</button>
+                    >Log in</button>
                 </div>
                 {error && <p className={styles.errorMessage}>{error}</p>}
                 {isLoading && <div className="lds-dual-ring"></div>}

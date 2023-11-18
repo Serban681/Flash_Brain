@@ -141,9 +141,9 @@ export default function RegisterPage() {
         <div className={styles.registerPageOuterDiv}>
             <Header></Header>
             <form className={styles.registerForm}>
-                <p className={styles.registerP}>Sign-up</p>
+                <p className={styles.registerP}>Register</p>
                 <button type="button" className={styles.googleButton} onClick={() => handleGoogleRegister()}>
-                    <Image src={GoogleImage} alt="Google icon" style={{marginRight:15, width:'auto', height:'auto'}}></Image>
+                    <Image src={GoogleImage} alt="Google icon" style={{marginRight:15, width:'2rem', height:'auto'}}></Image>
                     Sign-up with Google
                 </button>
                 <div className={styles.registerLine}>
@@ -152,7 +152,7 @@ export default function RegisterPage() {
                     <div></div>
                 </div>
 
-                <div className={styles.userP}>Username</div>
+                <div className={styles.userLabel}>Username</div>
                 <input
                     type="text"
                     className={styles.userInput}
@@ -160,7 +160,7 @@ export default function RegisterPage() {
                     onChange={(e) => setUsername(e.target.value)}
                 />
 
-                <div className={styles.emailP}>Email</div>
+                <div className={styles.emailLabel}>Email</div>
                 <input
                     type="text"
                     className={styles.emailInput}
@@ -168,7 +168,7 @@ export default function RegisterPage() {
                     onChange={(e) => setEmail(e.target.value)}
                 />
 
-                <div className={styles.passP}>Password</div>
+                <div className={styles.passLabel}>Password</div>
                 <input
                     type="password"
                     className={styles.passwordInput}
@@ -176,7 +176,7 @@ export default function RegisterPage() {
                     onChange={(e) => setPassword(e.target.value)}
                 />
 
-                <div className={styles.confirmP}>Confirm password</div>
+                <div className={styles.confirmLabel}>Confirm password</div>
                 <input
                     type="password"
                     className={styles.confirmInput}
@@ -188,7 +188,7 @@ export default function RegisterPage() {
                 <div style={{width:'100%', marginTop:20, marginBottom: 20}}>
                     <button
                         onClick={(e) => handleRegister(e)}
-                        className="small-btn">Sign-up</button>
+                        className="small-btn">Sign up</button>
                 </div>
                 {error && <p className={styles.errorMessage}>{error}</p>}
                 {isLoading && <div className="lds-dual-ring"></div>}
