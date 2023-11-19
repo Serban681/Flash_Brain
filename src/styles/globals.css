@@ -109,6 +109,10 @@ html, body {
     background-color: var(--green);
 }
 
+#reduced-padding {
+    padding: 0.7rem 2rem;
+}
+
 .small-btn:hover {
     scale: 1.03;
 }
