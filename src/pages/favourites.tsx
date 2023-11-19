@@ -5,10 +5,20 @@ import {useEffect} from "react";
 import router from "next/router";
 import useFetchLikedSummaries from "@/utils/useFetchLikedSummaries";
 import useFetchSummaries from "@/utils/useFetchSummaries";
+import useFetchUserSummaries from "@/utils/useFetchUserSummaries";
 
 export default function FavouritesPage() {
 
     const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
+    let {
+        error,
+        isPending,
+        summaryList
+    } = useFetchUserSummaries();
+
+    useEffect(() => {
+        console.log(summaryList);
+    }, [summaryList]);
 
     useEffect(() => {
         if(!isPendingLoggedIn && !isLoggedIn) router.push("/login");
