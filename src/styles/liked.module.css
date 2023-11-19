@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: var(--yellow);
+    background-color: var(--blue);
 }
 
 .likedContentDiv {
@@ -15,10 +15,51 @@
     align-items: center;
 }
 
+.summaryBrowser {
+    width: 100%;
+    padding-bottom: 8rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three equal columns */
+    gap: 50px; /* Gap between grid items */
+}
+
+/* For smaller screens, switch to 2 columns */
+@media (max-width: 1400px) {
+    .summaryBrowser {
+        grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+    }
+}
+
+/* For even smaller screens, switch to a single column */
+@media (max-width: 900px) {
+    .summaryBrowser {
+        grid-template-columns: 1fr; /* Single column */
+    }
+}
+
+.indexLowerDiv {
+    background-color: var(--blue);
+    padding-left: 150px;
+    padding-right: 150px;
+    width: 100%;
+    min-height: 400px;
+}
+
+.summaryBrowser {
+    margin-top: -1rem;
+    width: 100%;
+    padding-bottom: 8rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three equal columns */
+    gap: 50px; /* Gap between grid items */
+}
+
 .title {
-    font-weight: bold;
-    font-size: 38px;
-    font-family: var(--font-josefin);
-    margin-top: 30px;
+    width: 100%;
+    text-align: left;
     color: var(--white);
+    font-family: var(--font-josefin);
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2.5rem;
 }
