@@ -6,7 +6,7 @@ import router from "next/router";
 import useFetchUserSummaries from "@/utils/useFetchUserSummaries";
 import SummaryCard from "@/components/MainPageComponents/SummaryCard";
 
-export default function FavouritesPage() {
+export default function MySummariesPage() {
 
     const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
 
@@ -64,7 +64,7 @@ export default function FavouritesPage() {
             
             <div className={`w-screen mt-24 ${styles.likedContentDiv}`}>
                     <div className={styles.indexLowerDiv}>
-                        <h2 className={`${styles.title} mb-8`}>Liked Summaries</h2>
+                        <h2 className={`${styles.title} mb-8`}>My Summaries</h2>
                         {summaryList.length > 0 && <div className={styles.summaryBrowser}>
                             {summaryList.map((summary, index) => (
                                 <div key={summary.summaryId} style={{borderRadius:10}}>
