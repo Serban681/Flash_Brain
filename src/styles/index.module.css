@@ -93,12 +93,16 @@
     bottom: 15rem;
 }
 
-.indexLowerDiv {
+.browseSection {
     background-color: var(--blue);
-    padding-left: 150px;
-    padding-right: 150px;
-    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.browseSectionContainer {
+    background-color: var(--blue);
     min-height: 400px;
+    width: 80%;
 }
 
 .indexSearchForm {
@@ -160,8 +164,48 @@
     gap: 50px; /* Gap between grid items */
 }
 
-@media (min-width: 1000px) {
+/* Category List element */
+
+.categoryElementDiv {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.categoryDiv, .categoryDivSelected {
+    color: var(--white);
+    font-family: var(--font-josefin);
+    font-weight: 500;
+    font-size: 1.2em;
+    border-radius: 13px;
+    padding: 0.4rem 1.4rem;
+    text-align: center;
+    margin-right: 25px;
+    margin-bottom: 15px;
+    margin-top: 0.6rem;
+    transition: scale 0.3s ease-in-out;
+}
+
+.categoryDiv {
+    background-color: var(--light-black);
+}
+
+.categoryDivSelected {
+    background-color: var(--black);
+}
+
+.categoryDiv:hover, .categoryDivSelected:hover {
+    cursor: pointer;
+    scale: 1.07;
+}
+
+@media (min-width: 1400px) {
     .heroContainer {
+        width: 70rem;
+    }
+
+    .browseSectionContainer {
         width: 70rem;
     }
 }
@@ -223,41 +267,24 @@
         top: 0;
         right: 0;
     }
+
+    .browseSectionContainer {
+        width: 21rem;
+    }
+
+    .categoryDiv, .categoryDivSelected {
+        color: var(--white);
+        font-family: var(--font-josefin);
+        font-weight: 500;
+        font-size: 1.2em;
+        border-radius: 13px;
+        padding: 0.4rem 1.4rem;
+        text-align: center;
+        margin-right: 1rem;
+        margin-bottom: 0.6rem;
+        margin-top: 0.6rem;
+        transition: scale 0.3s ease-in-out;
+    }
 }
 
 
-/* Category List element */
-
-.categoryElementDiv {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    margin-top: 2rem;
-}
-
-.categoryDiv, .categoryDivSelected {
-    color: var(--white);
-    font-family: var(--font-josefin);
-    font-weight: 500;
-    font-size: 1.2em;
-    border-radius: 13px;
-    padding: 0.4rem 1.4rem;
-    text-align: center;
-    margin-right: 25px;
-    margin-bottom: 15px;
-    margin-top: 0.6rem;
-    transition: scale 0.3s ease-in-out;
-}
-
-.categoryDiv {
-    background-color: var(--light-black);
-}
-
-.categoryDivSelected {
-    background-color: var(--black);
-}
-
-.categoryDiv:hover, .categoryDivSelected:hover {
-    cursor: pointer;
-    scale: 1.07;
-}

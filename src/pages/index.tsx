@@ -186,18 +186,18 @@ export default function Home() {
                 </div>
                 
                 
-                <section id="browseSection">
-                    <div className={styles.indexLowerDiv}>
+                <section id="browseSection" className={styles.browseSection}>
+                    <div className={styles.browseSectionContainer}>
                         <form onSubmit={(e) => handleSearch(e)} className={styles.indexSearchForm}>
-                        <div className={styles.searchBarDiv}>
-                            <input
-                                type="text"
-                                className={styles.searchBarInput}
-                                value={searchValue}
-                                onChange={(e) => setSearchValue(e.target.value)}
-                            ></input>
-                            <button className={styles.searchBarButton}>Search</button>
-                        </div>
+                            <div className={styles.searchBarDiv}>
+                                <input
+                                    type="text"
+                                    className={styles.searchBarInput}
+                                    value={searchValue}
+                                    onChange={(e) => setSearchValue(e.target.value)}
+                                ></input>
+                                <button className={styles.searchBarButton}>Search</button>
+                            </div>
                         </form>
                         <CategoryList
                             categoryList={activeCategoryList}
