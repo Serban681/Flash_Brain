@@ -204,7 +204,7 @@ export default function Home() {
                             setCategoryList={setActiveCategoryList}
                             searchValue={searchValue}
                         ></CategoryList>
-                        <div className="centered-container">
+                        <div className="centered-container mb-4">
                             <div className="lds-dual-ring" style={{opacity: isPendingSummaries ? '1' : '0'}}></div>
                         </div>
                         {summaryList.length > 0 && <div className={styles.summaryBrowser}>
@@ -221,7 +221,9 @@ export default function Home() {
                         {summaryList.length == 0 && !isPendingSummaries && <p style={{
                             fontFamily:'var(--font-josefin)',
                             fontSize: 26,
-                            color: 'var(--white)'
+                            color: 'var(--white)',
+                            textAlign: 'center',
+                            marginBottom: '8rem'
                         }}>No results found</p>}
                     </div>
                 </section>
