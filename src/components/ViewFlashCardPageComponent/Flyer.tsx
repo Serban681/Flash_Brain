@@ -1,7 +1,3 @@
-
-import { use } from "react"
-import { useEffect } from "react"
-
 export default function FlyerComponent({ degree, color, move, title, id, setCurrentFlashcard } : { degree: number, color: string, move: { up: number, right: number }, title: string, id: number, setCurrentFlashcard: (id: number) => void }) {
     const darkColor = color === 'yellow' ? 'dark-yellow' : color === 'green' ? 'dark-green' : 'dark-black'
 
