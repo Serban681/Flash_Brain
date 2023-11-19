@@ -145,7 +145,12 @@ export default function Home() {
            undefined, { shallow: true })
             setCurrentSearchedValue(searchValue);
        }
-        else router.push("/")
+        else {
+            setCurrentSearchedValue('');
+           router.push({
+                   pathname: '/'},
+               undefined, { shallow: true })
+       }
     }
 
     useEffect(() => {
@@ -185,7 +190,7 @@ export default function Home() {
                     </div>
                 </div>
                 
-                
+
                 <section id="browseSection" className={styles.browseSection}>
                     <div className={styles.browseSectionContainer}>
                         <form onSubmit={(e) => handleSearch(e)} className={styles.indexSearchForm}>
