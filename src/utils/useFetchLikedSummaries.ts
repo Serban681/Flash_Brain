@@ -25,7 +25,6 @@ function useFetchLikedSummaries(isLoggedIn: boolean) {
                 return res.json();
             })
             .then(data => {
-                console.log(data);
                 setSummaryList(data);
                 setIsPending(false);
             })

@@ -1,9 +1,6 @@
 import {useEffect, useState} from "react";
-// @ts-ignore
-import Cookies from "js-cookie";
 import config from "../config";
 import {Summary} from "@/utils/model/Summary";
-import {number, set} from "zod";
 
 function useFetchSingleSummary(summaryId: number) {
 
