@@ -87,6 +87,8 @@ html, body {
     transition: scale 0.2s ease-in-out;
 }
 
+
+
 .big-btn:hover {
     scale: 1.03;
 }
@@ -180,5 +182,11 @@ input:-webkit-autofill:active{
     }
     100% {
         transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 900px) {
+    .big-btn {
+        width: 100%;
     }
 }
