@@ -160,71 +160,73 @@ export default function Home() {
 
   return (
     <>
-      <>
-          <div className={styles.indexOuterDiv}>
-              <Header></Header>
-              <div className={`absolute bottom-10 transition-all ease-in ${!isPendingLoggedIn && isLoggedIn && !isScrolled ? 'right-[2rem]' : 'right-[-4rem]'}`}>
+        <div className={`bg-[var(--yellow)] ${styles.mainContainer}`}>
+            <Header></Header>
+            <div className={`absolute bottom-10 hidden md:block transition-all ease-in ${!isPendingLoggedIn && isLoggedIn && !isScrolled ? 'right-[2rem]' : 'right-[-4rem]'}`}>
                 <div onClick={goToFavourites} className={`cursor-pointer w-14 h-14 flex justify-center items-center bg-[#1B262C] rounded-full shadow-default`}>
                     <Image className="w-7 h-7" src={like_image} alt="" />
                 </div>
-              </div>
-              <div className={styles.indexContentDiv}>
-                <div className={styles.indexHigherDiv}>
-                    <div className={styles.indexHigherDivLeft}>
-                        <p className={styles.indexMotto}>Make hard things easy to understand</p>
-                        <div>
+            </div>
+            <div className={styles.contentContainer}>
+                <div className={styles.centerHero}>
+                    <div className={styles.heroContainer}>
+                        <div className={styles.heroMottoContainer}>
+                            <p className={styles.heroMotto}>Make hard things easy to understand</p>
+                        </div>
+                        <div className={styles.heroIllustration}>
+                            <div className={styles.circle1}></div>
+                            <div className={styles.circle2}></div>
+                            <div className={styles.circle3}></div>
+                        </div>
+                        <div className={styles.indexBtn}>
                             {!isLoggedIn && <button className="big-btn" onClick={() => router.push('/register')}>Register now</button>}
                             {isLoggedIn && <button className="big-btn" onClick={() => scrollToSection("browseSection")}>Get started</button>}
                         </div>
                     </div>
-                    <div className={styles.indexHigherDivRight}>
-                        <div className={styles.circle1}></div>
-                        <div className={styles.circle2}></div>
-                        <div className={styles.circle3}></div>
-                    </div>
                 </div>
-                  <section id="browseSection">
-                      <div className={styles.indexLowerDiv}>
-                          <form onSubmit={(e) => handleSearch(e)} className={styles.indexSearchForm}>
-                            <div className={styles.searchBarDiv}>
-                                <input
-                                    type="text"
-                                    className={styles.searchBarInput}
-                                    value={searchValue}
-                                    onChange={(e) => setSearchValue(e.target.value)}
-                                ></input>
-                                <button className={styles.searchBarButton}>Search</button>
-                            </div>
-                          </form>
-                          <CategoryList
-                              categoryList={activeCategoryList}
-                              setCategoryList={setActiveCategoryList}
-                              searchValue={searchValue}
-                          ></CategoryList>
-                            <div className="centered-container">
-                                <div className="lds-dual-ring" style={{opacity: isPendingSummaries ? '1' : '0'}}></div>
-                            </div>
-                          {summaryList.length > 0 && <div className={styles.summaryBrowser}>
-                              {summaryList.map((summary, index) => (
-                                  <div key={summary.summaryId} style={{borderRadius:10}}>
-                                      <SummaryCard
-                                          summary={summary}
-                                          backgroundColor={getSummaryBackground(index)}
-                                          secondaryColor={getSummarySecondaryColor(index)}
-                                      ></SummaryCard>
-                                  </div>
-                              ))}
-                          </div>}
-                          {summaryList.length == 0 && !isPendingSummaries && <p style={{
-                              fontFamily:'var(--font-josefin)',
-                              fontSize: 26,
-                              color: 'var(--white)'
-                          }}>No results found</p>}
-                      </div>
-                  </section>
-              </div>
-          </div>
-      </>
+                
+                
+                <section id="browseSection">
+                    <div className={styles.indexLowerDiv}>
+                        <form onSubmit={(e) => handleSearch(e)} className={styles.indexSearchForm}>
+                        <div className={styles.searchBarDiv}>
+                            <input
+                                type="text"
+                                className={styles.searchBarInput}
+                                value={searchValue}
+                                onChange={(e) => setSearchValue(e.target.value)}
+                            ></input>
+                            <button className={styles.searchBarButton}>Search</button>
+                        </div>
+                        </form>
+                        <CategoryList
+                            categoryList={activeCategoryList}
+                            setCategoryList={setActiveCategoryList}
+                            searchValue={searchValue}
+                        ></CategoryList>
+                        <div className="centered-container">
+                            <div className="lds-dual-ring" style={{opacity: isPendingSummaries ? '1' : '0'}}></div>
+                        </div>
+                        {summaryList.length > 0 && <div className={styles.summaryBrowser}>
+                            {summaryList.map((summary, index) => (
+                                <div key={summary.summaryId} style={{borderRadius:10}}>
+                                    <SummaryCard
+                                        summary={summary}
+                                        backgroundColor={getSummaryBackground(index)}
+                                        secondaryColor={getSummarySecondaryColor(index)}
+                                    ></SummaryCard>
+                                </div>
+                            ))}
+                        </div>}
+                        {summaryList.length == 0 && !isPendingSummaries && <p style={{
+                            fontFamily:'var(--font-josefin)',
+                            fontSize: 26,
+                            color: 'var(--white)'
+                        }}>No results found</p>}
+                    </div>
+                </section>
+            </div>
+        </div>
     </>
   );
 }
