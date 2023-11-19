@@ -1,12 +1,13 @@
 import Header from "@/components/GeneralComponents/Header"
 import Image from "next/image"
 import upload_icon from "@/images/upload_icon.svg"
-import { useState } from "react"
+import {useEffect, useState} from "react"
 import config from "@/config";
 import LoadingComponent from "@/components/GeneralComponents/LoadingComponent";
 // @ts-ignore
 import Cookies from "js-cookie";
 import router from "next/router";
+import useCheckLoggedIn from "@/utils/useCheckLoggedIn";
 
 export default function CreateFlashCardPage() {
     const [file, setFile] = useState<File | null>(null);
@@ -16,6 +17,11 @@ export default function CreateFlashCardPage() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [btnText, setBtnText] = useState<string>('Upload');
     const [createdId, setCreatedId] = useState<number>(0);
+    const {isLoggedIn, isPending} = useCheckLoggedIn();
+
+    useEffect(() => {
+        if(!isLoggedIn && !isPending) router.push('/login');
+    }, [isLoggedIn, isPending]);
 
     function handleFileChange(e:any) {
         setFile(e.target.files[0]);
