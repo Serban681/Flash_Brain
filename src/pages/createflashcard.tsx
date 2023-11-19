@@ -87,7 +87,7 @@ export default function CreateFlashCardPage() {
                         </div>
                         
                         <div className="mt-16">
-                            <button className="big-btn" onClick={handleClick}>{btnText}</button>
+                            <button className="big-btn" id="reduced-padding" onClick={handleClick}>{btnText}</button>
                         </div>
                     </div>
                 </div>
