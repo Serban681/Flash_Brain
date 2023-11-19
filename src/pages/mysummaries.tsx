@@ -1,5 +1,6 @@
 import Header from "@/components/GeneralComponents/Header";
-import styles from "@/styles/liked.module.css";
+import styles from "@/styles/index.module.css";
+import likeStyles from "@/styles/liked.module.css";
 import useCheckLoggedIn from "@/utils/useCheckLoggedIn";
 import {useEffect} from "react";
 import router from "next/router";
@@ -59,12 +60,15 @@ export default function MySummariesPage() {
     }
 
     return (
-        <div className={styles.likedPageOuterDiv}>
+        <div className={likeStyles.likedPageOuterDiv}>
             <Header></Header>
             
-            <div className={`w-screen mt-24 ${styles.likedContentDiv}`}>
-                    <div className={styles.indexLowerDiv}>
-                        <h2 className={`${styles.title} mb-8`}>My Summaries</h2>
+            <section id="browseSection" className={styles.browseSection}>
+                    <div className={styles.browseSectionContainer}>
+                        <div className="centered-container mb-4">
+                            <div className="lds-dual-ring" style={{opacity: isPending ? '1' : '0'}}></div>
+                        </div>
+                        <h2 className={`${likeStyles.title} mb-8`}>My Summaries</h2>
                         {summaryList.length > 0 && <div className={styles.summaryBrowser}>
                             {summaryList.map((summary, index) => (
                                 <div key={summary.summaryId} style={{borderRadius:10}}>
@@ -72,17 +76,19 @@ export default function MySummariesPage() {
                                         summary={summary}
                                         backgroundColor={getSummaryBackground(index)}
                                         secondaryColor={getSummarySecondaryColor(index)}
-                                    ></SummaryCard>    
+                                    ></SummaryCard>
                                 </div>
                             ))}
                         </div>}
                         {summaryList.length == 0 && !isPending && <p style={{
                             fontFamily:'var(--font-josefin)',
                             fontSize: 26,
-                            color: 'var(--white)'
+                            color: 'var(--white)',
+                            textAlign: 'center',
+                            marginBottom: '8rem'
                         }}>No results found</p>}
                     </div>
-            </div>
+            </section>
         </div>
     )
 }
