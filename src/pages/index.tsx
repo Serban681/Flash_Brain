@@ -1,4 +1,3 @@
-import Head from "next/head";
 import Header from "@/components/GeneralComponents/Header";
 import useCheckLoggedIn from "@/utils/useCheckLoggedIn";
 import styles from '@/styles/index.module.css';
@@ -8,7 +7,6 @@ import {Category} from "@/utils/model/Category";
 import SummaryCard from "@/components/MainPageComponents/SummaryCard";
 import useFetchSummaries from "@/utils/useFetchSummaries";
 import {useSearchParams} from "next/navigation";
-import useFetchLikedSummaries from "@/utils/useFetchLikedSummaries";
 import Image from "next/image";
 
 import like_image from "@/images/like_image_icon.svg";
@@ -154,12 +152,6 @@ export default function Home() {
     }
 
     useEffect(() => {
-        if(currentSearchedValue) {
-            // const section = document.getElementById('browseSection');
-            // if (section) {
-            //     section.scrollIntoView({behavior: 'smooth'});
-            // }
-        }
         setSearchValue(currentSearchedValue ?? '');
     }, [currentSearchedValue]);
 

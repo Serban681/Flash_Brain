@@ -1,7 +1,6 @@
 import styles from '../../styles/summary-card.module.css'
 import {Summary} from "@/utils/model/Summary";
 import Link from 'next/link';
-import {MouseEvent, useState} from "react";
 import thumbs_up from "@/images/thumbs_up.svg";
 import Image from "next/image";
 
