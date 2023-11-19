@@ -24,6 +24,7 @@ export default function useFetchUserSummaries() {
             return res.json();
         })
             .then(data => {
+                console.log(data);
                 setSummaryList(data);
                 setIsPending(false);
             })

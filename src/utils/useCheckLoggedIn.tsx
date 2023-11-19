@@ -23,7 +23,6 @@ function useCheckLoggedIn() {
                 return res.json();
             })
             .then(data => {
-                console.log(data);
                 setUserInformation(data);
             })
             .catch(() => {
