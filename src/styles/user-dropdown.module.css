@@ -82,3 +82,9 @@
     right: 2rem;
     bottom: 2rem;
 }
+
+@media (max-width: 900px) {
+    .userDropdownOuterDiv, .userDropdownOuterDivHidden {
+        width: 20rem;
+    }
+}
