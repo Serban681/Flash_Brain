@@ -6,7 +6,7 @@ import router from "next/router";
 import useFetchLikedSummaries from "@/utils/useFetchLikedSummaries";
 import useFetchSummaries from "@/utils/useFetchSummaries";
 
-export default function liked() {
+export default function FavouritesPage() {
 
     const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
 
@@ -18,7 +18,7 @@ export default function liked() {
         <div className={styles.likedPageOuterDiv}>
             <Header></Header>
             <div className={styles.likedContentDiv}>
-                <p className={styles.title}>Liked summaries</p>
+                <h2 className="float-right">Liked Summaries</h2>
             </div>
         </div>
     )
