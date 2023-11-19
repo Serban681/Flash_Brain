@@ -5,6 +5,7 @@
     flex-direction: column;
     align-items: center;
     background-color: var(--blue);
+    min-height: calc(100vh - 8rem);
 }
 
 .likedContentDiv {
