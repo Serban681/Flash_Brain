@@ -55,6 +55,10 @@ export default function ViewFlashCardPage() {
     }, [likedSummaryList, summary]);
 
     const likeThePost = () => {
+        if(!isLoggedIn) {
+            router.push('/login');
+            return;
+        }
         if(isLiked) {
             fetch(config.apiUrl + "/like/" + summary?.summaryId,
                 {method: 'DELETE',
