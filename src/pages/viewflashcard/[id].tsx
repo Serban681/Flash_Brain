@@ -186,7 +186,7 @@ export default function ViewFlashCardPage() {
             {
                 !!imagePath && 
                 <div className={imageActive ? imgActiveStyle : imgPasiveStyle} onClick={() => setImageActive(!imageActive)} >
-                    <Image width={400} height={300} className="h-[17rem] w-[30rem] object-cover" src={'http://3f3b-34-83-57-216.ngrok-free.app/' + imagePath} alt=""  />
+                    <Image width={400} height={300} className="h-[17rem] w-[30rem] object-cover bg-white" src={'http://3f3b-34-83-57-216.ngrok-free.app/' + imagePath} alt=""  />
                 </div>
             }
             
