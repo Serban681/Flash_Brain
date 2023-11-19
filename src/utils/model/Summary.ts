@@ -1,4 +1,5 @@
 import {Flashcard} from "@/utils/model/Flashcard";
+import {Like} from "@/utils/model/Like";
 
 export interface Summary {
     summaryId: number;
@@ -8,5 +9,5 @@ export interface Summary {
     isPublic: boolean;
     flashCards: Flashcard[];
     path?: string;
-    likes?: number[];
+    likes?: Like[];
 }

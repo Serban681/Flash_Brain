@@ -26,6 +26,7 @@ function useFetchSingleSummary(summaryId: number) {
             .then(data => {
                 setSummary(data);
                 setIsPending(false);
+                console.log(data);
             })
             .catch((e) => {
                 setIsPending(false);

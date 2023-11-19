@@ -31,6 +31,7 @@ function useFetchSummaries(searchValue: string, categoryList:number[]) {
                 return res.json();
             })
             .then(data => {
+                console.log(data);
                 setSummaryList(data);
                 setIsPending(false);
             })

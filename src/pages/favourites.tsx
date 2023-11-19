@@ -6,6 +6,7 @@ import {useEffect} from "react";
 import router from "next/router";
 import useFetchUserSummaries from "@/utils/useFetchUserSummaries";
 import SummaryCard from "@/components/MainPageComponents/SummaryCard";
+import useFetchLikedSummaries from "@/utils/useFetchLikedSummaries";
 
 export default function FavouritesPage() {
 
@@ -15,7 +16,7 @@ export default function FavouritesPage() {
         error,
         isPending,
         summaryList
-    } = useFetchUserSummaries();
+    } = useFetchLikedSummaries(isLoggedIn);
 
     useEffect(() => {
         console.log(summaryList);

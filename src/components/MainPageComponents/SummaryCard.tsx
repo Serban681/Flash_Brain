@@ -1,27 +1,16 @@
 import styles from '../../styles/summary-card.module.css'
 import {Summary} from "@/utils/model/Summary";
 import Link from 'next/link';
-import {useState} from "react";
+import {MouseEvent, useState} from "react";
 import thumbs_up from "@/images/thumbs_up.svg";
 import Image from "next/image";
 
-export default function SummaryCard(props:any) {
+export default function SummaryCard(props: any) {
 
-    let summary:Summary = props.summary;
+    let summary: Summary = props.summary;
     let isLoggedIn = props.isLoggedIn;
     let backgroundColor: string = props.backgroundColor;
     let secondaryColor: string = props.secondaryColor;
-
-    const [isLiked, setIsLiked] = useState<boolean>(false);
-
-    function likeCard() {
-        if(isLiked) return;
-        else {
-            //TODO call post like api endpoint and add the current summary to the local list of user liked summaries
-        }
-    }
-
-    //TODO 2 different classes for the like icon (one with fill one without)
 
     return (
         <Link href={"/viewflashcard/" + summary.summaryId}><div className={styles.summaryCardOuterDiv}>
@@ -42,12 +31,11 @@ export default function SummaryCard(props:any) {
                 <div className={`relative ${styles.summaryRightDiv}`} style={{backgroundColor: backgroundColor}}>
                     {summary.title}
                     <div className='absolute flex right-2 bottom-0.5'>
-                        <p>126</p>
-                        <Image className='w-4 ml-0.5 mb-1' width={40} height={40} src={thumbs_up} alt="" />
+                        <p>{summary.likes?.length ?? 0}</p>
+                        <Image className='w-4 ml-0.5 mb-1' width={40} height={40} src={thumbs_up} alt=""/>
                     </div>  
                 </div>
             </div>
         </Link>
     )
-
 }
