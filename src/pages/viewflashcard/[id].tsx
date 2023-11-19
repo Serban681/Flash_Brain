@@ -3,20 +3,14 @@ import FlyerComponent from "@/components/ViewFlashCardPageComponent/Flyer"
 import Image from "next/image"
 import like_icon from "@/images/like_icon.svg"
 import arrow from "@/images/arrow.svg"
-
 import { useRouter} from "next/router"
-
 import { useEffect, useState } from "react"
-import { Summary } from "@/utils/model/Summary"
 import { Flashcard } from "@/utils/model/Flashcard"
-import { User } from "@/utils/model/User"
 import useCheckLoggedIn from "@/utils/useCheckLoggedIn"
 import thumbs_up from "@/images/thumbs_up.svg"
-
 import useFetchSingleSummary from "@/utils/useFetchSingleSummary"
 import useFetchSingleUser from "@/utils/useFetchSingleUser";
 import useFetchLikedSummaries from "@/utils/useFetchLikedSummaries";
-import SummaryCard from "@/components/MainPageComponents/SummaryCard";
 import config from "@/config";
 // @ts-ignore
 import Cookies from "js-cookie";
@@ -25,7 +19,6 @@ export default function ViewFlashCardPage() {
     const router = useRouter()
     const { id } = router.query
     const numberId = Number(id);
-    const [likeOffset, setLikeOffset] = useState<number>(0);
 
     //get the summary
     const {error:errorGettingSummary, isPending:summaryPending, summary} = useFetchSingleSummary(numberId);
@@ -34,6 +27,12 @@ export default function ViewFlashCardPage() {
     //check logged-in status
     const {isLoggedIn, isPending, userInformation} = useCheckLoggedIn();
     //get the liked summaries of the current user
+    const [likeCount, setLikeCount] = useState<number>(0);
+
+    useEffect(() => {
+        setLikeCount(summary?.likes?.length!);
+    }, [summary]);
+
     let {
         error,
         isPending:isPendingLikedSummaries,
@@ -68,7 +67,7 @@ export default function ViewFlashCardPage() {
                 .then(res => {
                     if(!res.ok) throw Error("Couldn't remove like from summary");
                     setIsLiked(false);
-                    setLikeOffset(0);
+                    setLikeCount(likeCount - 1);
                 })
                 .catch((e) => {
                     console.log(e.message);
@@ -83,7 +82,7 @@ export default function ViewFlashCardPage() {
                 .then(res => {
                     if(!res.ok) throw Error("Couldn't like post");
                     setIsLiked(true);
-                    setLikeOffset(1);
+                    setLikeCount(likeCount + 1);
                 })
                 .catch((e) => {
                     console.log(e.message);
@@ -131,10 +130,7 @@ export default function ViewFlashCardPage() {
 
     const addTagsAfterPeriods = (str: string) => {
         var sentences = str.split('.');
-
-        var resultString = '<p>' + sentences.join('.</p><br><p>') + '</p>';
-
-        return resultString;
+        return '<p>' + sentences.join('.</p><br><p>') + '</p>';
     }
 
     return (
@@ -171,7 +167,7 @@ export default function ViewFlashCardPage() {
 
                             <div className="flex justify-between mt-7">
                                 <div className="flex mt-10">
-                                    <div className="mr-1 text-[1.3rem]">{summary?.likes?.length ? summary?.likes?.length + likeOffset : 0}</div>
+                                    <div className="mr-1 text-[1.3rem]">{likeCount}</div>
                                     <Image onClick={() => likeThePost()} className="w-6 mb-2 hover:scale-110 cursor-pointer" src={isLiked ? thumbs_up : like_icon} alt="" />
                                 </div>
                                 <div className="mt-5 text-right">
