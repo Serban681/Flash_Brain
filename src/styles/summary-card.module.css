@@ -62,3 +62,10 @@
     text-align: center;
     justify-content: center;
 }
+
+@media (max-width: 900px) {
+    .summaryCardOuterDiv {
+        margin-top: -1rem;
+        margin-bottom: -0.5rem;
+    }
+}
