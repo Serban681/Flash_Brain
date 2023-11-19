@@ -14,7 +14,7 @@ function useFetchLikedSummaries(isLoggedIn: boolean) {
         if(!isLoggedIn) return;
         setError('');
         setIsPending(true);
-        fetch(config.apiUrl + "/user/liked/5",
+        fetch(config.apiUrl + "/user/liked",
             {method: 'GET',
                 headers: {
                 "Origin":config.origin,
