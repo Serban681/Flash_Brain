@@ -3,7 +3,7 @@ import Header from "@/components/GeneralComponents/Header";
 import Image from "next/image";
 import GoogleImage from "@/images/google_logo.svg";
 import Link from "next/link";
-import {ChangeEvent, useState} from "react";
+import {useState} from "react";
 import {RegisterRequest} from "@/utils/model/RegisterRequest";
 import config from "@/config";
 // @ts-ignore
@@ -70,7 +70,7 @@ export default function RegisterPage() {
             })
             .then((data) => {
                 setIsLoading(false);
-                Cookies.set('jwtToken', data.access_token);
+                localStorage.setItem('jwtToken', data.access_token);
                 router.push('/');
             })
             .catch((error) => {
@@ -122,7 +122,7 @@ export default function RegisterPage() {
                             })
                             .then((data) => {
                                 setIsLoading(false);
-                                Cookies.set('jwtToken', data.access_token);
+                                localStorage.setItem('jwtToken', data.access_token);
                                 router.push('/');
                             })
                             .catch((error) => {

@@ -1,6 +1,4 @@
-import {use, useEffect, useState} from "react";
-// @ts-ignore
-import Cookies from "js-cookie";
+import {useEffect, useState} from "react";
 import config from "../config";
 import {User} from "@/utils/model/User";
 
@@ -11,10 +9,10 @@ function useCheckLoggedIn() {
     const [userInformation, setUserInformation] = useState<User | undefined>(undefined);
 
     useEffect(() => {
-        fetch(config.apiUrl + "/auth/verifyToken",
+        fetch(config.apiUrl + "/auth/token/status",
             {method: 'GET',
                 headers: {"Origin":config.origin,
-                    "Authorization": "Bearer " + Cookies.get('jwtToken')}}
+                    "Authorization": "Bearer " + localStorage.getItem('jwtToken')}}
         )
             .then(res => {
                 if(!res.ok) throw Error("Couldn't check logged in state");

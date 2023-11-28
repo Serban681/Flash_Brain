@@ -1,6 +1,4 @@
 import styles from './../../styles/user-dropdown.module.css';
-// @ts-ignore
-import Cookies from "js-cookie";
 import {useEffect, useRef} from "react";
 import gravatar from 'gravatar';
 import Image from 'next/image';
@@ -41,7 +39,7 @@ export default function UserDropdown(props:any) {
     }, [componentRef]);
 
     const handleSignOut = () => {
-        Cookies.remove('jwtToken');
+        localStorage.removeItem('jwtToken');
         router.push('/');
         window.location.reload();
     }

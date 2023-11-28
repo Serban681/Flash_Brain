@@ -6,8 +6,6 @@ import GoogleImage from "@/images/google_logo.svg";
 import {useState} from "react";
 import {LoginRequest} from "@/utils/model/LoginRequest";
 import config from "@/config";
-// @ts-ignore
-import Cookies from "js-cookie";
 import router from "next/router";
 import {useGoogleLogin} from "@react-oauth/google";
 export default function LoginPage() {
@@ -17,22 +15,8 @@ export default function LoginPage() {
     const [error, setError] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    function handleLogin(e:any) {
-        e.preventDefault();
-        const loginData: LoginRequest = {
-            password,
-            username,
-        };
-
-        if(password === '' || username === '') {
-            setError('⚠ Username and password cannot be empty.');
-            return;
-        }
-
-        setError('');
-        setIsLoading(true);
-
-        fetch(config.apiUrl + "/auth/generate", {
+    function authApiCall(loginData: LoginRequest) {
+        fetch(config.apiUrl + "/auth/token", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -51,7 +35,7 @@ export default function LoginPage() {
                 }
             })
             .then((data) => {
-                Cookies.set('jwtToken', data.access_token);
+                localStorage.setItem('jwtToken', data.access_token);
                 setIsLoading(false);
                 router.push('/');
             })
@@ -59,6 +43,22 @@ export default function LoginPage() {
                 setIsLoading(false);
                 setError('⚠ ' + error.message);
             });
+    }
+
+    function handleLogin(e:any) {
+        e.preventDefault();
+        const loginData: LoginRequest = {
+            password,
+            username
+        };
+
+        if(password === '' || username === '') {
+            setError('⚠ Username and password cannot be empty.');
+            return;
+        }
+        setError('');
+        setIsLoading(true);
+        authApiCall(loginData);
     }
 
     const handleGoogleLogin =
@@ -85,33 +85,7 @@ export default function LoginPage() {
                             username: userInfo.email.substring(0, atIndex),
                             password: userInfo.id
                         }
-                        fetch(config.apiUrl + "/auth/generate", {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Origin': config.origin
-                            },
-                            body: JSON.stringify(loginData),
-                        })
-                            .then((response) => {
-                                if (response.ok) {
-                                    return response.json();
-                                } else {
-                                    if(response.status === 401)
-                                        throw new Error('Password is incorrect.');
-                                    else if(response.status === 404) throw new Error('User not found.');
-                                    else throw new Error('Something went wrong.');
-                                }
-                            })
-                            .then((data) => {
-                                Cookies.set('jwtToken', data.access_token);
-                                setIsLoading(false);
-                                router.push('/');
-                            })
-                            .catch((error) => {
-                                setError('⚠ ' + error.message);
-                                setIsLoading(false);
-                            });
+                        authApiCall(loginData);
                     })
                     .catch(() => {
                         setIsLoading(false);
