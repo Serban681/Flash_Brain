@@ -25,7 +25,7 @@ export default function ViewFlashCardPage() {
     //get the owner of the summary
     const {error:errorGettingOwner, isPending:ownerPending, user:owner} = useFetchSingleUser(summary?.ownerId);
     //check logged-in status
-    const {isLoggedIn, isPending, userInformation} = useCheckLoggedIn();
+    const {isLoggedIn, isPending, userInformation} = useCheckLoggedIn(0);
     //get the liked summaries of the current user
     const [likeCount, setLikeCount] = useState<number>(0);
 

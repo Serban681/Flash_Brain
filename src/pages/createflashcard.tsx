@@ -17,7 +17,7 @@ export default function CreateFlashCardPage() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [btnText, setBtnText] = useState<string>('Upload');
     const [createdId, setCreatedId] = useState<number>(0);
-    const {isLoggedIn, isPending} = useCheckLoggedIn();
+    const {isLoggedIn, isPending} = useCheckLoggedIn(0);
 
     useEffect(() => {
         if(!isLoggedIn && !isPending) router.push('/login');

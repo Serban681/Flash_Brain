@@ -12,7 +12,7 @@ export default function UserDropdown(props:any) {
     let setIsHidden = props.setIsHidden;
     const componentRef = useRef<HTMLDivElement>(null);
 
-    const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
+    const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn(0);
 
     const gravatarUrl = !isPendingLoggedIn && isLoggedIn ? gravatar.url(!!userInformation ? userInformation.email : '' , {protocol: 'http', s: '40'}) : ''
 

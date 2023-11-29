@@ -2,12 +2,11 @@ import AvatarComponent from "./Avatar";
 import LogoComponent from "./Logo";
 import Image from "next/image";
 import AddImage from "@/images/plus.svg";
-import HeartImage from "@/images/liked_icon.svg";
 import router from "next/router";
 import useCheckLoggedIn from "@/utils/useCheckLoggedIn";
 
 export default function Header() {
-    const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
+    const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn(0);
 
     const goToCreateFlashCardPage = () => {
         if(!isPendingLoggedIn && isLoggedIn) {

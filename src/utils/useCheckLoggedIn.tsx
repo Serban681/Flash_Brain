@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import config from "../config";
 import {User} from "@/utils/model/User";
 
-function useCheckLoggedIn() {
+function useCheckLoggedIn(initiator: number) {
 
     const [isPending, setIsPending] = useState<boolean>(true);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -27,7 +27,7 @@ function useCheckLoggedIn() {
                 setIsPending(false);
                 setIsLoggedIn(false);
             })
-    }, [])
+    }, [initiator])
     return {isLoggedIn, isPending, userInformation};
 
 }

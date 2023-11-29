@@ -2,14 +2,14 @@ import AccountCircle from '@/images/account_circle.svg'
 import Image from 'next/image'
 import router from 'next/router'
 import UserDropdown from "@/components/GeneralComponents/UserDropdown";
-import {use, useEffect, useState} from "react";
+import {useState} from "react";
 import useCheckLoggedIn from "@/utils/useCheckLoggedIn";
 import gravatar from 'gravatar';
 
 export default function AvatarComponent() {
 
     const [isHidden ,setIsHidden] = useState(true)
-    const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
+    const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn(0);
 
     const handleClick = () => {
         if(!isLoggedIn) router.push('/login');

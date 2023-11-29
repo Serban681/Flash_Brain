@@ -4,13 +4,12 @@ import styles from "@/styles/index.module.css";
 import useCheckLoggedIn from "@/utils/useCheckLoggedIn";
 import {useEffect} from "react";
 import router from "next/router";
-import useFetchUserSummaries from "@/utils/useFetchUserSummaries";
 import SummaryCard from "@/components/MainPageComponents/SummaryCard";
 import useFetchLikedSummaries from "@/utils/useFetchLikedSummaries";
 
 export default function FavouritesPage() {
 
-    const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
+    const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn(0);
 
     let {
         error,
