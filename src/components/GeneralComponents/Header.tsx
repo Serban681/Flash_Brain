@@ -17,11 +17,8 @@ export default function Header() {
     return (
         <div className="inline flex justify-between text-white w-full items-center pt-5">
             <div className={`${!isPendingLoggedIn && isLoggedIn ? 'opacity-100 cursor-pointer' : 'opacity-0' }`}>
-                <div style={{display:'flex', flexDirection:'row', alignItems: 'center'}}>
-                    <Image onClick={goToCreateFlashCardPage} src={AddImage} alt="" className="ml-5 h-10" />
-                </div>
+                <Image onClick={goToCreateFlashCardPage} src={AddImage} alt="" className="ml-0 h-10" />
             </div>
-            
             <LogoComponent />
             <AvatarComponent />
         </div>

@@ -15,7 +15,7 @@ export default function CreateFlashCardPage() {
     const [isPendingUpload, setIsPendingUpload] = useState<boolean>(false);
     const [isPublic, setIsPublic] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [btnText, setBtnText] = useState<string>('Upload');
+    const [btnText, setBtnText] = useState<string>('Generate');
     const [createdId, setCreatedId] = useState<number>(0);
     const {isLoggedIn, isPending} = useCheckLoggedIn(0);
 
@@ -28,7 +28,7 @@ export default function CreateFlashCardPage() {
     }
 
     const handleClick = () => {
-        if(btnText === 'Upload') {
+        if(btnText === 'Generate') {
             handleFileUpload();
         } else {
             router.push(`/viewflashcard/${createdId}`)
@@ -44,31 +44,31 @@ export default function CreateFlashCardPage() {
         const formData = new FormData();
         formData.append('uploadFile', file);
         setIsLoading(true);
-
-        fetch(config.apiUrl + '/file/uploadfile?isPublic=' + isPublic, {
-            method: 'POST',
-            headers: {
-                "Origin":config.origin,
-                "Authorization": "Bearer " + Cookies.get('jwtToken')
-            },
-            body: formData
-        })
-        .then(async (response) => {
-            if (!response.ok) {
-                throw new Error('Something went wrong');
-            } else {
-                setIsLoading(false);
-                setBtnText('View Summary');
-                await response.json().then(data => {
-                    setCreatedId(data.summaryId);
-                });
-            }
-        })
-        .catch((error) => {
-            console.error('There was a problem with the upload');
-            setIsPendingUpload(false);
-            setIsLoading(false);
-        });
+        console.log(isPublic);
+        // fetch(config.apiUrl + '/file/uploadfile?isPublic=' + isPublic, {
+        //     method: 'POST',
+        //     headers: {
+        //         "Origin":config.origin,
+        //         "Authorization": "Bearer " + Cookies.get('jwtToken')
+        //     },
+        //     body: formData
+        // })
+        // .then(async (response) => {
+        //     if (!response.ok) {
+        //         throw new Error('Something went wrong');
+        //     } else {
+        //         setIsLoading(false);
+        //         setBtnText('View Summary');
+        //         await response.json().then(data => {
+        //             setCreatedId(data.summaryId);
+        //         });
+        //     }
+        // })
+        // .catch((error) => {
+        //     console.error('There was a problem with the upload');
+        //     setIsPendingUpload(false);
+        //     setIsLoading(false);
+        // });
     }
 
     return (
@@ -90,11 +90,17 @@ export default function CreateFlashCardPage() {
                             <input type="file" id="fileInput" className="file-input" onChange={handleFileChange} />
                                
                             <div className="file-input-label">Choose a file</div>
+                            {fileError && <div className="text-red-500 text-center font-josefin font-bold mt-2">{"⚠ " + fileError}</div>}
                         </div>
                         
                         <div className="mt-16">
-                            <button className="big-btn" id="reduced-padding" onClick={handleClick}>{btnText}</button>
+                            <button className="big-btn mb-5" id="reduced-padding" onClick={handleClick}>{btnText}</button>
                         </div>
+                        <div className="flex flex-row items-center mb-5">
+                            <input type='checkbox' checked={isPublic} onChange={() => setIsPublic(!isPublic)} className="mr-1"/>
+                            <span className="text-white font-josefin font-bold">Private summary</span>
+                        </div>
+
                     </div>
                 </div>
             </div>
