@@ -5,21 +5,10 @@ import useCheckLoggedIn from "@/utils/useCheckLoggedIn";
 import {useEffect} from "react";
 import router from "next/router";
 import SummaryCard from "@/components/MainPageComponents/SummaryCard";
-import useFetchLikedSummaries from "@/utils/useFetchLikedSummaries";
 
 export default function FavouritesPage() {
 
     const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn(0);
-
-    let {
-        error,
-        isPending,
-        summaryList
-    } = useFetchLikedSummaries(isLoggedIn);
-
-    useEffect(() => {
-        console.log(summaryList);
-    }, [summaryList]);
 
     useEffect(() => {
         if(!isPendingLoggedIn && !isLoggedIn) router.push("/login");
@@ -66,11 +55,11 @@ export default function FavouritesPage() {
             <section id="browseSection" className={styles.browseSection}>
                     <div className={styles.browseSectionContainer}>
                         <div className="centered-container mb-4">
-                            <div className="lds-dual-ring" style={{opacity: isPending ? '1' : '0'}}></div>
+                            <div className="lds-dual-ring" style={{opacity: isPendingLoggedIn ? '1' : '0'}}></div>
                         </div>
                         <h2 className={`${likedStyles.title} mb-8`}>My Favourites</h2>
-                        {summaryList.length > 0 && <div className={styles.summaryBrowser}>
-                            {summaryList.map((summary, index) => (
+                        {userInformation?.likes && userInformation.likes.length > 0 && <div className={styles.summaryBrowser}>
+                            {userInformation.likes.map((summary, index) => (
                                 <div key={summary.summaryId} style={{borderRadius:10}}>
                                     <SummaryCard
                                         summary={summary}
@@ -80,7 +69,7 @@ export default function FavouritesPage() {
                                 </div>
                             ))}
                         </div>}
-                        {summaryList.length == 0 && !isPending && <p style={{
+                        {userInformation?.likes && userInformation.likes.length == 0 && !isPendingLoggedIn && <p style={{
                             fontFamily:'var(--font-josefin)',
                             fontSize: 26,
                             color: 'var(--white)',

@@ -89,7 +89,7 @@ export default function RegisterPage() {
             })
             .then((data) => {
                 setIsLoading(false);
-                localStorage.setItem('jwtToken', data.access_token);
+                localStorage.setItem('jwtToken', data.accessToken);
                 setIsEmailMessage(true);
                 registerInterval = setInterval(() => {
                     setLoggedInNumber(prevNumber => prevNumber + 1)
@@ -145,7 +145,7 @@ export default function RegisterPage() {
                             })
                             .then((data) => {
                                 setIsLoading(false);
-                                localStorage.setItem('jwtToken', data.access_token);
+                                localStorage.setItem('jwtToken', data.accessToken);
                                 setIsEmailMessage(true);
                                 registerInterval = setInterval(() => {
                                     setLoggedInNumber(prevNumber => prevNumber + 1);

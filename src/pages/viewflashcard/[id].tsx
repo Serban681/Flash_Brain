@@ -10,10 +10,7 @@ import useCheckLoggedIn from "@/utils/useCheckLoggedIn"
 import thumbs_up from "@/images/thumbs_up.svg"
 import useFetchSingleSummary from "@/utils/useFetchSingleSummary"
 import useFetchSingleUser from "@/utils/useFetchSingleUser";
-import useFetchLikedSummaries from "@/utils/useFetchLikedSummaries";
 import config from "@/config";
-// @ts-ignore
-import Cookies from "js-cookie";
 
 export default function ViewFlashCardPage() {
     const router = useRouter()
@@ -24,7 +21,7 @@ export default function ViewFlashCardPage() {
     const {error:errorGettingSummary, isPending:summaryPending, summary} = useFetchSingleSummary(numberId);
     //get the owner of the summary
     const {error:errorGettingOwner, isPending:ownerPending, user:owner} = useFetchSingleUser(summary?.ownerId);
-    //check logged-in status
+    //check logged-in status and get the current logged-in user
     const {isLoggedIn, isPending, userInformation} = useCheckLoggedIn(0);
     //get the liked summaries of the current user
     const [likeCount, setLikeCount] = useState<number>(0);
@@ -33,25 +30,17 @@ export default function ViewFlashCardPage() {
         setLikeCount(summary?.likes?.length!);
     }, [summary]);
 
-    let {
-        error,
-        isPending:isPendingLikedSummaries,
-        summaryList: likedSummaryList,
-        setSummaryList
-    } = useFetchLikedSummaries(isLoggedIn);
-
-
     const [isLiked, setIsLiked] = useState<boolean>(false);
     //check if the current summary is in the list of liked summaries of the current user
     useEffect(() => {
-        if(likedSummaryList) {
-            likedSummaryList.forEach((likedSummary) =>{
+        if(userInformation?.likes) {
+            userInformation.likes.forEach((likedSummary) =>{
                 if(likedSummary.summaryId === summary?.summaryId) {
                     setIsLiked(true);
                 }
             })
         }
-    }, [likedSummaryList, summary]);
+    }, [userInformation, summary]);
 
     const likeThePost = () => {
         if(!isLoggedIn) {
@@ -62,7 +51,7 @@ export default function ViewFlashCardPage() {
             fetch(config.apiUrl + "/like/" + summary?.summaryId,
                 {method: 'DELETE',
                     headers: {"Origin":config.origin,
-                        "Authorization": "Bearer " + Cookies.get('jwtToken')}}
+                        "Authorization": "Bearer " + localStorage.getItem('jwtToken')}}
             )
                 .then(res => {
                     if(!res.ok) throw Error("Couldn't remove like from summary");
@@ -77,7 +66,7 @@ export default function ViewFlashCardPage() {
             fetch(config.apiUrl + "/like/" + summary?.summaryId,
                 {method: 'GET',
                     headers: {"Origin":config.origin,
-                        "Authorization": "Bearer " + Cookies.get('jwtToken')}}
+                        "Authorization": "Bearer " + localStorage.getItem('jwtToken')}}
             )
                 .then(res => {
                     if(!res.ok) throw Error("Couldn't like post");
@@ -99,7 +88,7 @@ export default function ViewFlashCardPage() {
     const [imagePath, setCurImagePath] = useState<string | null | undefined>(flashcards && flashcards[0]?.imagePath!)
 
     const imgActiveStyle = 'absolute border-8 border-white right-[7rem] bottom-[2rem] cursor-pointer z-10 shadow-default transition-all duration-500 ease-in-out hover:scale-105'
-    const imgPasiveStyle = 'absolute border-8 border-white right-[-25rem] bottom-[7rem] cursor-pointer z-10 shadow-default transition-all duration-500 ease-in-out hover:scale-105'
+    const imgPassiveStyle = 'absolute border-8 border-white right-[-25rem] bottom-[7rem] cursor-pointer z-10 shadow-default transition-all duration-500 ease-in-out hover:scale-105'
 
     useEffect(() => {
         setFlashcards(summary?.flashCards!)
@@ -182,14 +171,12 @@ export default function ViewFlashCardPage() {
 
             <Image onClick={prevFive} className="absolute left-10 bottom-1/2 hover:scale-110 cursor-pointer w-8 rotate-180" src={arrow} alt='' />
             <Image onClick={nextFive} className="absolute right-10 bottom-1/2 hover:scale-110 cursor-pointer w-8" src={arrow} alt='' />
-            
             {
                 !!imagePath && 
-                <div className={imageActive ? imgActiveStyle : imgPasiveStyle} onClick={() => setImageActive(!imageActive)} >
+                <div className={imageActive ? imgActiveStyle : imgPassiveStyle} onClick={() => setImageActive(!imageActive)} >
                     <Image width={400} height={300} className="h-[17rem] w-[30rem] object-cover" src={'http://fd72-34-32-181-95.ngrok-free.app/' + imagePath} alt=""  />
                 </div>
             }
-            
         </div>
     )
 }

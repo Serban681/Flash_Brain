@@ -18,7 +18,7 @@ function useFetchLikedSummaries(isLoggedIn: boolean) {
             {method: 'GET',
                 headers: {
                 "Origin":config.origin,
-                    "Authorization": "Bearer " + Cookies.get('jwtToken')}}
+                    "Authorization": "Bearer " + localStorage.getItem('jwtToken')}}
         )
             .then(res => {
                 if(!res.ok) throw Error("Couldn't fetch summaries");

@@ -1,9 +1,10 @@
-import {Like} from "@/utils/model/Like";
+import {Summary} from "@/utils/model/Summary";
 
 export interface User {
     uid?: number;
     email: string;
     password?: string;
     username: string;
-    likes?: Like[];
+    likes?: Summary[];
+    summaries?: Summary[];
 }
