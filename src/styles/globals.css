@@ -125,6 +125,24 @@ html, body {
     transition: scale 0.2s ease-in-out;
 }
 
+.delete-btn {
+    margin-top: 1rem;
+    background-color: var(--black);
+    border-radius: var(--border-radius);
+    color: var(--white);
+    font-family: 'Josefin Sans', sans-serif;
+    height: 2rem;
+    text-align: center;
+    vertical-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-btn:hover {
+    background-color: var(--dark-black);
+}
+
 #green {
     background-color: var(--green);
 }
