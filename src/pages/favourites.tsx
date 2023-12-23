@@ -5,10 +5,13 @@ import useCheckLoggedIn from "@/utils/useCheckLoggedIn";
 import {useEffect} from "react";
 import router from "next/router";
 import SummaryCard from "@/components/MainPageComponents/SummaryCard";
+import useFetchLikedSummaries from "@/utils/useFetchLikedSummaries";
 
 export default function FavouritesPage() {
 
     const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn(0);
+    //get the liked summaries of the current user
+    const {error, isPending: likedSummariesPending, summaryList} = useFetchLikedSummaries(isLoggedIn);
 
     useEffect(() => {
         if(!isPendingLoggedIn && !isLoggedIn) router.push("/login");
@@ -55,11 +58,11 @@ export default function FavouritesPage() {
             <section id="browseSection" className={styles.browseSection}>
                     <div className={styles.browseSectionContainer}>
                         <div className="centered-container mb-4">
-                            <div className="lds-dual-ring" style={{opacity: isPendingLoggedIn ? '1' : '0'}}></div>
+                            <div className="lds-dual-ring" style={{opacity: isPendingLoggedIn || likedSummariesPending ? '1' : '0'}}></div>
                         </div>
                         <h2 className={`${likedStyles.title} mb-8`}>My Favourites</h2>
-                        {userInformation?.likes && userInformation.likes.length > 0 && <div className={styles.summaryBrowser}>
-                            {userInformation.likes.map((summary, index) => (
+                        {summaryList && summaryList.length > 0 && <div className={styles.summaryBrowser}>
+                            {summaryList.map((summary, index) => (
                                 <div key={summary.summaryId} style={{borderRadius:10}}>
                                     <SummaryCard
                                         summary={summary}
@@ -69,13 +72,20 @@ export default function FavouritesPage() {
                                 </div>
                             ))}
                         </div>}
-                        {userInformation?.likes && userInformation.likes.length == 0 && !isPendingLoggedIn && <p style={{
+                        {summaryList && summaryList.length == 0 && !isPendingLoggedIn && !likedSummariesPending && <p style={{
                             fontFamily:'var(--font-josefin)',
                             fontSize: 26,
                             color: 'var(--white)',
                             textAlign: 'center',
                             marginBottom: '8rem'
                         }}>You haven't liked anything yet</p>}
+                        {error &&  <p style={{
+                            fontFamily:'var(--font-josefin)',
+                            fontSize: 26,
+                            color: 'var(--white)',
+                            textAlign: 'center',
+                            marginBottom: '8rem'
+                        }}>Error fetching liked summaries</p>}
                     </div>
             </section>
         </div>

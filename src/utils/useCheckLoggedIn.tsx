@@ -9,6 +9,7 @@ function useCheckLoggedIn(initiator: number) {
     const [userInformation, setUserInformation] = useState<User | undefined>(undefined);
 
     useEffect(() => {
+        setIsPending(true);
         fetch(config.apiUrl + "/auth/token/status",
             {method: 'GET',
                 headers: {"Origin":config.origin,

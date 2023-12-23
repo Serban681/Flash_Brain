@@ -13,7 +13,6 @@ export default function CreateFlashCardPage() {
     const [isPublic, setIsPublic] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [btnText, setBtnText] = useState<string>('Generate');
-    const [createdId, setCreatedId] = useState<number>(0);
     const {isLoggedIn, isPending} = useCheckLoggedIn(0);
 
     useEffect(() => {
@@ -28,7 +27,7 @@ export default function CreateFlashCardPage() {
         if(btnText === 'Generate') {
             handleFileUpload();
         } else {
-            router.push(`/viewflashcard/${createdId}`)
+            router.push(`/`)
         }
     }
 
@@ -55,11 +54,9 @@ export default function CreateFlashCardPage() {
                 throw new Error('There was a problem with the upload.');
             } else {
                 setIsLoading(false);
-                setBtnText('View Summary');
+                setBtnText('Go to main page');
                 return response.json();
             }
-        }).then((data) => {
-            setCreatedId(data.summaryId);
         })
         .catch(() => {
             setFileError("Upload failed.");
@@ -94,7 +91,7 @@ export default function CreateFlashCardPage() {
                         </div>
                         <div className="flex flex-row items-center mb-5">
                             <input type='checkbox' checked={isPublic} onChange={() => setIsPublic(!isPublic)} className="mr-1"/>
-                            <span className="text-white font-josefin font-bold">Private summary</span>
+                            <span className="text-white font-josefin font-bold">Public summary</span>
                         </div>
 
                     </div>

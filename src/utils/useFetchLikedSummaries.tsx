@@ -1,8 +1,6 @@
 import {useEffect, useState} from "react";
 import {Summary} from "@/utils/model/Summary";
 import config from "@/config";
-// @ts-ignore
-import Cookies from "js-cookie";
 
 function useFetchLikedSummaries(isLoggedIn: boolean) {
 
@@ -11,10 +9,11 @@ function useFetchLikedSummaries(isLoggedIn: boolean) {
     const [summaryList, setSummaryList] = useState<Summary[]>([]);
 
     useEffect(() => {
+        setIsPending(false);
         if(!isLoggedIn) return;
         setError('');
         setIsPending(true);
-        fetch(config.apiUrl + "/user/liked",
+        fetch(config.apiUrl + "/summary/favourites",
             {method: 'GET',
                 headers: {
                 "Origin":config.origin,
@@ -34,6 +33,5 @@ function useFetchLikedSummaries(isLoggedIn: boolean) {
             })
     }, [isLoggedIn]);
     return {error, isPending, summaryList, setSummaryList};
-
 }
 export default useFetchLikedSummaries;

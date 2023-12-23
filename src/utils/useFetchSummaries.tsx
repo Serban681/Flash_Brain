@@ -18,7 +18,7 @@ function useFetchSummaries(searchValue: string, categoryList:number[]) {
         setIsPending(true);
         fetch(config.apiUrl + "/summary/filtered",
             {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     "Origin": config.origin,
                     'Content-Type': 'application/json'
@@ -30,11 +30,11 @@ function useFetchSummaries(searchValue: string, categoryList:number[]) {
                 return res.json();
             })
             .then(data => {
-                console.log(data);
                 setSummaryList(data);
                 setIsPending(false);
             })
             .catch((e) => {
+                console.log(e.message);
                 setIsPending(false);
                 setError(e.message);
             })
