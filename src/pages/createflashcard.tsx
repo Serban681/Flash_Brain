@@ -6,6 +6,7 @@ import config from "@/config";
 import LoadingComponent from "@/components/GeneralComponents/LoadingComponent";
 import router from "next/router";
 import useCheckLoggedIn from "@/utils/useCheckLoggedIn";
+import LinkUpload from "@/components/CreateFlashCardComponents/LinkUpload";
 
 export default function CreateFlashCardPage() {
     const [file, setFile] = useState<File | null>(null);
@@ -14,6 +15,9 @@ export default function CreateFlashCardPage() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [btnText, setBtnText] = useState<string>('Generate');
     const {isLoggedIn, isPending} = useCheckLoggedIn(0);
+
+    const [infoText, setInfoText] = useState<string>('');
+    const [isYoutubeSelected, setIsYoutubeSelected] = useState<boolean>(false);
 
     useEffect(() => {
         if(!isLoggedIn && !isPending) router.push('/login');
@@ -33,6 +37,7 @@ export default function CreateFlashCardPage() {
 
     function handleFileUpload() {
         setFileError('');
+        setInfoText('')
         if(!file) {
             setFileError('Please select a file');
             return;
@@ -55,6 +60,7 @@ export default function CreateFlashCardPage() {
             } else {
                 setIsLoading(false);
                 setBtnText('Go to main page');
+                setInfoText('You will receive an email when your summary is ready.');
                 return response.json();
             }
         })
@@ -66,14 +72,24 @@ export default function CreateFlashCardPage() {
 
     return (
         <div className="bg-blue w-full h-full ">
-            <Header />
             <LoadingComponent loading={isLoading} />
+            <Header />
             <div className="flex items-center min-h-[calc(100vh-11.75rem)]">
-                <div className="flex justify-center w-full">
-                    <div className="flex justify-center flex-col w-60 items-center">
-                        <Image className="w-14" src={upload_icon} alt=""  />
+                <div className="flex flex-col justify-center items-center w-full">
+                    <div className="mb-4 mt-4">
+                        <button
+                            className={!isYoutubeSelected ? "generationMethodButton generationMethodButtonSelected" : "generationMethodButton"}
+                            onClick={() => setIsYoutubeSelected(false)}
+                        >Document</button>
+                        <button
+                            className={isYoutubeSelected ? "generationMethodButton generationMethodButtonSelected" : "generationMethodButton"}
+                            onClick={() => setIsYoutubeSelected(true)}
+                        >Youtube</button>
+                    </div>
+                    {!isYoutubeSelected && <div className="flex justify-center flex-col items-center" style={{height:"34rem"}}>
+                        <Image className="w-14" src={upload_icon} alt="upload"  />
                         <h2 className="text-white text-xl font-josefin font-extrabold">Upload File</h2>
-                        <p className="text-white font-josefin font-medium text-center mt-3">
+                        <p className="text-white font-josefin font-medium text-center mt-3 w-48">
                             Upload files here. We accept .pdf, .txt and .docx that are less than 10mb.
                         </p>
                         <div className="text-white font-josefin font-bold mb-3 text-center mt-14">
@@ -93,8 +109,9 @@ export default function CreateFlashCardPage() {
                             <input type='checkbox' checked={isPublic} onChange={() => setIsPublic(!isPublic)} className="mr-1"/>
                             <span className="text-white font-josefin font-bold">Public summary</span>
                         </div>
-
-                    </div>
+                        {infoText && <div className="text-white font-josefin font-bold text-center mt-2">{infoText}</div>}
+                    </div>}
+                    {isYoutubeSelected && <LinkUpload setIsLoading={setIsLoading}></LinkUpload>}
                 </div>
             </div>
         </div>

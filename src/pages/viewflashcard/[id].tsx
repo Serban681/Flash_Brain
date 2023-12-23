@@ -99,7 +99,6 @@ export default function ViewFlashCardPage() {
     const imgPassiveStyle = 'absolute border-8 border-white right-[-25rem] bottom-[7rem] cursor-pointer z-10 shadow-default transition-all duration-500 ease-in-out hover:scale-105'
 
     useEffect(() => {
-        console.log(summary?.flashcards[0]?.imagePath);
         setFlashcards(summary?.flashcards!)
         setCurContent(flashcards && flashcards[0]?.content)
         setCurImagePath(flashcards && flashcards[0]?.imagePath!)

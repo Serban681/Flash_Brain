@@ -73,6 +73,26 @@ html, body {
     color: white;
 }
 
+.generationMethodButton {
+    background-color: var(--black);
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 500;
+    color: #fff;
+    display: inline-block;
+    width: 10rem;
+    padding: 0.6rem 2rem;
+    cursor: pointer;
+}
+
+.generationMethodButton:hover {
+    background-color: var(--dark-black);
+}
+
+.generationMethodButtonSelected {
+    background-color: var(--dark-black);
+
+}
+
 /* ---- End Upload File Styling ----- */
 
 .big-btn {
