@@ -5,6 +5,8 @@ export interface User {
     email: string;
     password?: string;
     username: string;
+    current_streak: number;
+    max_streak: number;
     like?: Summary[];
     summaries?: Summary[];
 }

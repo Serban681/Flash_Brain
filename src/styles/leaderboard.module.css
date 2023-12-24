@@ -1,0 +1,12 @@
+.leaderboardOuterContainer {
+    width: 100%;
+    height: clamp(200px, 100%, 100vh);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--blue);
+}
+
+.leaderboardContainer {
+    min-height: calc(100vh - 11.75rem);
+}

@@ -16,7 +16,7 @@ export default function Header() {
 
     return (
         <div className="inline flex justify-between text-white w-full items-center pt-5">
-            <div className={`${!isPendingLoggedIn && isLoggedIn ? 'opacity-100 cursor-pointer' : 'opacity-0' }`}>
+            <div className={`${!isPendingLoggedIn && isLoggedIn ? 'opacity-100 cursor-pointer w-28' : 'opacity-0 w-28' }`}>
                 <Image onClick={goToCreateFlashCardPage} src={AddImage} alt="" className="ml-0 h-10" />
             </div>
             <LogoComponent />
