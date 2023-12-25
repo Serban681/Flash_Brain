@@ -7,6 +7,7 @@ export interface User {
     username: string;
     current_streak: number;
     max_streak: number;
+    score?:number;
     like?: Summary[];
     summaries?: Summary[];
 }

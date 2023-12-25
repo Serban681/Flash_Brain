@@ -8,5 +8,10 @@
 }
 
 .leaderboardContainer {
-    min-height: calc(100vh - 11.75rem);
+    height: calc(100vh - 11.75rem);
+    width: clamp(200px, 60%, 1500px);
+}
+
+.leaderboardContainer > div {
+    height: calc(100% - 12rem);
 }

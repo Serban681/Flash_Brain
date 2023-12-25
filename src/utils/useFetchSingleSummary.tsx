@@ -9,15 +9,20 @@ function useFetchSingleSummary(summaryId: number) {
     const [summary, setSummary] = useState<Summary | undefined>(undefined);
 
     useEffect(() => {
-        if(summaryId === undefined || summary === null || Number.isNaN(summaryId)) return;
+        if (summaryId === undefined || summary === null || Number.isNaN(summaryId)) return;
         setError('');
         setIsPending(true);
         fetch(config.apiUrl + "/summary/" + summaryId,
-            {method: 'GET',
-                headers: {"Origin":config.origin}}
+            {
+                method: 'GET',
+                headers: {
+                    "Origin": config.origin,
+                    "Authorization": "Bearer " + (localStorage.getItem("jwtToken") === null ? "not-an-empty-string" : localStorage.getItem("jwtToken"))
+                }
+            }
         )
             .then(res => {
-                if(!res.ok) throw Error("Couldn't fetch summary");
+                if (!res.ok) throw Error("Couldn't fetch summary");
                 return res.json();
             })
             .then(data => {
@@ -31,4 +36,5 @@ function useFetchSingleSummary(summaryId: number) {
     }, [summaryId])
     return {error, isPending, summary};
 }
+
 export default useFetchSingleSummary

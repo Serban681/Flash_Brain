@@ -11,12 +11,16 @@ function useCheckLoggedIn(initiator: number) {
     useEffect(() => {
         setIsPending(true);
         fetch(config.apiUrl + "/auth/token/status",
-            {method: 'GET',
-                headers: {"Origin":config.origin,
-                    "Authorization": "Bearer " + localStorage.getItem('jwtToken')}}
+            {
+                method: 'GET',
+                headers: {
+                    "Origin": config.origin,
+                    "Authorization": "Bearer " + localStorage.getItem('jwtToken')
+                }
+            }
         )
             .then(res => {
-                if(!res.ok) throw Error("Couldn't check logged in state");
+                if (!res.ok) throw Error("Couldn't check logged in state");
                 setIsLoggedIn(true);
                 setIsPending(false);
                 return res.json();
@@ -32,4 +36,5 @@ function useCheckLoggedIn(initiator: number) {
     return {isLoggedIn, isPending, userInformation};
 
 }
+
 export default useCheckLoggedIn;

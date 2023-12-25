@@ -68,7 +68,7 @@ export default function UserDropdown(props:any) {
                     <button className={`small-btn block ${styles.btn_2}`} id="green" onClick={handleSignOut}>Sign out</button>
                     <div>
                         <Image className={styles.streakIcon} src={streak_icon} alt="strek"/>
-                        <div className={styles.streakContainer}>Current streak: {userInformation?.current_streak} days <br/> Longest streak: {userInformation?.max_streak} days</div>
+                        <div className={styles.streakContainer}>Current streak: {userInformation?.current_streak} {userInformation?.current_streak === 1 ? "day" : "days"} <br/> Longest streak: {userInformation?.max_streak} {userInformation?.max_streak === 1 ? "day" : "days"}</div>
                     </div>
                 </div>
             </div>
