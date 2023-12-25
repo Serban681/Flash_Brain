@@ -1,8 +1,6 @@
 import {useEffect, useState} from "react";
 import {Summary} from "@/utils/model/Summary";
-import config from "@/config";
-// @ts-ignore
-import Cookies from "js-cookie";
+import process from "process";
 
 export default function useFetchUserSummaries() {
     const [isPending, setIsPending] = useState<boolean>(true);
@@ -12,12 +10,12 @@ export default function useFetchUserSummaries() {
     useEffect(() => {
         setError('');
         setIsPending(true);
-        fetch(config.apiUrl + "/user/posted",
+        fetch(process.env.NEXT_PUBLIC_API_URL + "/user/posted",
             {
                 method: 'GET',
                 headers: {
-                    "Origin":config.origin,
-                    "Authorization": "Bearer " + Cookies.get('jwtToken')},
+                    "Origin":process.env.NEXT_PUBLIC_ORIGIN!,
+                    "Authorization": "Bearer " + localStorage.getItem('jwtToken')},
             }
         ).then(res => {
             if(!res.ok) throw Error("Couldn't fetch posted summaries");

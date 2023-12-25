@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {Summary} from "@/utils/model/Summary";
-import config from "@/config";
+import process from "process";
 
 function useFetchLikedSummaries(isLoggedIn: boolean) {
 
@@ -13,10 +13,10 @@ function useFetchLikedSummaries(isLoggedIn: boolean) {
         if(!isLoggedIn) return;
         setError('');
         setIsPending(true);
-        fetch(config.apiUrl + "/summary/favourites",
+        fetch(process.env.NEXT_PUBLIC_API_URL + "/summary/favourites",
             {method: 'GET',
                 headers: {
-                "Origin":config.origin,
+                "Origin":process.env.NEXT_PUBLIC_ORIGIN!,
                     "Authorization": "Bearer " + localStorage.getItem('jwtToken')}}
         )
             .then(res => {

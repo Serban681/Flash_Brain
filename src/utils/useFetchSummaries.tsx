@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import config from "../config";
 import {Summary} from "@/utils/model/Summary";
+import process from "process";
 
 function useFetchSummaries(searchValue: string, categoryList:number[]) {
 
@@ -16,11 +16,11 @@ function useFetchSummaries(searchValue: string, categoryList:number[]) {
         }
         setError('');
         setIsPending(true);
-        fetch(config.apiUrl + "/summary/filtered",
+        fetch(process.env.NEXT_PUBLIC_API_URL + "/summary/filtered",
             {
                 method: 'POST',
                 headers: {
-                    "Origin": config.origin,
+                    "Origin": process.env.NEXT_PUBLIC_ORIGIN!,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(filterRequest)

@@ -1,8 +1,8 @@
 import youtube_icon from "@/images/youtube_icon.svg"
 import Image from "next/image";
 import {useState} from "react";
-import config from "@/config";
 import router from "next/router";
+import process from "process";
 
 export default function LinkUpload(props: any) {
 
@@ -33,10 +33,10 @@ export default function LinkUpload(props: any) {
         const requestBody = {
             url: link
         };
-        fetch(config.apiUrl + '/summary/video?isPublic=' + isPublic, {
+        fetch(process.env.NEXT_PUBLIC_API_URL + '/summary/video?isPublic=' + isPublic, {
             method: 'POST',
             headers: {
-                "Origin":config.origin,
+                "Origin":process.env.NEXT_PUBLIC_ORIGIN!,
                 "Authorization": "Bearer " + localStorage.getItem('jwtToken'),
                 "Content-Type": "application/json"
             },

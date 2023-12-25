@@ -10,9 +10,9 @@ import useCheckLoggedIn from "@/utils/useCheckLoggedIn"
 import thumbs_up from "@/images/thumbs_up.svg"
 import useFetchSingleSummary from "@/utils/useFetchSingleSummary"
 import useFetchSingleUser from "@/utils/useFetchSingleUser";
-import config from "@/config";
 import useFetchLikedSummaries from "@/utils/useFetchLikedSummaries";
 import LoadingComponent from "@/components/GeneralComponents/LoadingComponent";
+import process from "process";
 
 export default function ViewFlashCardPage() {
     const router = useRouter()
@@ -54,9 +54,9 @@ export default function ViewFlashCardPage() {
         if(isLiked) {
             setIsLiked(false);
             setLikeCount(likeCount - 1);
-            fetch(config.apiUrl + "/like/" + summary?.summaryId,
+            fetch(process.env.NEXT_PUBLIC_API_URL + "/like/" + summary?.summaryId,
                 {method: 'DELETE',
-                    headers: {"Origin":config.origin,
+                    headers: {"Origin":process.env.NEXT_PUBLIC_ORIGIN!,
                         "Authorization": "Bearer " + localStorage.getItem('jwtToken')}}
             )
                 .then(res => {
@@ -71,9 +71,9 @@ export default function ViewFlashCardPage() {
         else {
             setIsLiked(true);
             setLikeCount(likeCount + 1);
-            fetch(config.apiUrl + "/like/" + summary?.summaryId,
+            fetch(process.env.NEXT_PUBLIC_API_URL + "/like/" + summary?.summaryId,
                 {method: 'GET',
-                    headers: {"Origin":config.origin,
+                    headers: {"Origin":process.env.NEXT_PUBLIC_ORIGIN!,
                         "Authorization": "Bearer " + localStorage.getItem('jwtToken')}}
             )
                 .then(res => {

@@ -5,11 +5,11 @@ import GoogleImage from "@/images/google_logo.svg";
 import Link from "next/link";
 import {useEffect, useState} from "react";
 import {RegisterRequest} from "@/utils/model/RegisterRequest";
-import config from "@/config";
 import {useGoogleLogin} from "@react-oauth/google";
 import EmailImage from "@/images/email_icon.svg";
 import useCheckLoggedIn from "@/utils/useCheckLoggedIn";
 import router from "next/router";
+import process from "process";
 
 export default function RegisterPage() {
 
@@ -70,11 +70,11 @@ export default function RegisterPage() {
         setError('');
         setIsLoading(true);
         console.log(registerData);
-        fetch(config.apiUrl + "/user", {
+        fetch(process.env.NEXT_PUBLIC_API_URL + "/user", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Origin': config.origin
+                'Origin': process.env.NEXT_PUBLIC_ORIGIN!,
             },
             body: JSON.stringify(registerData),
         })
@@ -127,11 +127,11 @@ export default function RegisterPage() {
                             email: userInfo.email,
                         }
                         console.log(registerData);
-                        fetch(config.apiUrl + "/user", {
+                        fetch(process.env.NEXT_PUBLIC_API_URL + "/user", {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
-                                'Origin': config.origin
+                                'Origin': process.env.NEXT_PUBLIC_ORIGIN!
                             },
                             body: JSON.stringify(registerData),
                         })

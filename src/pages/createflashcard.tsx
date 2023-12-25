@@ -2,11 +2,11 @@ import Header from "@/components/GeneralComponents/Header"
 import Image from "next/image"
 import upload_icon from "@/images/upload_icon.svg"
 import {useEffect, useState} from "react"
-import config from "@/config";
 import LoadingComponent from "@/components/GeneralComponents/LoadingComponent";
 import router from "next/router";
 import useCheckLoggedIn from "@/utils/useCheckLoggedIn";
 import LinkUpload from "@/components/CreateFlashCardComponents/LinkUpload";
+import process from "process";
 
 export default function CreateFlashCardPage() {
     const [file, setFile] = useState<File | null>(null);
@@ -46,10 +46,10 @@ export default function CreateFlashCardPage() {
         const formData = new FormData();
         formData.append('upload_file', file);
         setIsLoading(true);
-        fetch(config.apiUrl + '/summary/file?isPublic=' + isPublic, {
+        fetch(process.env.NEXT_PUBLIC_API_URL + '/summary/file?isPublic=' + isPublic, {
             method: 'POST',
             headers: {
-                "Origin":config.origin,
+                "Origin":process.env.NEXT_PUBLIC_ORIGIN!,
                 "Authorization": "Bearer " + localStorage.getItem('jwtToken')
             },
             body: formData

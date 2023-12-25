@@ -7,7 +7,7 @@ import router from "next/router";
 import SummaryCard from "@/components/MainPageComponents/SummaryCard";
 import delete_icon from "@/images/delete_icon.svg"
 import Image from "next/image";
-import config from "@/config";
+import process from "process";
 
 export default function MySummariesPage() {
 
@@ -62,10 +62,10 @@ export default function MySummariesPage() {
 
         setDeletedSummaryId(summaryId);
         setIsLoadingDelete(true);
-        fetch(config.apiUrl + "/summary/" + summaryId,
+        fetch(process.env.NEXT_PUBLIC_API_URL + "/summary/" + summaryId,
             {method: 'DELETE',
                 headers: {
-                    "Origin":config.origin,
+                    "Origin":process.env.NEXT_PUBLIC_ORIGIN!,
                     "Authorization": "Bearer " + localStorage.getItem('jwtToken')}}
         )
             .then(res => {

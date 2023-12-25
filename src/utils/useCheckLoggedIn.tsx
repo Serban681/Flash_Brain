@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import config from "../config";
 import {User} from "@/utils/model/User";
+import * as process from "process";
 
 function useCheckLoggedIn(initiator: number) {
 
@@ -10,11 +10,11 @@ function useCheckLoggedIn(initiator: number) {
 
     useEffect(() => {
         setIsPending(true);
-        fetch(config.apiUrl + "/auth/token/status",
+        fetch(process.env.NEXT_PUBLIC_API_URL + "/auth/token/status",
             {
                 method: 'GET',
                 headers: {
-                    "Origin": config.origin,
+                    "Origin": process.env.NEXT_PUBLIC_ORIGIN!,
                     "Authorization": "Bearer " + localStorage.getItem('jwtToken')
                 }
             }

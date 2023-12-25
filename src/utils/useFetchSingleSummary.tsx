@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import config from "../config";
 import {Summary} from "@/utils/model/Summary";
+import * as process from "process";
 
 function useFetchSingleSummary(summaryId: number) {
 
@@ -12,11 +12,11 @@ function useFetchSingleSummary(summaryId: number) {
         if (summaryId === undefined || summary === null || Number.isNaN(summaryId)) return;
         setError('');
         setIsPending(true);
-        fetch(config.apiUrl + "/summary/" + summaryId,
+        fetch(process.env.NEXT_PUBLIC_API_URL + "/summary/" + summaryId,
             {
                 method: 'GET',
                 headers: {
-                    "Origin": config.origin,
+                    "Origin": process.env.NEXT_PUBLIC_ORIGIN!,
                     "Authorization": "Bearer " + (localStorage.getItem("jwtToken") === null ? "not-an-empty-string" : localStorage.getItem("jwtToken"))
                 }
             }

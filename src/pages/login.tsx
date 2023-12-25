@@ -5,9 +5,9 @@ import Image from "next/image";
 import GoogleImage from "@/images/google_logo.svg";
 import {useState} from "react";
 import {LoginRequest} from "@/utils/model/LoginRequest";
-import config from "@/config";
 import router from "next/router";
 import {useGoogleLogin} from "@react-oauth/google";
+import process from "process";
 export default function LoginPage() {
 
     const [username, setUsername] = useState("");
@@ -16,11 +16,11 @@ export default function LoginPage() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     function authApiCall(loginData: LoginRequest) {
-        fetch(config.apiUrl + "/auth/token", {
+        fetch(process.env.NEXT_PUBLIC_API_URL + "/auth/token", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Origin': config.origin
+                'Origin': process.env.NEXT_PUBLIC_ORIGIN!
             },
             body: JSON.stringify(loginData),
         })

@@ -1,6 +1,6 @@
-import config from "@/config";
 import {useEffect, useState} from "react";
 import {LeaderboardEntry} from "@/utils/model/LeaderboardEntry";
+import process from "process";
 export default function useFetchLeaderboard() {
     const [isPending, setIsPending] = useState<boolean>(true);
     const [error, setError] = useState<string>("");
@@ -9,10 +9,10 @@ export default function useFetchLeaderboard() {
     useEffect(() => {
         setError('');
         setIsPending(true);
-        fetch(config.apiUrl + "/user/leaderboard",
+        fetch(process.env.NEXT_PUBLIC_API_URL + "/user/leaderboard",
             {method: 'GET',
                 headers: {
-                    "Origin":config.origin,
+                    "Origin":process.env.NEXT_PUBLIC_ORIGIN!,
                     "Authorization": "Bearer " + localStorage.getItem('jwtToken')}}
         )
             .then(res => {
