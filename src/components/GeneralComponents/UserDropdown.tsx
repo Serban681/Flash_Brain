@@ -1,12 +1,11 @@
 import styles from './../../styles/user-dropdown.module.css';
-// @ts-ignore
-import Cookies from "js-cookie";
 import {useEffect, useRef} from "react";
 import gravatar from 'gravatar';
 import Image from 'next/image';
 import useCheckLoggedIn from "@/utils/useCheckLoggedIn";
 import router from "next/router";
 import close_icon from "@/images/close_icon.svg";
+import streak_icon from "@/images/streak_icon.svg";
 
 export default function UserDropdown(props:any) {
 
@@ -14,7 +13,7 @@ export default function UserDropdown(props:any) {
     let setIsHidden = props.setIsHidden;
     const componentRef = useRef<HTMLDivElement>(null);
 
-    const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
+    const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn(0);
 
     const gravatarUrl = !isPendingLoggedIn && isLoggedIn ? gravatar.url(!!userInformation ? userInformation.email : '' , {protocol: 'http', s: '40'}) : ''
 
@@ -41,7 +40,7 @@ export default function UserDropdown(props:any) {
     }, [componentRef]);
 
     const handleSignOut = () => {
-        Cookies.remove('jwtToken');
+        localStorage.removeItem('jwtToken');
         router.push('/');
         window.location.reload();
     }
@@ -65,7 +64,13 @@ export default function UserDropdown(props:any) {
             </div>
             <div className={styles.buttonsContainer}>
                 <button onClick={goToMySummaries} className={`small-btn ${styles.btn}`}>My summaries</button>
-                <button className={`small-btn block ${styles.btn_2}`} id="green" onClick={handleSignOut}>Sign out</button>            
+                <div className="flex flex-row">
+                    <button className={`small-btn block ${styles.btn_2}`} id="green" onClick={handleSignOut}>Sign out</button>
+                    <div>
+                        <Image className={styles.streakIcon} src={streak_icon} alt="strek"/>
+                        <div className={styles.streakContainer}>Current streak: {userInformation?.current_streak} {userInformation?.current_streak === 1 ? "day" : "days"} <br/> Longest streak: {userInformation?.max_streak} {userInformation?.max_streak === 1 ? "day" : "days"}</div>
+                    </div>
+                </div>
             </div>
         </div>
     )

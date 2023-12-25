@@ -1,5 +1,5 @@
 export interface Flashcard {
-    flashCardId: number;
+    flashcardId: number;
     title: string;
     content: string;
     imagePath: string;

@@ -1,8 +1,6 @@
 import {useEffect, useState} from "react";
 import {Summary} from "@/utils/model/Summary";
-import config from "@/config";
-// @ts-ignore
-import Cookies from "js-cookie";
+import process from "process";
 
 function useFetchLikedSummaries(isLoggedIn: boolean) {
 
@@ -11,14 +9,15 @@ function useFetchLikedSummaries(isLoggedIn: boolean) {
     const [summaryList, setSummaryList] = useState<Summary[]>([]);
 
     useEffect(() => {
+        setIsPending(false);
         if(!isLoggedIn) return;
         setError('');
         setIsPending(true);
-        fetch(config.apiUrl + "/user/liked",
+        fetch(process.env.NEXT_PUBLIC_API_URL + "/summary/favourites",
             {method: 'GET',
                 headers: {
-                "Origin":config.origin,
-                    "Authorization": "Bearer " + Cookies.get('jwtToken')}}
+                "Origin":process.env.NEXT_PUBLIC_ORIGIN!,
+                    "Authorization": "Bearer " + localStorage.getItem('jwtToken')}}
         )
             .then(res => {
                 if(!res.ok) throw Error("Couldn't fetch summaries");
@@ -34,6 +33,5 @@ function useFetchLikedSummaries(isLoggedIn: boolean) {
             })
     }, [isLoggedIn]);
     return {error, isPending, summaryList, setSummaryList};
-
 }
 export default useFetchLikedSummaries;

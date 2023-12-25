@@ -3,13 +3,13 @@ import Header from "@/components/GeneralComponents/Header";
 import Image from "next/image";
 import GoogleImage from "@/images/google_logo.svg";
 import Link from "next/link";
-import {ChangeEvent, useState} from "react";
+import {useEffect, useState} from "react";
 import {RegisterRequest} from "@/utils/model/RegisterRequest";
-import config from "@/config";
-// @ts-ignore
-import Cookies from "js-cookie";
-import router from "next/router";
 import {useGoogleLogin} from "@react-oauth/google";
+import EmailImage from "@/images/email_icon.svg";
+import useCheckLoggedIn from "@/utils/useCheckLoggedIn";
+import router from "next/router";
+import process from "process";
 
 export default function RegisterPage() {
 
@@ -20,6 +20,27 @@ export default function RegisterPage() {
 
     const [error, setError] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isEmailMessage, setIsEmailMessage] = useState<boolean>(false);
+
+    /*
+    when the user finishes the register process, the checkLoggedInNumber will be
+    incremented every few seconds to check if the email has been verified. If it has, the user
+    will be redirected to the main page.
+     */
+    const [loggedInNumber, setLoggedInNumber] = useState<number>(0);
+    const {isLoggedIn, isPending, userInformation} = useCheckLoggedIn(loggedInNumber);
+    let registerInterval: NodeJS.Timeout;
+
+    useEffect(() => {
+        return () => {
+            if(registerInterval)
+                clearInterval(registerInterval);
+        }
+    }, []);
+
+    useEffect(() => {
+        if(isLoggedIn) router.push('/');
+    }, [isLoggedIn]);
 
     function handleRegister(e:any) {
         e.preventDefault();
@@ -37,12 +58,10 @@ export default function RegisterPage() {
             setError('⚠ Passwords do not match.');
             return;
         }
-
         if(!email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
             setError('⚠ Invalid email address.');
             return;
         }
-
         if(password.length < 8) {
             setError("⚠ Password must be at least 8 characters long.");
             return;
@@ -50,12 +69,12 @@ export default function RegisterPage() {
 
         setError('');
         setIsLoading(true);
-
-        fetch(config.apiUrl + "/user", {
+        console.log(registerData);
+        fetch(process.env.NEXT_PUBLIC_API_URL + "/user", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Origin': config.origin
+                'Origin': process.env.NEXT_PUBLIC_ORIGIN!,
             },
             body: JSON.stringify(registerData),
         })
@@ -70,8 +89,11 @@ export default function RegisterPage() {
             })
             .then((data) => {
                 setIsLoading(false);
-                Cookies.set('jwtToken', data.access_token);
-                router.push('/');
+                localStorage.setItem('jwtToken', data.accessToken);
+                setIsEmailMessage(true);
+                registerInterval = setInterval(() => {
+                    setLoggedInNumber(prevNumber => prevNumber + 1)
+                }, 2000)
             })
             .catch((error) => {
                 setIsLoading(false);
@@ -104,11 +126,12 @@ export default function RegisterPage() {
                             password: userInfo.id,
                             email: userInfo.email,
                         }
-                        fetch(config.apiUrl + "/user", {
+                        console.log(registerData);
+                        fetch(process.env.NEXT_PUBLIC_API_URL + "/user", {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
-                                'Origin': config.origin
+                                'Origin': process.env.NEXT_PUBLIC_ORIGIN!
                             },
                             body: JSON.stringify(registerData),
                         })
@@ -122,8 +145,11 @@ export default function RegisterPage() {
                             })
                             .then((data) => {
                                 setIsLoading(false);
-                                Cookies.set('jwtToken', data.access_token);
-                                router.push('/');
+                                localStorage.setItem('jwtToken', data.accessToken);
+                                setIsEmailMessage(true);
+                                registerInterval = setInterval(() => {
+                                    setLoggedInNumber(prevNumber => prevNumber + 1);
+                                }, 2000)
                             })
                             .catch((error) => {
                                 setIsLoading(false)
@@ -140,7 +166,12 @@ export default function RegisterPage() {
     return (
         <div className={styles.registerPageOuterDiv}>
             <Header></Header>
-            <form className={styles.registerForm}>
+            {isEmailMessage &&
+                <div className={styles.emailVerificationMessage}>
+                    <Image src={EmailImage} alt="" className="ml-5 h-16 w-16"/>
+                    <p>{`We've sent a verification e-mail to ${email}. Please access the your e-mail to verify your account.`}</p>
+                </div>}
+            {!isEmailMessage && <form className={styles.registerForm}>
                 <p className={styles.registerP}>Register</p>
                 <button type="button" className={styles.googleButton} onClick={() => handleGoogleRegister()}>
                     <Image src={GoogleImage} alt="Google icon" style={{marginRight:15, width:'2rem', height:'auto'}}></Image>
@@ -192,7 +223,7 @@ export default function RegisterPage() {
                 </div>
                 {error && <p className={styles.errorMessage}>{error}</p>}
                 {isLoading && <div className="lds-dual-ring"></div>}
-            </form>
+            </form>}
         </div>
     )
 }

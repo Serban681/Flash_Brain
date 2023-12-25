@@ -11,6 +11,7 @@
   "dependencies": {
     "@react-oauth/google": "^0.11.1",
     "@t3-oss/env-nextjs": "^0.7.0",
+    "dotenv": "^16.3.1",
     "gravatar": "^1.8.2",
     "js-cookie": "^3.0.5",
     "next": "^14.0.0",

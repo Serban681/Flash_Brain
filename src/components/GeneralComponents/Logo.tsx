@@ -6,6 +6,6 @@ export default function LogoComponent() {
     }
     
     return (
-        <h1 className="font-fredoka text-[2rem] text-white font-bold cursor-pointer" onClick={() => handleClick()}>#FlashBrain</h1>        
+        <h1 className="font-fredoka text-[2rem] text-white font-bold cursor-pointer" onClick={() => handleClick()}>#FlashBrain</h1>
     )
 }

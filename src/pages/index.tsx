@@ -63,7 +63,7 @@ export default function Home() {
 
     const initialPathValue = searchParams.get('query');
 
-    const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
+    const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn(0);
     const [activeCategoryList, setActiveCategoryList] = useState<number[]>([1]);
             
     const searchQuery = searchParams.get('query');

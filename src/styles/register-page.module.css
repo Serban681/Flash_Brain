@@ -114,3 +114,19 @@
     width: 100%;
     margin-bottom: 5px;
 }
+
+.emailVerificationMessage {
+    margin-top: 4rem;
+    display: flex;
+    min-height: calc(100vh - 11.75rem);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80vw;
+    margin-bottom: 3rem;
+    text-align: center;
+    color: var(--white);
+    font-family: var(--font-josefin);
+    font-weight: bold;
+    font-size: 1.5rem;
+}

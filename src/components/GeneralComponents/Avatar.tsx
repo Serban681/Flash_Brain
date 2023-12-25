@@ -2,14 +2,15 @@ import AccountCircle from '@/images/account_circle.svg'
 import Image from 'next/image'
 import router from 'next/router'
 import UserDropdown from "@/components/GeneralComponents/UserDropdown";
-import {use, useEffect, useState} from "react";
+import {useState} from "react";
 import useCheckLoggedIn from "@/utils/useCheckLoggedIn";
 import gravatar from 'gravatar';
+import leaderboard_icon from '@/images/leaderboard_icon.svg'
 
 export default function AvatarComponent() {
 
     const [isHidden ,setIsHidden] = useState(true)
-    const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn();
+    const {isLoggedIn, isPending: isPendingLoggedIn, userInformation} = useCheckLoggedIn(0);
 
     const handleClick = () => {
         if(!isLoggedIn) router.push('/login');
@@ -20,12 +21,15 @@ export default function AvatarComponent() {
 
     return (
         <div>
-            {
-                !isPendingLoggedIn && !!isLoggedIn ? 
-                    <Image className='w-9 mr-5 cursor-pointer rounded-full' src={gravatarUrl} alt='User Avatar' width={40} height={40} onClick={handleClick} />
-                    :
-                    <Image className='w-10 mr-5 cursor-pointer' src={AccountCircle} alt='' onClick={handleClick} />
-            }
+            <div className="flex flex-row ">
+                <Image onClick={() => {router.push("/leaderboard")}} className="mr-8 scale-125 hover:brightness-90 hover:cursor-pointer" src={leaderboard_icon} alt="leaderboard"></Image>
+                {
+                    !isPendingLoggedIn && !!isLoggedIn ?
+                        <Image className='w-10 mr-5 cursor-pointer rounded-full' src={gravatarUrl} alt='User Avatar' width={40} height={40} onClick={handleClick} />
+                        :
+                        <Image className='w-10 mr-5 cursor-pointer' src={AccountCircle} alt='' onClick={handleClick} />
+                }
+            </div>
 
             <UserDropdown
                 isHidden={isHidden}

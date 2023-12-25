@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import config from "../config";
 import {Summary} from "@/utils/model/Summary";
+import * as process from "process";
 
 function useFetchSingleSummary(summaryId: number) {
 
@@ -9,21 +9,25 @@ function useFetchSingleSummary(summaryId: number) {
     const [summary, setSummary] = useState<Summary | undefined>(undefined);
 
     useEffect(() => {
-        if(summaryId === undefined || summary === null || Number.isNaN(summaryId)) return;
+        if (summaryId === undefined || summary === null || Number.isNaN(summaryId)) return;
         setError('');
         setIsPending(true);
-        fetch(config.apiUrl + "/summary/" + summaryId,
-            {method: 'GET',
-                headers: {"Origin":config.origin}}
+        fetch(process.env.NEXT_PUBLIC_API_URL + "/summary/" + summaryId,
+            {
+                method: 'GET',
+                headers: {
+                    "Origin": process.env.NEXT_PUBLIC_ORIGIN!,
+                    "Authorization": "Bearer " + (localStorage.getItem("jwtToken") === null ? "not-an-empty-string" : localStorage.getItem("jwtToken"))
+                }
+            }
         )
             .then(res => {
-                if(!res.ok) throw Error("Couldn't fetch summary");
+                if (!res.ok) throw Error("Couldn't fetch summary");
                 return res.json();
             })
             .then(data => {
                 setSummary(data);
                 setIsPending(false);
-                console.log(data);
             })
             .catch((e) => {
                 setIsPending(false);
@@ -32,4 +36,5 @@ function useFetchSingleSummary(summaryId: number) {
     }, [summaryId])
     return {error, isPending, summary};
 }
+
 export default useFetchSingleSummary

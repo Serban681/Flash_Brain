@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import config from "../config";
 import {Summary} from "@/utils/model/Summary";
+import process from "process";
 
 function useFetchSummaries(searchValue: string, categoryList:number[]) {
 
@@ -9,17 +9,18 @@ function useFetchSummaries(searchValue: string, categoryList:number[]) {
     const [summaryList, setSummaryList] = useState<Summary[]>([]);
 
     useEffect(() => {
+        setIsPending(false);
         let filterRequest = {
             query: searchValue,
             categories: categoryList
         }
         setError('');
         setIsPending(true);
-        fetch(config.apiUrl + "/summary/filtered",
+        fetch(process.env.NEXT_PUBLIC_API_URL + "/summary/filtered",
             {
                 method: 'POST',
                 headers: {
-                    "Origin": config.origin,
+                    "Origin": process.env.NEXT_PUBLIC_ORIGIN!,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(filterRequest)
@@ -29,14 +30,15 @@ function useFetchSummaries(searchValue: string, categoryList:number[]) {
                 return res.json();
             })
             .then(data => {
-                console.log(data);
                 setSummaryList(data);
                 setIsPending(false);
             })
             .catch((e) => {
+                console.log(e.message);
                 setIsPending(false);
                 setError(e.message);
             })
+
     }, [categoryList, searchValue])
     return {error, isPending, summaryList};
 }

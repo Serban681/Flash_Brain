@@ -1,0 +1,17 @@
+.leaderboardOuterContainer {
+    width: 100%;
+    height: clamp(200px, 100%, 100vh);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--blue);
+}
+
+.leaderboardContainer {
+    height: calc(100vh - 11.75rem);
+    width: clamp(200px, 60%, 1500px);
+}
+
+.leaderboardContainer > div {
+    height: calc(100% - 12rem);
+}

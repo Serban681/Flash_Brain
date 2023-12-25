@@ -73,6 +73,26 @@ html, body {
     color: white;
 }
 
+.generationMethodButton {
+    background-color: var(--black);
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 500;
+    color: #fff;
+    display: inline-block;
+    width: 10rem;
+    padding: 0.6rem 2rem;
+    cursor: pointer;
+}
+
+.generationMethodButton:hover {
+    background-color: var(--dark-black);
+}
+
+.generationMethodButtonSelected {
+    background-color: var(--dark-black);
+
+}
+
 /* ---- End Upload File Styling ----- */
 
 .big-btn {
@@ -103,6 +123,24 @@ html, body {
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     transition: scale 0.2s ease-in-out;
+}
+
+.delete-btn {
+    margin-top: 1rem;
+    background-color: var(--black);
+    border-radius: var(--border-radius);
+    color: var(--white);
+    font-family: 'Josefin Sans', sans-serif;
+    height: 2rem;
+    text-align: center;
+    vertical-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-btn:hover {
+    background-color: var(--dark-black);
 }
 
 #green {
