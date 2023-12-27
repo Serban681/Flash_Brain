@@ -24,7 +24,6 @@ export default function useFetchSingleUser(id: number | undefined) {
                 return res.json();
             })
             .then(data => {
-                console.log(data);
                 setUser(data);
                 setIsPending(false);
             })

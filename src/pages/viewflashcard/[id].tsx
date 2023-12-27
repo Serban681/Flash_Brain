@@ -94,6 +94,24 @@ export default function ViewFlashCardPage() {
 
     const [curContent, setCurContent] = useState<string | null | undefined>(flashcards && flashcards[0]?.content)
     const [imagePath, setCurImagePath] = useState<string | null | undefined>(flashcards && flashcards[0]?.imagePath!)
+    const [isValidImage, setIsValidImage] = useState<boolean>(true);
+
+    useEffect(() => {
+        if(!imagePath) {
+            return;
+        }
+        fetch(imagePath)
+            .then(response => {
+                if (response.ok) {
+                    setIsValidImage(true);
+                } else {
+                    setIsValidImage(false);
+                }
+            })
+            .catch(error => {
+                setIsValidImage(false);
+            });
+    }, [imagePath]);
 
     const imgActiveStyle = 'absolute border-8 border-white right-[7rem] bottom-[2rem] cursor-pointer z-10 shadow-default transition-all duration-500 ease-in-out hover:scale-105'
     const imgPassiveStyle = 'absolute border-8 border-white right-[-25rem] bottom-[7rem] cursor-pointer z-10 shadow-default transition-all duration-500 ease-in-out hover:scale-105'
@@ -179,7 +197,7 @@ export default function ViewFlashCardPage() {
             <Image onClick={prevFive} className="absolute left-10 bottom-1/2 hover:scale-110 cursor-pointer w-8 rotate-180" src={arrow} alt='' />
             <Image onClick={nextFive} className="absolute right-10 bottom-1/2 hover:scale-110 cursor-pointer w-8" src={arrow} alt='' />
             {
-                !!imagePath && 
+                !!imagePath && isValidImage &&
                 <div className={imageActive ? imgActiveStyle : imgPassiveStyle} onClick={() => setImageActive(!imageActive)} >
                     <Image width={400} height={300} className="h-[17rem] w-[30rem] object-cover" src={imagePath} alt=""  />
                 </div>

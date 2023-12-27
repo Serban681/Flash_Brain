@@ -9,7 +9,7 @@ import useFetchSummaries from "@/utils/useFetchSummaries";
 import {useSearchParams} from "next/navigation";
 import Image from "next/image";
 
-import like_image from "@/images/like_image_icon.svg";
+import like_image from "../images/like_Image_icon.svg";
 
 export function CategoryList(props: any) {
 

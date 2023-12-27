@@ -69,7 +69,6 @@ export default function RegisterPage() {
 
         setError('');
         setIsLoading(true);
-        console.log(registerData);
         fetch(process.env.NEXT_PUBLIC_API_URL + "/user", {
             method: 'POST',
             headers: {
@@ -89,7 +88,7 @@ export default function RegisterPage() {
             })
             .then((data) => {
                 setIsLoading(false);
-                localStorage.setItem('jwtToken', data.accessToken);
+                localStorage.setItem('jwtToken', data.access_token);
                 setIsEmailMessage(true);
                 registerInterval = setInterval(() => {
                     setLoggedInNumber(prevNumber => prevNumber + 1)
@@ -126,7 +125,6 @@ export default function RegisterPage() {
                             password: userInfo.id,
                             email: userInfo.email,
                         }
-                        console.log(registerData);
                         fetch(process.env.NEXT_PUBLIC_API_URL + "/user", {
                             method: 'POST',
                             headers: {
@@ -145,7 +143,7 @@ export default function RegisterPage() {
                             })
                             .then((data) => {
                                 setIsLoading(false);
-                                localStorage.setItem('jwtToken', data.accessToken);
+                                localStorage.setItem('jwtToken', data.access_token);
                                 setIsEmailMessage(true);
                                 registerInterval = setInterval(() => {
                                     setLoggedInNumber(prevNumber => prevNumber + 1);

@@ -35,6 +35,7 @@ export default function LoginPage() {
                 }
             })
             .then((data) => {
+                console.log(data);
                 localStorage.setItem('jwtToken', data.accessToken);
                 setIsLoading(false);
                 router.push('/');
